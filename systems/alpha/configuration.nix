@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports =
@@ -119,12 +119,6 @@
   # Fix DualBoot time
   time.hardwareClockInLocalTime = true;
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
-  };
-
   services.udev.packages = [ pkgs.yubikey-personalization ];
   services.pcscd.enable = true;
   programs.ssh.startAgent = false;
@@ -158,5 +152,10 @@
   #nixpkgs.config.allowUnfree = true;
   # Fix Home-Manager issues with all unfree
   #nixpkgs.config.allowUnfreePredicate = _: true;
+
+  # Make ready for nix flakes
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
 }
 
