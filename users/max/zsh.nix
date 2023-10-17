@@ -66,7 +66,12 @@ in
   # Commandline tools
   programs = {
     htop.enable = true;
-    bat.enable = true;
+    bat = {
+      enable = true;
+      config = {
+        pager = "less -FR";
+      };
+    };
     jq.enable = true;
 
     eza = {
@@ -75,6 +80,12 @@ in
       extraOptions = [
         "--group-directories-first"
       ];
+    };
+
+    fzf = {
+      enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
     };
   };
 }

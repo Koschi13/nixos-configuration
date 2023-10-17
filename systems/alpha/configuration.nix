@@ -51,6 +51,7 @@
     # Enable the X11 windowing system.
     enable = true;
     videoDrivers = ["nvidia"];
+    excludePackages = [ pkgs.xterm ];
 
     # Enable GDM login
     displayManager = {
@@ -90,12 +91,12 @@
       git
     ];
 
-    variables = {
-      EDITOR = "nvim"; 
-    };
-
     # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enableCompletion
     pathsToLink = [ "/share/zsh" ];
+
+    sessionVariables = {
+      #NIXOS_OZONE_WL = "1";
+    };
 
     # This has to be configured for each shell
     #shellInit = ''
@@ -104,11 +105,19 @@
     #'';
   };
 
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-wlr
+        #_xdg-desktop-portal-gtk
+      ];
+    };
+  };
+
+
   programs = {
     zsh.enable = true;
-    neovim.enable = true;
-    neovim.viAlias = true;
-    neovim.vimAlias = true;
   };
 
   # YubiKey configuration

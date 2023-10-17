@@ -3,6 +3,8 @@
 {
   imports = [
     ./zsh.nix
+    ./firefox.nix
+    ./nvim.nix
   ];
 
   nixpkgs = {
@@ -26,6 +28,10 @@
     stateVersion = "23.05";
 
     packages = with pkgs; [
+      # tools
+      ripgrep
+      (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
+
       # coding
       alacritty
 
@@ -38,10 +44,13 @@
       bitwarden-cli
 
       # Messengers
+      tdesktop
       signal-desktop
+      element-desktop
 
       # other
       firefox-wayland
+      spotify
     ];
 
     file = {
@@ -62,21 +71,6 @@
       enable = true;
       enableBashIntegration = true;
       enableZshIntegration = true;
-    };
-
-    firefox = {
-      enable = true;
-      profiles.default = {
-        id = 0;
-        name = "Default";
-        isDefault = true;
-        extensions = with firefox-addons.packages.${pkgs.system}; [
-          ublock-origin
-          bitwarden
-          tridactyl
-          multi-account-containers
-        ];
-      };
     };
   };
 
