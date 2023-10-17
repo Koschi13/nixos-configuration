@@ -1,5 +1,9 @@
 # My NixOS configuration
 
+## Props
+
+https://github.com/Misterio77/nix-starter-configs/tree/main
+
 ## Using this repository
 
 NOTE: `apply-user` is no longer working since I switched to flakes.

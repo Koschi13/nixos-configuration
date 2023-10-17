@@ -1,4 +1,4 @@
 #!/bin/sh
 pushd ~/.dotfiles
-home-manager --flake .#max
+home-manager switch --flake .#max
 popd

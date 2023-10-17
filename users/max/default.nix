@@ -1,6 +1,10 @@
 { config, pkgs, firefox-addons, ... }:
 
 {
+  imports = [
+    ./zsh.nix
+  ];
+
   nixpkgs = {
     overlays = [
     ];
@@ -53,19 +57,11 @@
     home-manager.enable = true;
 
     gpg.enable = true;
-    jq.enable = true;
-    bat.enable = true;
-    htop.enable = true;
 
     fzf = {
       enable = true;
       enableBashIntegration = true;
       enableZshIntegration = true;
-    };
-
-    exa = {
-      enable = true;
-      enableAliases = true;
     };
 
     firefox = {

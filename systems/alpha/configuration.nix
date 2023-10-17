@@ -66,7 +66,7 @@
 
   # Enable sound (pipewire)
   hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
+  security.rtkit.enable = true;  # For realtime acquisition
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -78,31 +78,48 @@
   users.users.max = {
     isNormalUser = true;
     initialPassword = "P@ssw0rd";
+    shell = pkgs.zsh;
+
     # Enable ‘sudo’ for the user.
     extraGroups = [ "wheel" ];
   };
 
   # default package available to the system
-  environment.systemPackages = with pkgs; [
-    wget
-    git
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      git
+    ];
+
+    variables = {
+      EDITOR = "nvim"; 
+    };
+
+    # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enableCompletion
+    pathsToLink = [ "/share/zsh" ];
+
+    # This has to be configured for each shell
+    #shellInit = ''
+    #  gpg-connect-agent /bye
+    #  export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    #'';
+  };
 
   programs = {
+    zsh.enable = true;
     neovim.enable = true;
     neovim.viAlias = true;
     neovim.vimAlias = true;
   };
-  environment.variables.EDITOR = "nvim"; 
 
   # YubiKey configuration
   services.udev.packages = [ pkgs.yubikey-personalization ];
   services.pcscd.enable = true;
+
+  # Use GPG instead of SSH
   programs.ssh.startAgent = false;
-  environment.shellInit = ''
-    gpg-connect-agent /bye
-    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-  '';
+
+  # Do not generate XML / HTML docs. This is a waste of space for most users and sometimes breaks.
+  documentation.doc.enable = false;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05"; # Did you read the comment?
