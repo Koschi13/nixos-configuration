@@ -3,43 +3,60 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.05";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nur = {
-      url = "github:nix-community/NUR";
+
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nur } @ inputs:
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    firefox-addons,
+    ...
+  } @ inputs:
   let
+    # don't know what this is for, but without we do not have outputs available
+    inherit (self) outputs;
+
+    # Define what system we are, so we can re-use it
     system = "x86_64-linux";
 
-    pkgs = import nixpkgs {
-      inherit system;
-      config = { allowUnfree = true; };
-      overlays = [
-        nur.overlay
-      ];
-    };
-
+    # Just an alias
     lib = nixpkgs.lib;
 
   in {
+    # NixOS configuration entrypoint
+    # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
       alpha = lib.nixosSystem {
-        inherit system pkgs;
+	specialArgs = {
+	  inherit inputs outputs;
+	};
 
 	modules = [
 	  ./systems/alpha/configuration.nix
-	  home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true; # makes hm use nixos's pkgs value
-            home-manager.useUserPackages = true; # ???
-            home-manager.users.max.imports = [ ./users/max/home.nix ];
-          }
+	];
+      };
+    };
+
+    # Standalone home-manager configuration entrypoint
+    # Available through 'home-manager --flake .#your-username@your-hostname'
+    homeConfigurations = {
+      "max" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system};
+	extraSpecialArgs = {
+	  inherit inputs outputs firefox-addons;
+	};
+	modules = [
+	  ./users/max/home.nix
 	];
       };
     };
