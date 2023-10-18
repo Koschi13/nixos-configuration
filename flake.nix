@@ -50,6 +50,15 @@
 	  ./systems/alpha/configuration.nix
 	];
       };
+      epsilon = lib.nixosSystem {
+        specialArgs = {
+          inherit inputs outputs;
+        };
+
+        modules = [
+          ./systems/epsilon/configuration.nix
+        ];
+      };
     };
 
     # Standalone home-manager configuration entrypoint
@@ -59,6 +68,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
 	extraSpecialArgs = {
 	  inherit inputs outputs firefox-addons;
+	  rootPath = ./.;
 	};
 	modules = [
 	  ./users/max/default.nix
