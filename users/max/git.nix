@@ -9,7 +9,12 @@ in {
     enable = true;
     userName = "Maximilian Konter";
     userEmail = "maximilian.konter@protonmail.com";
+
     signing.signByDefault = true;
+    extraConfig.rebase.autosquash = true;
+
+    # Better diff written in Rust
+    delta.enable = true;
 
     includes = [
       {

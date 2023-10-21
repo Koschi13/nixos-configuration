@@ -4,37 +4,44 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.initrd.luks.devices.luksroot = {
-    name = "luksroot";
-    device = "/dev/disk/by-uuid/59b4aa20-6263-4829-8755-13bacbcefac0";
-    preLVM = true;
-    allowDiscards = true;
+  boot = {
+    initrd = {
+      availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+      kernelModules = [ "dm-snapshot" ];
+      luks.devices.luksroot = {
+        name = "luksroot";
+        device = "/dev/disk/by-uuid/d28414c3-c27c-4fcd-8e88-551a2aa67a71";
+        preLVM = true;
+        allowDiscards = true;
+      };
+    };
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+      systemd-boot.configurationLimit = 10;
+    };
   };
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-label/NIXROOT";
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/NIXROOT";
       fsType = "ext4";
     };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-label/NIXBOOT";
+    "/boot" = {
+      device = "/dev/disk/by-label/NIXBOOT";
       fsType = "vfat";
     };
+  };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-label/NIXSWAP"; }
-    ];
+  swapDevices = [
+    { device = "/dev/disk/by-label/NIXSWAP"; }
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

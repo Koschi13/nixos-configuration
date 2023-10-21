@@ -47,7 +47,7 @@
 	};
 
 	modules = [
-	  ./systems/alpha/configuration.nix
+	  ./systems/alpha/default.nix
 	];
       };
       epsilon = lib.nixosSystem {
@@ -56,7 +56,8 @@
         };
 
         modules = [
-          ./systems/epsilon/configuration.nix
+	  ./systems/default.nix
+          ./systems/epsilon/default.nix
         ];
       };
     };

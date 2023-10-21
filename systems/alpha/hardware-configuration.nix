@@ -19,6 +19,7 @@
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
+      systemd-boot.configurationLimit = 10;
     };
 
     initrd = {

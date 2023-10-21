@@ -5,6 +5,8 @@
     ./zsh.nix
     ./firefox.nix
     ./nvim.nix
+    ./gnome.nix
+    ./gpg/default.nix
   ];
 
   nixpkgs = {
