@@ -5,10 +5,10 @@
     ../_modules/zsh.nix
     ../_modules/firefox.nix
     ../_modules/nvim.nix
-    ../_modules/homemanager.nix
-    ../_modules/nixpkgs.nix
     ../_modules/gnome.nix
     ../_modules/gpg/default.nix
+    ../_modules/homemanager.nix
+    ../_modules/nixpkgs.nix
   ];
 
   home = {

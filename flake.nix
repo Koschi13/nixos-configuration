@@ -76,6 +76,19 @@
 	  inputs.nixvim.homeManagerModules.nixvim
 	];
       };
+
+      # This user will also be called "max"
+      "scandio" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system};
+	extraSpecialArgs = {
+	  inherit inputs outputs firefox-addons;
+	  rootPath = ./.;
+	};
+	modules = [
+	  ./users/scandio/default.nix
+	  inputs.nixvim.homeManagerModules.nixvim
+	];
+      };
     };
   };
 }
