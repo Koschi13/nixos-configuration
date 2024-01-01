@@ -18,6 +18,8 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs = {
@@ -25,6 +27,7 @@
     nixpkgs,
     home-manager,
     firefox-addons,
+    hyprland,
     ...
   } @ inputs:
   let
@@ -87,6 +90,7 @@
 	modules = [
 	  ./users/scandio/default.nix
 	  inputs.nixvim.homeManagerModules.nixvim
+	  hyprland.homeManagerModules.default
 	];
       };
     };

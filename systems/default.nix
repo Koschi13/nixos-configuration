@@ -53,10 +53,10 @@
       excludePackages = [ pkgs.xterm ];
 
       # Enable GDM login
-      displayManager = {
-        gdm.enable = true;
-        gdm.wayland = true;
-      };
+      #displayManager = {
+      #  gdm.enable = true;
+      #  gdm.wayland = true;
+      #};	
 
       # Enable Gnome desktop
       desktopManager = {
@@ -64,9 +64,22 @@
       };
     };
 
+    programs.regreet.enable = true;
+    services.greetd = {
+      enable = true;
+      settings = {
+        initial_session = {
+          user = "max";
+          command = "$SHELL -l";
+        };
+      };
+    };
+
     environment.gnome.excludePackages = (with pkgs; [
       gnome-photos
       gnome-tour
+      gnome-connections
+      gnome-extension-manager
     ]) ++ (with pkgs.gnome; [
       cheese # webcam tool
       gnome-music
@@ -81,10 +94,21 @@
       iagno # go game
       hitori # sudoku game
       atomix # puzzle game
+      yelp # gnome help
+      simple-scan # document scanner
+      gnome-calendar
+      gnome-maps
+      gnome-clocks
+      gnome-contacts
+      gnome-weather
+      gnome-font-viewer
+      gnome-logs
     ]);
+
     # Enable sound (pipewire)
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;  # For realtime acquisition
+    security.polkit.enable = true;  # Needed for Hyprland
     services.pipewire = {
       enable = true;
       alsa.enable = true;
@@ -113,9 +137,9 @@
       # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enableCompletion
       pathsToLink = [ "/share/zsh" ];
 
-      sessionVariables = {
-        #NIXOS_OZONE_WL = "1";
-      };
+      #sessionVariables = {
+      #  NIXOS_OZONE_WL = "1";
+      #};
     };
 
     xdg = {
@@ -123,13 +147,14 @@
         enable = true;
         extraPortals = with pkgs; [
           xdg-desktop-portal-wlr
-          #_xdg-desktop-portal-gtk
+          xdg-desktop-portal-hyprland
         ];
       };
     };
 
     programs = {
       zsh.enable = true;
+      dconf.enable = true;
     };
 
     # YubiKey configuration

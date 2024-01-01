@@ -9,6 +9,11 @@
     ../_modules/gpg/default.nix
     ../_modules/homemanager.nix
     ../_modules/nixpkgs.nix
+    ../_modules/hyprland/default.nix
+    ../_modules/rofi/default.nix
+    ../_modules/dunst.nix
+    ../_modules/waybar.nix
+    ../_modules/scripts/default.nix
   ];
 
   home = {
@@ -44,6 +49,10 @@
       # other
       firefox-wayland
       spotify
+
+      # work
+      _1password-gui
+      slack
     ];
 
     file = {
