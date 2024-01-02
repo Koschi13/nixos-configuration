@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-if [ $HOST -ne "epsilon"]; then
+if [[ $HOST -ne "epsilon" ]]; then
     exit 1
 fi
 pushd ~/.dotfiles

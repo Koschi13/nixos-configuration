@@ -80,11 +80,11 @@
       gnome-tour
       gnome-connections
       gnome-extension-manager
+      gedit # text editor
     ]) ++ (with pkgs.gnome; [
       cheese # webcam tool
       gnome-music
       gnome-terminal
-      gedit # text editor
       epiphany # web browser
       geary # email reader
       evince # document viewer
@@ -109,6 +109,9 @@
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;  # For realtime acquisition
     security.polkit.enable = true;  # Needed for Hyprland
+    # See https://github.com/hyprwm/Hyprland/issues/2727
+    # Need for Swaylock to accept password
+    security.pam.services.swaylock = {};
     services.pipewire = {
       enable = true;
       alsa.enable = true;

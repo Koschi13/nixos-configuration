@@ -9,14 +9,22 @@
     waybar
     swww
     grim
+    swaylock-effects
   ];
 
   #test later systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
   wayland.windowManager.hyprland = {
     enable = true;
-    systemdIntegration = true;
+    systemd.enable = true;
+
     # enableNvidiaPatches = true;
     extraConfig = ''
+    # change monitor to high resolution, the last argument is the scale factor
+    monitor=,highres,auto,2
+
+    # toolkit-specific scale
+    env = GDK_SCALE,2
+    env = XCURSOR_SIZE,32
 
     # Fix slow startup
     # exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
@@ -24,7 +32,7 @@
 
     # Autostart
 
-    # exec-once = hyprctl setcursor Bibata-Modern-Classic 24
+    exec-once = hyprctl setcursor Bibata-Modern-Classic 24
     exec-once = dunst
 
     source = /home/max/.config/hypr/colors/frappe.conf
@@ -86,6 +94,10 @@
         workspace_swipe = false
     }
 
+    xwayland {
+      force_zero_scaling = true
+    }
+
     # Example windowrule v1
     # windowrule = float, ^(kitty)$
     # Example windowrule v2
@@ -116,6 +128,7 @@
     bind = $mainMod, E, togglesplit, # dwindle
     bind = $mainMod, W, togglegroup,
     bind = $mainMod SHIFT, W, changegroupactive,
+    bind = $mainMod, BACKSPACE, exec, swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2 --ignore-empty-password
 
     # Switch Keyboard Layouts
     # bind = $mainMod, SPACE, exec, hyprctl switchxkblayout teclado-gamer-husky-blizzard next
@@ -146,6 +159,16 @@
     bind = $mainMod SHIFT, SEMICOLON, movewindow, r
     bind = $mainMod SHIFT, K, movewindow, u
     bind = $mainMod SHIFT, L, movewindow, d
+
+    bind = $mainMod ALT, J, moveintogroup, l
+    bind = $mainMod ALT, SEMICOLON, moveintogroup, r
+    bind = $mainMod ALT, K, moveintogroup, u
+    bind = $mainMod ALT, L, moveintogroup, d
+
+    bind = $mainMod SHIFT ALT, J, moveoutofgroup, l
+    bind = $mainMod SHIFT ALT, SEMICOLON, moveoutofgroup, r
+    bind = $mainMod SHIFT ALT, K, moveoutofgroup, u
+    bind = $mainMod SHIFT ALT, L, moveoutofgroup, d
 
     bind = $mainMod, 1, workspace, 1
     bind = $mainMod, 2, workspace, 2

@@ -29,9 +29,12 @@
       # tools
       ripgrep
       (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
+      zip
+      unzip
+      alacritty
 
       # coding
-      alacritty
+      jetbrains.pycharm-professional
 
       # encryption
       git-crypt
@@ -49,10 +52,14 @@
       # other
       firefox-wayland
       spotify
+      pavucontrol
 
       # work
       _1password-gui
       slack
+      awscli2
+      kubectl
+      kubectx
     ];
 
     file = {
@@ -61,6 +68,8 @@
           TERM: xterm-256color
       '';
     };
+
+    sessionPath = [ "$HOME/.local/bin" ];
   };
 
   # Nicely reload system units when changing configs

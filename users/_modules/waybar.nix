@@ -74,7 +74,7 @@
                  padding-right: 6px;
                  color: #7ebae4;
                }
-         #mode, #clock, #memory, #temperature,#cpu, #custom-wall, #temperature, #backlight, #pulseaudio, #network, #battery, #custom-powermenu {
+         #mode, #clock, #memory, #temperature,#cpu, #custom-wall, #temperature, #backlight, #pulseaudio, #battery, #network, #custom-powermenu {
                  padding-left: 10px;
                  padding-right: 10px;
                }
@@ -107,6 +107,15 @@
          #pulseaudio {
                  color: rgb(245, 224, 220);
                }
+         #battery {
+                 color: #00cc00;
+               }
+         #battery.warning {
+                 color: #ff9900;
+               }
+         #battery.critical {
+                 color: #ff3300;
+               }
          #network {
                  color: #ABE9B3;
                }
@@ -127,6 +136,9 @@
         "position" = "top";
         modules-left = [
           "custom/launcher"
+	  "battery"
+          "memory"
+          "cpu"
           "temperature"
         ];
         modules-center = [
@@ -135,8 +147,6 @@
         modules-right = [
           "pulseaudio"
           "backlight"
-          "memory"
-          "cpu"
           "network"
           "custom/powermenu"
           "tray"
@@ -192,6 +202,16 @@
           "icon-size" = 15;
           "spacing" = 5;
         };
+        "battery" = {
+          "states" = {
+            "warning" = 30;
+            "critical" = 15;
+          };
+          "format" = "{icon} {capacity}%";
+          "format-plugged" = "󱊦 {capacity}%";
+          "format-alt" = "{time} {icon}";
+          "format-icons" = ["󰂎" "󱊡" "󱊢" "󱊣"];
+	};
       }];
     };
 }
