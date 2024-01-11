@@ -1,10 +1,10 @@
 { config, pkgs, ...}:
 
-let
-  pkgsUnstable = import <nixpkgs-unstable> {};
-in
-
 {
+  imports = [
+    ./starship.nix
+  ];
+
   # BASH
   programs.bash.enable = true;
 
@@ -17,7 +17,7 @@ in
       enable = true;
     };
     autocd = true;
-    defaultKeymap = "viins";
+    dotDir = ".config/zsh";
 
     envExtra = ''
       gpg-connect-agent /bye
@@ -25,10 +25,21 @@ in
     '';
 
     initExtra = ''
+      bindkey -v                      # Use Vim inside of the Terminal
+
+      # Changing directories
+      setopt pushd_ignore_dups        # Dont push copies of the same dir on stack.
+      setopt pushd_minus              # Reference stack entries with "-".
     '';
 
     history = {
       share = true;
+      expireDuplicatesFirst = true;
+      save = 100000;
+      size = 100000;
+      ignoreDups = true;
+      ignoreAllDups = true;
+      ignoreSpace = true;
 
       # Save timestamp of command
       extended = true;
@@ -52,8 +63,33 @@ in
       lrr = "eza -lRFL";
       lt = "eza -lgRFhs date";
       ll = "eza -lh";
+
+      # ip
+      ip = "ip --color=auto";
     };
 
+    plugins = [
+      {
+        name = "fast-syntax-highlighting";
+        file = "fast-syntax-highlighting.plugin.zsh";
+        src = "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions";
+      }
+      #{
+      #  name = "zsh-colored-man-pages";
+      #  file = "colored-man-pages.plugin.zsh";
+      #  src = "${zsh-colored-man-pages}/share/zsh-colored-man-pages";
+      #}
+      {
+        name = "zsh-fzf-tab";
+        file = "fzf-tab.plugin.zsh";
+        src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+      }
+      {
+        name = "forgit";
+        file = "forgit.plugin.zsh";
+        src = "${pkgs.zsh-forgit}/share/forgit";
+      }
+    ];
   };
 
   # prompt
@@ -86,6 +122,13 @@ in
       enable = true;
       enableBashIntegration = true;
       enableZshIntegration = true;
+    };
+
+    z-lua = {
+      enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+      enableAliases = true;
     };
   };
 }

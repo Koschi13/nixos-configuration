@@ -19,6 +19,10 @@
 
     # enableNvidiaPatches = true;
     extraConfig = ''
+    # AOC desktop
+    monitor=desc:AOC U34G2G4R3 0x00002347,3440x1440@144,1440x0,1
+    # Laptop screen
+    monitor=desc:California Institute of Technology 0x1402,2880x1800@90,0x0,2
     # change monitor to high resolution, the last argument is the scale factor
     monitor=,highres,auto,2
 
@@ -32,7 +36,7 @@
 
     # Autostart
 
-    exec-once = hyprctl setcursor Bibata-Modern-Classic 24
+    #exec-once = hyprctl setcursor Bibata-Modern-Classic 24
     exec-once = dunst
 
     source = /home/max/.config/hypr/colors/frappe.conf
@@ -111,10 +115,13 @@
     #windowrule=size 934 525,^(mpv)$
     #windowrule=float,^(mpv)$
     #windowrule=center,^(mpv)$
+    #windowrulev2=center,class:^jetbrains-pycharm$,title:^Settings$
+    #windowrulev2=size 600 500,class:^jetbrains-pycharm$,title:^Settings$
+    # Fix Pycharm flickering -> https://github.com/hyprwm/Hyprland/issues/2412
+    windowrulev2=nofocus,class:^jetbrains-(?!toolbox),floating:1,title:^win\d+$
 
     $mainMod = SUPER
     bind = $mainMod, F, fullscreen,
-
 
     #bind = $mainMod, RETURN, exec, cool-retro-term-zsh
     bind = $mainMod, RETURN, exec, alacritty
@@ -198,9 +205,9 @@
     #bind = $mainMod, mouse_up, workspace, e-1
 
     # Move/resize windows with mainMod + LMB/RMB and dragging
-    #bindm = $mainMod, mouse:272, movewindow
-    #bindm = $mainMod, mouse:273, resizewindow
-    #bindm = ALT, mouse:272, resizewindow
+    bindm = $mainMod, mouse:272, movewindow
+    bindm = $mainMod, mouse:273, resizewindow
+    bindm = ALT, mouse:272, resizewindow
         '';
   };
 

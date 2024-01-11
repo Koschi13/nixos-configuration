@@ -20,6 +20,12 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
+
+    # ZSH plugins
+    zsh-colored-man-pages = {
+      url = "github:ael-code/zsh-colored-man-pages";
+      flake = false;
+    };
   };
 
   outputs = {

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../_modules/zsh.nix
+    ../_modules/zsh/default.nix
     ../_modules/firefox.nix
     ../_modules/nvim.nix
     ../_modules/gnome.nix
@@ -14,6 +14,7 @@
     ../_modules/dunst.nix
     ../_modules/waybar.nix
     ../_modules/scripts/default.nix
+    ../_modules/direnv.nix
   ];
 
   home = {
@@ -53,6 +54,7 @@
       firefox-wayland
       spotify
       pavucontrol
+      google-chrome
 
       # work
       _1password-gui
@@ -60,6 +62,7 @@
       awscli2
       kubectl
       kubectx
+      podman-compose
     ];
 
     file = {
