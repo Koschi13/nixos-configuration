@@ -25,11 +25,21 @@
     '';
 
     initExtra = ''
-      bindkey -v                      # Use Vim inside of the Terminal
+      bindkey -v                       # Use Vim inside of the Terminal
+
+      # Autosuggest
+      bindkey '^ ' autosuggest-accept  # Use ctrl+space to apply the suggestion
+      ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
+        forward-char
+        end-of-line
+        vi-forward-char
+        vi-end-of-line
+        vi-add-eol
+      )
 
       # Changing directories
-      setopt pushd_ignore_dups        # Dont push copies of the same dir on stack.
-      setopt pushd_minus              # Reference stack entries with "-".
+      setopt pushd_ignore_dups         # Dont push copies of the same dir on stack.
+      setopt pushd_minus               # Reference stack entries with "-".
     '';
 
     history = {
@@ -66,6 +76,9 @@
 
       # ip
       ip = "ip --color=auto";
+
+      # kubectl
+      k = "kubectl";
     };
 
     plugins = [
@@ -90,13 +103,6 @@
         src = "${pkgs.zsh-forgit}/share/forgit";
       }
     ];
-  };
-
-  # prompt
-  programs.starship = {
-    enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
   };
 
   # Commandline tools

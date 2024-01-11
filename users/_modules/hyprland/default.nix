@@ -127,7 +127,7 @@
     bind = $mainMod, RETURN, exec, alacritty
     bind = $mainMod, B, exec, firefox
     bind = $mainMod SHIFT, Q, killactive,
-    bind = $mainMod SHIFT, E, exit,
+    bind = $mainMod SHIFT ALT, E, exit,
     bind = $mainMod, M, exec, nautilus
     bind = $mainMod, V, togglefloating,
     bind = $mainMod, SPACE, exec, rofiWindow

@@ -43,10 +43,11 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 - [ ] Configure boot screen
 - [ ] Set up Python via shells
 - [ ] Install VS-Code. Either on a per-project basis or globally (maybe there are shell templates?)
-- [ ] Install PyCharm.  Either on a per-project basis or globally (maybe there are shell templates?)
-- [ ] Install Kubernetes and AWS-CLI
+- [x] Install PyCharm.  Either on a per-project basis or globally (maybe there are shell templates?)
+- [x] Install Kubernetes and AWS-CLI
 - [ ] Figure out, why the git config isn't working
-- [ ] Install Hyprland
-- [ ] Configure Hyprland
+- [x] Install Hyprland
+- [x] Configure Hyprland
 - [ ] Configure ZSH + Starship
-- [ ] Install Slack
+- [x] Install Slack
+- [ ] Configure AWS cli via HomeManager using the .secrets directory

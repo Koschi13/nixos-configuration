@@ -1,6 +1,10 @@
-{ config, pkgs, firefox-addons, ... }:
+{ config, pkgs, firefox-addons, rootPath, ... }:
 
-{
+let
+
+  aws_vars = import "${rootPath}/.secrets/aws_vars.nix";
+
+in {
   imports = [
     ../_modules/zsh/default.nix
     ../_modules/firefox.nix
@@ -73,6 +77,10 @@
     };
 
     sessionPath = [ "$HOME/.local/bin" ];
+
+    sessionVariables = {
+      AWS_PROFILE = aws_vars.env.AWS_PROFILE;
+    };
   };
 
   # Nicely reload system units when changing configs
