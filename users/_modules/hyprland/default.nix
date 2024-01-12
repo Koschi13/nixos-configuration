@@ -27,10 +27,10 @@
     # Laptop screen
     monitor=desc:California Institute of Technology 0x1402,2880x1800@90,0x0,2
     # change monitor to high resolution, the last argument is the scale factor
-    monitor=,highres,auto,2
+    monitor=,highres,auto,1
 
     # toolkit-specific scale
-    env = GDK_SCALE,2
+    env = GDK_SCALE,1
     env = XCURSOR_SIZE,32
 
     # Fix slow startup
