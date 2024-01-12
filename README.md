@@ -51,3 +51,4 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 - [ ] Configure ZSH + Starship
 - [x] Install Slack
 - [ ] Configure AWS cli via HomeManager using the .secrets directory
+- [ ] Configure VS-Code via HomeManager

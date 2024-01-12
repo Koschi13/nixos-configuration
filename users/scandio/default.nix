@@ -40,6 +40,7 @@ in {
 
       # coding
       jetbrains.pycharm-professional
+      android-studio
 
       # encryption
       git-crypt

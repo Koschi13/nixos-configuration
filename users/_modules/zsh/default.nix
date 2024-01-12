@@ -25,7 +25,7 @@
     '';
 
     initExtra = ''
-      bindkey -v                       # Use Vim inside of the Terminal
+      bindkey -v                       # Use Vim-keys inside of the Terminal
 
       # Autosuggest
       bindkey '^ ' autosuggest-accept  # Use ctrl+space to apply the suggestion
@@ -101,6 +101,11 @@
         name = "forgit";
         file = "forgit.plugin.zsh";
         src = "${pkgs.zsh-forgit}/share/forgit";
+      }
+      {
+        name = "zvm";
+	file = "zsh-vi-mode.plugin.zsh";
+	src = "${pkgs.zsh-vi-mode}/share/zsh-vi-mode";
       }
     ];
   };
