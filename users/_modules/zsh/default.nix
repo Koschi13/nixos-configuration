@@ -13,6 +13,7 @@
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
+    defaultKeymap = "emacs";
     syntaxHighlighting = {
       enable = true;
     };
@@ -24,11 +25,30 @@
       export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
     '';
 
-    initExtra = ''
-      bindkey -v                       # Use Vim-keys inside of the Terminal
+    initExtraBeforeCompInit = ''
+      # forgit alias, prefix all with f
+      forgit_log=fglo
+      forgit_diff=fgd
+      forgit_add=fga
+      forgit_reset_head=fgrh
+      forgit_ignore=fgi
+      forgit_checkout_file=fgcf
+      forgit_checkout_branch=fgcb
+      forgit_branch_delete=fgbd
+      forgit_checkout_tag=fgct
+      forgit_checkout_commit=fgco
+      forgit_revert_commit=fgrc
+      forgit_clean=fgclean
+      forgit_stash_show=fgss
+      forgit_stash_push=fgsp
+      forgit_cherry_pick=fgcp
+      forgit_rebase=fgrb
+      forgit_blame=fgbl
+      forgit_fixup=fgfu
+    '';
 
+    initExtra = ''
       # Autosuggest
-      bindkey '^ ' autosuggest-accept  # Use ctrl+space to apply the suggestion
       ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
         forward-char
         end-of-line
@@ -100,7 +120,7 @@
       {
         name = "forgit";
         file = "forgit.plugin.zsh";
-        src = "${pkgs.zsh-forgit}/share/forgit";
+        src = "${pkgs.zsh-forgit}/share/zsh/zsh-forgit";
       }
       {
         name = "zvm";

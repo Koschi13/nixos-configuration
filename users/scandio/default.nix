@@ -13,12 +13,13 @@ in {
     ../_modules/gpg/default.nix
     ../_modules/homemanager.nix
     ../_modules/nixpkgs.nix
-    ../_modules/hyprland/default.nix
+    #../_modules/hyprland/default.nix
     ../_modules/rofi/default.nix
     ../_modules/dunst.nix
     ../_modules/waybar.nix
     ../_modules/scripts/default.nix
     ../_modules/direnv.nix
+    ../_modules/sway/default.nix
   ];
 
   home = {
@@ -37,6 +38,7 @@ in {
       zip
       unzip
       alacritty
+      blueman
 
       # coding
       jetbrains.pycharm-professional
@@ -68,6 +70,7 @@ in {
       kubectl
       kubectx
       podman-compose
+      kubernetes-helm
     ];
 
     file = {
@@ -81,8 +84,12 @@ in {
 
     sessionVariables = {
       AWS_PROFILE = aws_vars.env.AWS_PROFILE;
+      TERMINAL = "alacritty";
+      BROWSER = "firefox";
     };
   };
+
+  services.mpris-proxy.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

@@ -51,4 +51,9 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 - [ ] Configure ZSH + Starship
 - [x] Install Slack
 - [ ] Configure AWS cli via HomeManager using the .secrets directory
-- [ ] Configure VS-Code via HomeManager
+- [ ] Install AstroVIM
+- [ ] Fix fzf ctrl+r not working in Alacritty but in Pycharm
+- [ ] Install fancontrol to get the temps down
+- [ ] `light` only working with root: https://github.com/NixOS/nixpkgs/issues/48623
+- [x] Use sway instead of Hyprland
+- [ ] confugure Alacritty using HomeManager

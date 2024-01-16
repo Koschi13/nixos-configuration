@@ -13,6 +13,8 @@
     pamixer
     light
     playerctl
+    wl-clipboard
+    slurp
   ];
 
   #test later systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
@@ -105,23 +107,12 @@
       force_zero_scaling = true
     }
 
-    # Example windowrule v1
-    # windowrule = float, ^(kitty)$
-    # Example windowrule v2
-    # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
-
-    #windowrule=float,^(kitty)$
-    #windowrule=center,^(kitty)$
-    #windowrule=size 600 500,^(kitty)$
     windowrule=float,^(pavucontrol)$
     windowrule=float,^(blueman-manager)$
-    #windowrule=size 934 525,^(mpv)$
-    #windowrule=float,^(mpv)$
-    #windowrule=center,^(mpv)$
-    #windowrulev2=center,class:^jetbrains-pycharm$,title:^Settings$
-    #windowrulev2=size 600 500,class:^jetbrains-pycharm$,title:^Settings$
     # Fix Pycharm flickering -> https://github.com/hyprwm/Hyprland/issues/2412
     windowrulev2=nofocus,class:^jetbrains-(?!toolbox),floating:1,title:^win\d+$
+    # Center all non menu windows of Pycharm
+    windowrulev2=center 1,floating:1,class:^jetbrains-pycharm$,title:^!(win\d+)$
 
     $mainMod = SUPER
     bind = $mainMod, F, fullscreen,
@@ -134,7 +125,7 @@
     bind = $mainMod, M, exec, nautilus
     bind = $mainMod, V, togglefloating,
     bind = $mainMod, SPACE, exec, rofiWindow
-    #bind = $mainMod, P, pseudo, # dwindle
+    #bind = $mainMod, X, pseudo, # dwindle
     bind = $mainMod, E, togglesplit, # dwindle
     bind = $mainMod, W, togglegroup,
     bind = $mainMod SHIFT, W, changegroupactive,
@@ -143,8 +134,8 @@
     # Switch Keyboard Layouts
     # bind = $mainMod, SPACE, exec, hyprctl switchxkblayout teclado-gamer-husky-blizzard next
 
-    bind = , Print, exec, grim -g "$(slurp)" - | wl-copy
-    bind = SHIFT, Print, exec, grim -g "$(slurp)"
+    bind = $mainMod, P, exec, grim -g "$(slurp)" - | wl-copy
+    bind = $mainMod SHIFT, P, exec, grim -g "$(slurp)"
 
     # Functional keybinds
     bind =,XF86AudioMicMute,exec,pamixer --default-source -t

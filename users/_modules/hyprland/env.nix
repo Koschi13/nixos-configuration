@@ -2,8 +2,6 @@
 
 {
   home.sessionVariables = {
-    BROWSER = "firefox";
-    TERMINAL = "alacritty";
     #GBM_BACKEND= "nvidia-drm";
     #__GLX_VENDOR_LIBRARY_NAME= "nvidia";
     #LIBVA_DRIVER_NAME= "nvidia"; # hardware acceleration
@@ -16,5 +14,8 @@
     XDG_CURRENT_DESKTOP = "Hyprland";
     XDG_SESSION_DESKTOP = "Hyprland";
     XDG_SESSION_TYPE = "wayland";
+
+    # grim screenshot location
+    GRIM_DEFAULT_DIR = "$HOME/Pictures/Screenshots/";
   };
 }
