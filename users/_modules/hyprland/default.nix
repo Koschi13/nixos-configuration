@@ -1,3 +1,7 @@
+#
+# IMPORTANT:
+# You need to add the xdg-desktop-portal-hyprland in the system config if you want to enable hyprland
+#
 { config, lib, pkgs, ... }:
 
 {

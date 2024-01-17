@@ -51,17 +51,6 @@
       # Enable the X11 windowing system.
       enable = true;
       excludePackages = [ pkgs.xterm ];
-
-      # Enable GDM login
-      #displayManager = {
-      #  gdm.enable = true;
-      #  gdm.wayland = true;
-      #};	
-
-      # Enable Gnome desktop
-      desktopManager = {
-        gnome.enable = true;
-      };
     };
 
     programs.regreet.enable = true;
@@ -75,40 +64,10 @@
       };
     };
 
-    environment.gnome.excludePackages = (with pkgs; [
-      gnome-photos
-      gnome-tour
-      gnome-connections
-      gnome-extension-manager
-      gedit # text editor
-    ]) ++ (with pkgs.gnome; [
-      cheese # webcam tool
-      gnome-music
-      gnome-terminal
-      epiphany # web browser
-      geary # email reader
-      evince # document viewer
-      gnome-characters
-      totem # video player
-      tali # poker game
-      iagno # go game
-      hitori # sudoku game
-      atomix # puzzle game
-      yelp # gnome help
-      simple-scan # document scanner
-      gnome-calendar
-      gnome-maps
-      gnome-clocks
-      gnome-contacts
-      gnome-weather
-      gnome-font-viewer
-      gnome-logs
-    ]);
-
     # Enable sound (pipewire)
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;  # For realtime acquisition
-    security.polkit.enable = true;  # Needed for Hyprland
+    security.polkit.enable = true;  # Needed for Hyprland/Sway
     # See https://github.com/hyprwm/Hyprland/issues/2727
     # Need for Swaylock to accept password
     security.pam.services.swaylock = {};
@@ -117,6 +76,7 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      wireplumber.enable = true;
     };
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -139,18 +99,21 @@
 
       # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enableCompletion
       pathsToLink = [ "/share/zsh" ];
-
-      #sessionVariables = {
-      #  NIXOS_OZONE_WL = "1";
-      #};
     };
 
     xdg = {
       portal = {
         enable = true;
+	wlr.enable = true;
+
+	# Fix warning which recently popped up
+	# TODO: figure out if something needs to be specified here
+	config.common.default = "*";
+
         extraPortals = with pkgs; [
-          xdg-desktop-portal-wlr
-          xdg-desktop-portal-hyprland
+          xdg-desktop-portal-gtk
+	  # Enable the hyprland portal (if using hyprland)
+          # xdg-desktop-portal-hyprland
         ];
       };
     };

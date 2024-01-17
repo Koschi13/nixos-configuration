@@ -62,8 +62,8 @@
           "${m}+r" = "mode 'resize'";
 
           # Screenshot
-          "${m}+p" = "exec grim -g '$(slurp -d)' - | wl-copy";
-          "${m}+Shift+p" = "exec grim -g '$(slurp -d)'";
+          "${m}+p" = ''exec grim -g "$(slurp -d)" - | wl-copy'';
+          "${m}+Shift+p" = ''exec grim -g "$(slurp -d)"'';
 
 	  # Audio
           "XF86AudioRaiseVolume" = "exec pamixer -i 5";
