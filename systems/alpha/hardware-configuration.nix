@@ -13,13 +13,12 @@
         efiSupport = true;
         default = "saved";
         device = "nodev";
+        configurationLimit = 10;
       };
 
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
       };
-      systemd-boot.configurationLimit = 10;
     };
 
     initrd = {

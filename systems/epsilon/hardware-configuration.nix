@@ -9,6 +9,19 @@
   ];
 
   boot = {
+    loader = {
+      grub = {
+        enable = true;
+        efiSupport = true;
+        device = "nodev";
+        configurationLimit = 10;
+      };
+
+      efi = {
+        canTouchEfiVariables = true;
+      };
+    };
+
     initrd = {
       availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
       kernelModules = [ "dm-snapshot" ];
@@ -19,13 +32,9 @@
         allowDiscards = true;
       };
     };
+
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-      systemd-boot.configurationLimit = 10;
-    };
   };
 
   fileSystems = {

@@ -43,8 +43,10 @@
     };
 
     networking = {
+      #
       # Set the hostname in the host specific config
-      useDHCP = lib.mkDefault true;
+      #
+      networkmanager.enable = true;
     };
 
     services.xserver = {
@@ -85,8 +87,14 @@
       initialPassword = "P@ssw0rd";
       shell = pkgs.zsh;
 
-      # Enable ‘sudo’ for the user.
-      extraGroups = [ "wheel" ];
+      extraGroups = [
+        # Enable ‘sudo’ for the user.
+        "wheel"
+        # Enable light control for the user
+        "video"
+        # Enalbe networkmanager control for the user
+        "networkmanager"
+      ];
     };
 
     # default package available to the system
@@ -104,15 +112,15 @@
     xdg = {
       portal = {
         enable = true;
-	wlr.enable = true;
+        wlr.enable = true;
 
-	# Fix warning which recently popped up
-	# TODO: figure out if something needs to be specified here
-	config.common.default = "*";
+        # Fix warning which recently popped up
+        # TODO: figure out if something needs to be specified here
+        config.common.default = "*";
 
         extraPortals = with pkgs; [
           xdg-desktop-portal-gtk
-	  # Enable the hyprland portal (if using hyprland)
+          # Enable the hyprland portal (if using hyprland)
           # xdg-desktop-portal-hyprland
         ];
       };
@@ -144,5 +152,15 @@
         defaultNetwork.settings.dns_enabled = true;
       };
     };
+
+    boot = {
+      tmp.useTmpfs = true;
+    };
+
+    services.dbus.packages = with pkgs; [
+      gnome3.gnome-keyring
+      gcr
+    ];
+    services.gnome.gnome-keyring.enable = true;
   };
 }
