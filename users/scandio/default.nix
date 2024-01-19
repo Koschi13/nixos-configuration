@@ -47,7 +47,6 @@ in {
       # encryption
       git-crypt
       gnupg
-      pinentry-gnome
       yubikey-manager
       bitwarden
       bitwarden-cli
