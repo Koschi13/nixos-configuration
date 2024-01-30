@@ -13,8 +13,8 @@
         bitwarden
         tridactyl
         multi-account-containers
-	# This is fucked up, unfree packages do not work her!
-	# onepassword-password-manager
+        # This is fucked up, unfree packages do not work her!
+        # onepassword-password-manager
       ];
     };
   };

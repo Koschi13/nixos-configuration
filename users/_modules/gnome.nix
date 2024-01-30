@@ -5,5 +5,6 @@
     pinentry-gnome
     gnome.gnome-tweaks
     gnome.seahorse
+    gnome.nautilus
   ];
 }

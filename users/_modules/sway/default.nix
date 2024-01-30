@@ -10,11 +10,9 @@
   #      https://github.com/nix-community/home-manager/issues/1521
   home.packages = with pkgs; [
     waybar
-    swww
     grim
     swaylock-effects
     pamixer
-    light
     playerctl
     wl-clipboard
     slurp
@@ -23,6 +21,12 @@
   wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;
+
+    # Colors
+    extraConfigEarly = ''
+      include $HOME/.config/sway/colors/catppuccin-frappe
+    '';
+
 
     config = {
       modifier = "Mod4";  # Logo key
@@ -38,54 +42,90 @@
 
       bars = [
         {
-	  command = "${pkgs.waybar}/bin/waybar";
-	}
+          command = "${pkgs.waybar}/bin/waybar";
+        }
       ];
+
+      # Set colors according to https://github.com/catppuccin/i3
+      colors = rec {
+        focused = {
+          border = "$lavender";
+          background = "$base";
+          text = "$text";
+          indicator = "$rosewater";
+          childBorder = "$lavender";
+        };
+        unfocused = {
+          border = "$overlay0";
+          background = "$base";
+          text = "$text";
+          indicator = "$rosewater";
+          childBorder = "$overlay0";
+        };
+        focusedInactive = unfocused;
+        urgent = {
+          border = "$peach";
+          background = "$base";
+          text = "$peach";
+          indicator = "$overlay0";
+          childBorder = "$peach";
+        };
+        placeholder = {
+          border = "$overlay0";
+          background = "$base";
+          text = "$text";
+          indicator = "$overlay0";
+          childBorder = "$overlay0";
+        };
+        background = "$base";
+      };
 
       # It is super important that the left side of the binding does not include any spaces!
       keybindings = let
         m = config.wayland.windowManager.sway.config.modifier;
-	l = config.wayland.windowManager.sway.config.left;
-	r = config.wayland.windowManager.sway.config.right;
-	u = config.wayland.windowManager.sway.config.up;
-	d = config.wayland.windowManager.sway.config.down;
-	term = config.wayland.windowManager.sway.config.terminal;
-	menu = config.wayland.windowManager.sway.config.menu;
+        l = config.wayland.windowManager.sway.config.left;
+        r = config.wayland.windowManager.sway.config.right;
+        u = config.wayland.windowManager.sway.config.up;
+        d = config.wayland.windowManager.sway.config.down;
+        term = config.wayland.windowManager.sway.config.terminal;
+        menu = config.wayland.windowManager.sway.config.menu;
       in
         lib.mkOptionDefault {
           #
-	  # System
-	  #
-	  "${m}+Shift+q" = "kill";
-	  "${m}+space" = "exec ${menu}";
-	  "${m}+Shift+r" = "reload";
+          # System
+          #
+          "${m}+Shift+q" = "kill";
+          "${m}+space" = "exec ${menu}";
+          "${m}+Shift+r" = "reload";
           "${m}+r" = "mode 'resize'";
 
           # Screenshot
           "${m}+p" = ''exec grim -g "$(slurp -d)" - | wl-copy'';
           "${m}+Shift+p" = ''exec grim -g "$(slurp -d)"'';
 
-	  # Audio
+          # Audio
           "XF86AudioRaiseVolume" = "exec pamixer -i 5";
           "XF86AudioLowerVolume" = "exec pamixer -d 5";
           "XF86AudioMute" = "exec pamixer -t";
           "XF86AudioMicMute" = "exec pamixer --default-source -t";
-          "XF86MonBrightnessDown" = "exec light -U 5";
-          "XF86MonBrightnessUp" = "exec light -A 5";
+          "XF86MonBrightnessDown" = "exec light -U 5";  # Installed via system
+          "XF86MonBrightnessUp" = "exec light -A 5";  # Installed via system
           "XF86AudioPlay" = "exec playerctl play-pause";
           "XF86AudioPause" = "exec playerctl play-pause";
           "XF86AudioNext" = "exec playerctl next";
           "XF86AudioPrev" = "exec playerctl previous";
 
           # Lock screen
+          # TODO move to script and place in swaylock.nix
           "${m}+Backspace" = "exec ${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2 --ignore-empty-password";
 
           # Exit sway (logs you out of your Wayland session)
+          # TODO move to script in this file
           "${m}+Shift+e" = "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
           #
           # Moving around:
           #
-	  # Focus
+          # Focus
           "${m}+${l}" = "focus left";
           "${m}+${d}" = "focus down";
           "${m}+${u}" = "focus up";
@@ -150,17 +190,17 @@
           # Move focus to the parent container
           "${m}+a" = "focus parent";
 
-	  #
-	  # Applications
-	  #
-	  "${m}+Return" = "exec ${term}";
+          #
+          # Applications
+          #
+          "${m}+Return" = "exec ${term}";
         };
 
       modes = let
- 	l = config.wayland.windowManager.sway.config.left;
- 	r = config.wayland.windowManager.sway.config.right;
- 	u = config.wayland.windowManager.sway.config.up;
- 	d = config.wayland.windowManager.sway.config.down;
+        l = config.wayland.windowManager.sway.config.left;
+        r = config.wayland.windowManager.sway.config.right;
+        u = config.wayland.windowManager.sway.config.up;
+        d = config.wayland.windowManager.sway.config.down;
       in {
         "resize" = {
             # left will shrink the containers width
@@ -198,23 +238,17 @@
 
       gaps = {
         smartGaps = true;
-	smartBorders = "on";
-	inner = 5;
-	outer = 15;
-      };
-
-      seat = {
-        "*" = {
-	  hide_cursor = "8000";  # Hide cursor after X ms of inactivity
-	};
+        smartBorders = "on";
+        inner = 5;
+        outer = 15;
       };
 
       input = {
         "type:keyboard" = {
-	  xkb_layout = "us,de";
-	  xkb_variant = ",nodeadkeys";
+          xkb_layout = "us,de";
+          xkb_variant = ",nodeadkeys";
           xkb_options = "ctrl:nocaps";
-	};
+        };
       };
 
       # Drag floating windows by holding down ${modifier} and left mouse button.
@@ -226,15 +260,33 @@
         m = config.wayland.windowManager.sway.config.modifier;
       in
         lib.mkOptionDefault {
-	  modifier = "${m} normal";
-	};
+          modifier = "${m} normal";
+          criteria = [
+            {
+              title = "Emulator";
+            }
+            {
+              title = "Android Emulator";
+            }
+            {
+              app_id = "pavucontrol";
+            }
+          ];
+        };
+
+      startup = [
+        {
+          command = "command -v swww >/dev/null 2>&1 && swww init & sleep 0.5 && exec wallpaper_random || echo 'swww not installed'";
+        }
+      ];
     };
   };
 
-  #home.file.".config/sway/colors/frappe.conf" = {
-  #  source = builtins.fetchurl {
-  #    url = "https://github.com/catppuccin/hyprland/releases/download/v1.2/frappe.conf";
-  #    sha256 = "927a528d42ad435b6c3a8b538bf7be38c74709c860048ded49ad78f1d17752a0";
-  #  };
-  #};
+  home.file.".config/sway/colors/catppuccin-frappe" = {
+    # TODO: utilize flake and let it decide the hash
+    source = builtins.fetchurl {
+      url = "https://raw.githubusercontent.com/catppuccin/i3/main/themes/catppuccin-frappe";
+      sha256 = "75b0e063b0ff670173641cb5fb456052af84b78774f77c37b6c3a886fc809c51";
+    };
+  };
 }

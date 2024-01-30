@@ -336,7 +336,9 @@
         "hyprland": "hyprland",
         "nixpkgs": "nixpkgs_2",
         "nixvim": "nixvim",
-        "zsh-colored-man-pages": "zsh-colored-man-pages"
+        "zsh-alias-finder": "zsh-alias-finder",
+        "zsh-calc": "zsh-calc",
+        "zsh-enhancd": "zsh-enhancd"
       }
     },
     "systems": {
@@ -418,19 +420,51 @@
         "type": "github"
       }
     },
-    "zsh-colored-man-pages": {
+    "zsh-alias-finder": {
       "flake": false,
       "locked": {
-        "lastModified": 1554205411,
-        "narHash": "sha256-087bNmB5gDUKoSriHIjXOVZiUG5+Dy9qv3D69E8GBhs=",
-        "owner": "ael-code",
-        "repo": "zsh-colored-man-pages",
-        "rev": "57bdda68e52a09075352b18fa3ca21abd31df4cb",
+        "lastModified": 1659597643,
+        "narHash": "sha256-aB5kI+Jt7TVQMCeLcvpAmoMaGxRF1xqw1tioQxbJOzE=",
+        "owner": "akash329d",
+        "repo": "zsh-alias-finder",
+        "rev": "ef6451c5b08f833f5c74303928f7b5c7f858ae84",
         "type": "github"
       },
       "original": {
-        "owner": "ael-code",
-        "repo": "zsh-colored-man-pages",
+        "owner": "akash329d",
+        "repo": "zsh-alias-finder",
+        "type": "github"
+      }
+    },
+    "zsh-calc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1616571053,
+        "narHash": "sha256-N4FBN7iyyiEyZX/opj63D5acA1Oh0YpFXdz83oIOWPE=",
+        "owner": "arzzen",
+        "repo": "calc.plugin.zsh",
+        "rev": "5b4c85977b693c15eb052cde6b5cef0d6610f567",
+        "type": "github"
+      },
+      "original": {
+        "owner": "arzzen",
+        "repo": "calc.plugin.zsh",
+        "type": "github"
+      }
+    },
+    "zsh-enhancd": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1688001393,
+        "narHash": "sha256-XJl0XVtfi/NTysRMWant84uh8+zShTRwd7t2cxUk+qU=",
+        "owner": "babarot",
+        "repo": "enhancd",
+        "rev": "230695f8da8463b18121f58d748851a67be19a00",
+        "type": "github"
+      },
+      "original": {
+        "owner": "babarot",
+        "repo": "enhancd",
         "type": "github"
       }
     }

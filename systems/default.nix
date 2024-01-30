@@ -103,6 +103,7 @@
         git
         wget
         gnupg
+	pcsclite
       ];
 
       # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enableCompletion

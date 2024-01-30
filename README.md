@@ -40,20 +40,11 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 
 ## TODO
 
-- [ ] Configure boot screen
 - [ ] Set up Python via shells
 - [ ] Install VS-Code. Either on a per-project basis or globally (maybe there are shell templates?)
-- [x] Install PyCharm.  Either on a per-project basis or globally (maybe there are shell templates?)
-- [x] Install Kubernetes and AWS-CLI
 - [ ] Figure out, why the git config isn't working
-- [x] Install Hyprland
-- [x] Configure Hyprland
-- [ ] Configure ZSH + Starship
-- [x] Install Slack
 - [ ] Configure AWS cli via HomeManager using the .secrets directory
-- [ ] Install AstroVIM
-- [ ] Fix fzf ctrl+r not working in Alacritty but in Pycharm
-- [ ] Install fancontrol to get the temps down
-- [ ] `light` only working with root: https://github.com/NixOS/nixpkgs/issues/48623
-- [x] Use sway instead of Hyprland
-- [ ] confugure Alacritty using HomeManager
+- [ ] Create PR in NixOS for seldon (bin) package
+- [ ] YubiKey not working: https://github.com/NixOS/nixpkgs/issues/121121
+- [ ] Add dnd shortcut
+- [ ] Install and use a formatter: https://www.reddit.com/r/NixOS/comments/1acemjr/overview_of_nix_formatters_ecosystem

@@ -7,14 +7,15 @@
         enable = false;
         target = "graphical-session.target";
       };
+      # TODO: move to file
       style = ''
         * {
           font-family: "DejaVuSansMono Nerd Font Mono";
           font-size: 12pt;
           font-weight: bold;
           /* Disabled for sway
-	  border-radius: 8px;
-	  */
+          border-radius: 8px;
+          */
           transition-property: background-color;
           transition-duration: 0.5s;
         }
@@ -36,16 +37,16 @@
         }
         window > box {
           /* Disabled for sway
-	  margin-left: 5px;
+          margin-left: 5px;
           margin-right: 5px;
           margin-top: 5px;
-	  */
+          */
           background-color: #1e1e2a;
           padding: 3px;
           padding-left:8px;
           /* Disabled for sway
-	  border: 2px none #33ccff;
-	  */
+          border: 2px none #33ccff;
+          */
         }
         #workspaces {
           padding-left: 0px;
@@ -134,7 +135,7 @@
         "position" = "top";
         modules-left = [
           "custom/launcher"
-	  "battery"
+          "battery"
           "memory"
           "cpu"
           "temperature"
@@ -170,7 +171,21 @@
           "interval" = 1;
           "format" = "{:%I:%M %p  %A %b %d}";
           "tooltip" = true;
-          "tooltip-format"= "{=%A; %d %B %Y}\n<tt>{calendar}</tt>";
+          "tooltip-format"= "<tt><small>{calendar}</small></tt>";
+          "calendar" = {
+            "mode" = "year";
+            "mode-mon-col" = 3;
+            "weeks-pos" = "right";
+            "on-scroll" = 1;
+            "on-click-right" = "mode";
+            "format" = {
+                "months" = "<span color='#ffead3'><b>{}</b></span>";
+                "days" = "<span color='#ecc6d9'><b>{}</b></span>";
+                "weeks" = "<span color='#99ffdd'><b>W{}</b></span>";
+                "weekdays" = "<span color='#ffcc66'><b>{}</b></span>";
+                "today" = "<span color='#ff6699'><b><u>{}</u></b></span>";
+            };
+          };
         };
         "memory" = {
           "interval" = 1;
@@ -209,7 +224,7 @@
           "format-plugged" = "󱊦 {capacity}%";
           "format-alt" = "{time} {icon}";
           "format-icons" = ["󰂎" "󱊡" "󱊢" "󱊣"];
-	};
+        };
       }];
     };
 }

@@ -1,11 +1,25 @@
 { config, pkgs, ... }:
-{
+let
+  rofiWindow = pkgs.writeShellScriptBin "rofiWindow" ''
+    #!/usr/bin/env bash
+    ## Run
+    rofi \
+      -show drun \
+      -theme "$HOME/.config/rofi/theme.rasi"
+  '';
+in {
+  home.packages = with pkgs; [
+    rofiWindow
+  ];
+
   programs.rofi = {
     enable = true;
     terminal = "${pkgs.cool-retro-term}/bin/cool-retro-term";
     theme = ./theme.rasi;
   };
+  # TODO: load catppuccin theme
 
+    # TODO: load from file
     home.file.".config/rofi/theme.rasi".text = ''
 
 /*****----- Configuration -----*****/

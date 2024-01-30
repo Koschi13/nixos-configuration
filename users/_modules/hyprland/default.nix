@@ -11,11 +11,9 @@
 
   home.packages = with pkgs; [
     waybar
-    swww
     grim
     swaylock-effects
     pamixer
-    light
     playerctl
     wl-clipboard
     slurp
@@ -50,7 +48,7 @@
 
     source = /home/max/.config/hypr/colors/frappe.conf
     exec = pkill waybar & sleep 0.5 && waybar
-    # exec-once = swww init & sleep 0.5 && exec wallpaper_random
+    exec-once = swww init & sleep 0.5 && exec wallpaper_random
     # exec-once = swww img /home/max/Images/wallpapers/xxx.png
 
     input {
@@ -143,8 +141,8 @@
 
     # Functional keybinds
     bind =,XF86AudioMicMute,exec,pamixer --default-source -t
-    bind =,XF86MonBrightnessDown,exec,light -U 5
-    bind =,XF86MonBrightnessUp,exec,light -A 5
+    bind =,XF86MonBrightnessDown,exec,light -U 5  # Installed via system
+    bind =,XF86MonBrightnessUp,exec,light -A 5  # Installed via system
     bind =,XF86AudioMute,exec,pamixer -t
     bind =,XF86AudioLowerVolume,exec,pamixer -d 5
     bind =,XF86AudioRaiseVolume,exec,pamixer -i 5
