@@ -19,6 +19,7 @@ let
     "git_state"
     "git_metrics"
     "git_status"
+    "aws"
     "kubernetes"
     "line_break"
     "sudo"
@@ -71,12 +72,16 @@ in
             style = "Muave";
           };
           git_metrics = {
-            format = "(\\[[+$added]($added_style))([-$deleted]($deleted_style)\\])";
+            format = "([+$added]($added_style) )([-$deleted]($deleted_style) )";
             added_style = "Green";
             deleted_style = "Yellow";
           };
           git_status = {
             style = "Peach";
+          };
+          aws = {
+            style = "Pink";
+            symbol = "󰸏 ";
           };
           kubernetes = {
             style = "Sky";
