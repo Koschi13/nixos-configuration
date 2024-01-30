@@ -1,9 +1,6 @@
 { config, pkgs, firefox-addons, rootPath, lib, ... }:
 
 let
-
-  aws_vars = import "${rootPath}/.secrets/aws_vars.nix";
-
   # Override Obsidian's electron_25 version to not include any vulnerabilities
   # This is needed to even be able to install and use the package
   obsidian = lib.throwIf (lib.versionOlder "1.5.3" pkgs.obsidian.version) "Obsidian no longer requires EOL Electron" (
@@ -88,7 +85,6 @@ in {
     sessionPath = [ "$HOME/.local/bin" ];
 
     sessionVariables = {
-      AWS_PROFILE = aws_vars.env.AWS_PROFILE;
       TERMINAL = "alacritty";
       BROWSER = "firefox";
     };
