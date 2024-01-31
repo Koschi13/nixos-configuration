@@ -7,9 +7,7 @@
     ../default.nix
   ];
 
-  networking = {
-    hostName = "epsilon";
-  };
+  networking = { hostName = "epsilon"; };
 
   programs.light.enable = true;
 

@@ -2,13 +2,11 @@
 
 {
   programs.zsh = {
-    plugins = [
-      {
-        name = "forgit";
-        file = "forgit.plugin.zsh";
-        src = "${pkgs.zsh-forgit}/share/zsh/zsh-forgit";
-      }
-    ];
+    plugins = [{
+      name = "forgit";
+      file = "forgit.plugin.zsh";
+      src = "${pkgs.zsh-forgit}/share/zsh/zsh-forgit";
+    }];
     initExtraBeforeCompInit = ''
       # forgit alias, prefix all with f
       forgit_log=fglo

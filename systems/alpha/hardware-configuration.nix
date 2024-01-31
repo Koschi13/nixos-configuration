@@ -1,9 +1,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
     loader = {
@@ -16,13 +14,12 @@
         configurationLimit = 10;
       };
 
-      efi = {
-        canTouchEfiVariables = true;
-      };
+      efi = { canTouchEfiVariables = true; };
     };
 
     initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+      availableKernelModules =
+        [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
       kernelModules = [ "dm-snapshot" ];
       luks.devices.luksroot = {
         name = "luksroot";
@@ -47,14 +44,11 @@
     };
   };
 
-  swapDevices = [
-    {
-      device = "/dev/disk/by-label/NIXSWAP";
-    }
-  ];
+  swapDevices = [{ device = "/dev/disk/by-label/NIXSWAP"; }];
 
   hardware = {
-    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    cpu.amd.updateMicrocode =
+      lib.mkDefault config.hardware.enableRedistributableFirmware;
 
     # NvidiaConfig (opengl)
     opengl = {

@@ -25,9 +25,7 @@ in {
             email = vars.scandio.email;
           };
         };
-        commit = {
-          gpgSign = false;
-        };
+        commit = { gpgSign = false; };
       }
 
       {
@@ -38,9 +36,7 @@ in {
             email = vars.bsh.email;
           };
         };
-        commit = {
-          gpgSign = false;
-        };
+        commit = { gpgSign = false; };
       }
     ];
   };

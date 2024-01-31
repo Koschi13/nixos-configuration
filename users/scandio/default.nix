@@ -3,14 +3,15 @@
 let
   # Override Obsidian's electron_25 version to not include any vulnerabilities
   # This is needed to even be able to install and use the package
-  obsidian = lib.throwIf (lib.versionOlder "1.5.3" pkgs.obsidian.version) "Obsidian no longer requires EOL Electron" (
-    pkgs.obsidian.override {
+  obsidian = lib.throwIf (lib.versionOlder "1.5.3" pkgs.obsidian.version)
+    "Obsidian no longer requires EOL Electron" (pkgs.obsidian.override {
       electron = pkgs.electron_25.overrideAttrs (_: {
-        preFixup = "patchelf --add-needed ${pkgs.libglvnd}/lib/libEGL.so.1 $out/bin/electron"; # https://github.com/NixOS/nixpkgs/issues/272912
-        meta.knownVulnerabilities = [ ]; # https://github.com/NixOS/nixpkgs/issues/273611
+        preFixup =
+          "patchelf --add-needed ${pkgs.libglvnd}/lib/libEGL.so.1 $out/bin/electron"; # https://github.com/NixOS/nixpkgs/issues/272912
+        meta.knownVulnerabilities =
+          [ ]; # https://github.com/NixOS/nixpkgs/issues/273611
       });
-    }
-  );
+    });
 
 in {
   imports = [
@@ -24,11 +25,12 @@ in {
     #../_modules/hyprland/default.nix
     ../_modules/rofi/default.nix
     ../_modules/dunst.nix
-    ../_modules/waybar.nix
+    ../_modules/waybar/default.nix
     ../_modules/direnv.nix
     ../_modules/sway/default.nix
     ../_modules/swww.nix
     ../_modules/alacritty.nix
+    ../_modules/librewolf.nix
   ];
 
   home = {
@@ -40,47 +42,47 @@ in {
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "23.05";
 
-    packages = with pkgs; [
-      # tools
-      ripgrep
-      (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
-      zip
-      unzip
-      blueman
+    packages = with pkgs;
+      [
+        # tools
+        ripgrep
+        (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
+        zip
+        unzip
+        blueman
 
-      # coding
-      jetbrains.pycharm-professional
-      android-studio
+        # coding
+        jetbrains.pycharm-professional
+        android-studio
+        nixfmt  # TODO provide via dev shell?
 
-      # encryption
-      git-crypt
-      gnupg
-      yubikey-manager
-      bitwarden
-      bitwarden-cli
+        # encryption
+        git-crypt
+        gnupg
+        yubikey-manager
+        bitwarden
+        bitwarden-cli
 
-      # Messengers
-      tdesktop
-      signal-desktop
-      element-desktop
+        # Messengers
+        tdesktop
+        signal-desktop
+        element-desktop
 
-      # other
-      firefox-wayland
-      spotify
-      pavucontrol
+        # other
+        firefox-wayland
+        spotify
+        pavucontrol
 
-      # work
-      _1password-gui
-      slack
-      awscli2
-      kubectl
-      kubectx
-      podman-compose
-      kubernetes-helm
-      google-chrome
-    ] ++ [
-      obsidian
-    ];
+        # work
+        _1password-gui
+        slack
+        awscli2 # TODO: now available as module
+        kubectl
+        kubectx
+        podman-compose
+        kubernetes-helm
+        google-chrome
+      ] ++ [ obsidian ];
 
     sessionPath = [ "$HOME/.local/bin" ];
 

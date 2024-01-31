@@ -3,22 +3,20 @@
 {
   config = {
     nixpkgs = {
-      overlays = [
-      ];
-      config = {
-        allowUnfree = true;
-      };
+      overlays = [ ];
+      config = { allowUnfree = true; };
     };
 
     # Get ready for nix flakes
     nix = {
       # This will add each flake input as a registry
       # To make nix3 commands consistent with your flake
-      registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
+      registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
 
       # This will additionally add your inputs to the system's legacy channels
       # Making legacy nix commands consistent as well, awesome!
-      nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+      nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}")
+        config.nix.registry;
 
       settings = {
         # Enable flakes and new 'nix' command
@@ -68,11 +66,11 @@
 
     # Enable sound (pipewire)
     hardware.pulseaudio.enable = false;
-    security.rtkit.enable = true;  # For realtime acquisition
-    security.polkit.enable = true;  # Needed for Hyprland/Sway
+    security.rtkit.enable = true; # For realtime acquisition
+    security.polkit.enable = true; # Needed for Hyprland/Sway
     # See https://github.com/hyprwm/Hyprland/issues/2727
     # Need for Swaylock to accept password
-    security.pam.services.swaylock = {};
+    security.pam.services.swaylock = { };
     services.pipewire = {
       enable = true;
       alsa.enable = true;
@@ -99,12 +97,7 @@
 
     # default package available to the system
     environment = {
-      systemPackages = with pkgs; [
-        git
-        wget
-        gnupg
-	pcsclite
-      ];
+      systemPackages = with pkgs; [ git wget gnupg pcsclite ];
 
       # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enableCompletion
       pathsToLink = [ "/share/zsh" ];
@@ -119,11 +112,12 @@
         # TODO: figure out if something needs to be specified here
         config.common.default = "*";
 
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-gtk
-          # Enable the hyprland portal (if using hyprland)
-          # xdg-desktop-portal-hyprland
-        ];
+        extraPortals = with pkgs;
+          [
+            xdg-desktop-portal-gtk
+            # Enable the hyprland portal (if using hyprland)
+            # xdg-desktop-portal-hyprland
+          ];
       };
     };
 
@@ -154,14 +148,9 @@
       };
     };
 
-    boot = {
-      tmp.useTmpfs = true;
-    };
+    boot = { tmp.useTmpfs = true; };
 
-    services.dbus.packages = with pkgs; [
-      gnome3.gnome-keyring
-      gcr
-    ];
+    services.dbus.packages = with pkgs; [ gnome3.gnome-keyring gcr ];
     services.gnome.gnome-keyring.enable = true;
   };
 }

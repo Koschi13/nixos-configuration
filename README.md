@@ -1,9 +1,13 @@
 # My NixOS configuration
 
 
-## Props
+## Development
 
-https://github.com/Misterio77/nix-starter-configs/tree/main
+### Formatting
+
+```shell
+nixfmt .
+```
 
 ## Using this repository
 
@@ -44,7 +48,6 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 - [ ] Install VS-Code. Either on a per-project basis or globally (maybe there are shell templates?)
 - [ ] Figure out, why the git config isn't working
 - [ ] Configure AWS cli via HomeManager using the .secrets directory
-- [ ] Create PR in NixOS for seldon (bin) package
-- [ ] YubiKey not working: https://github.com/NixOS/nixpkgs/issues/121121
 - [ ] Add dnd shortcut
 - [ ] Install and use a formatter: https://www.reddit.com/r/NixOS/comments/1acemjr/overview_of_nix_formatters_ecosystem
+- [ ] `bd` not working

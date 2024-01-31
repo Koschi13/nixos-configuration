@@ -2,11 +2,7 @@
 { pkgs, zsh-calc, zsh-alias-finder, ... }:
 
 {
-  imports = [
-    ./enhancd.nix
-    ./forgit.nix
-    ./oh-my-zsh/default.nix
-  ];
+  imports = [ ./enhancd.nix ./forgit.nix ./oh-my-zsh/default.nix ];
 
   programs.zsh.plugins = [
     {
@@ -32,7 +28,8 @@
     {
       name = "zsh-history-substring-search";
       file = "zsh-history-substring-search.zsh";
-      src = "${pkgs.zsh-history-substring-search}/share/zsh-history-substring-search";
+      src =
+        "${pkgs.zsh-history-substring-search}/share/zsh-history-substring-search";
     }
     {
       name = "zsh-autosuggestions";

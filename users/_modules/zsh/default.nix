@@ -1,10 +1,7 @@
 { pkgs, zsh-calc, ... }:
 
 {
-  imports = [
-    ./plugins/default.nix
-    ./starship.nix
-  ];
+  imports = [ ./plugins/default.nix ./starship.nix ];
 
   # BASH
   programs.bash.enable = true;
@@ -22,30 +19,9 @@
     autocd = true;
     dotDir = ".config/zsh";
 
-    envExtra = ''
-      gpg-connect-agent /bye
-      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-    '';
-
-    initExtraBeforeCompInit = ''
-      # Set the default WORDCHARS
-      WORDCHARS='`~!@#$%^&*()-_=+[{]}\|;:",<.>/?'"'"
-    '';
-
-    initExtra = ''
-      # Autosuggest
-      ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
-        forward-char
-        end-of-line
-        vi-forward-char
-        vi-end-of-line
-        vi-add-eol
-      )
-
-      # Changing directories
-      setopt pushd_ignore_dups         # Dont push copies of the same dir on stack.
-      setopt pushd_minus               # Reference stack entries with "-".
-    '';
+    envExtra = (builtins.readFile ./envExtra);
+    initExtra = (builtins.readFile ./initExtra);
+    initExtraBeforeCompInit = (builtins.readFile ./initExtraBeforeCompInit);
 
     history = {
       share = true;
@@ -60,10 +36,7 @@
       extended = true;
 
       # patterns listed here will not be added to the history
-      ignorePatterns = [
-        "rm *"
-        "pkill *"
-      ];
+      ignorePatterns = [ "rm *" "pkill *" ];
     };
 
     shellAliases = {
@@ -92,18 +65,14 @@
     htop.enable = true;
     bat = {
       enable = true;
-      config = {
-        pager = "less -FR";
-      };
+      config = { pager = "less -FR"; };
     };
     jq.enable = true;
 
     eza = {
       enable = true;
       icons = true;
-      extraOptions = [
-        "--group-directories-first"
-      ];
+      extraOptions = [ "--group-directories-first" ];
     };
 
     fzf = {

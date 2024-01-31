@@ -11,10 +11,4 @@ let
       swww img ~/Pictures/Wallpapers/STScI-01G7ETPF7DVBJAC42JR5N6EQRH.png --transition-type simple
     fi
   '';
-in {
-  home.packages = with pkgs; [
-    swww
-    wallpaper_random
-    default_wallpaper
-  ];
-}
+in { home.packages = with pkgs; [ swww wallpaper_random default_wallpaper ]; }

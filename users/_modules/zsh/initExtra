@@ -1,0 +1,15 @@
+# Autosuggest
+ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
+  forward-char
+  end-of-line
+  vi-forward-char
+  vi-end-of-line
+  vi-add-eol
+)
+
+# Changing directories
+setopt pushd_ignore_dups         # Dont push copies of the same dir on stack.
+setopt pushd_minus               # Reference stack entries with "-".
+
+# case insensitive completion
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
