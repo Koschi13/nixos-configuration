@@ -70,7 +70,8 @@
         "max" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
           extraSpecialArgs = {
-            inherit inputs outputs firefox-addons;
+            inherit inputs outputs firefox-addons zsh-calc zsh-enhancd
+              zsh-alias-finder;
             rootPath = ./.;
           };
           modules =

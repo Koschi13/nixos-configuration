@@ -4,11 +4,18 @@
   imports = [
     ../_modules/zsh/default.nix
     ../_modules/firefox.nix
-    ../_modules/nvim.nix
+    ../_modules/nvim/default.nix
     ../_modules/homemanager.nix
     ../_modules/nixpkgs.nix
     ../_modules/gnome.nix
     ../_modules/gpg/default.nix
+    ../_modules/rofi/default.nix
+    ../_modules/dunst.nix
+    ../_modules/waybar/default.nix
+    ../_modules/direnv.nix
+    ../_modules/i3/default.nix
+    ../_modules/swww.nix
+    ../_modules/alacritty.nix
   ];
 
   home = {
@@ -26,12 +33,12 @@
       (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
 
       # coding
-      alacritty
+      nixfmt
+      jetbrains-toolbox
 
       # encryption
       git-crypt
       gnupg
-      pinentry-gnome
       yubikey-manager
       bitwarden
       bitwarden-cli
@@ -44,14 +51,10 @@
       # other
       firefox-wayland
       spotify
+      pavucontrol
     ];
 
-    file = {
-      ".config/alacritty/alacritty.yaml".text = ''
-        env:
-          TERM: xterm-256color
-      '';
-    };
+    sessionPath = [ "$HOME/.local/share/JetBrains/Toolbox/scripts" ];
   };
 
   # Nicely reload system units when changing configs

@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if [[ $HOST -eq "epsilon" ]]; then
+if [[ $HOST == "epsilon" ]]; then
   echo "This is your work laptop you fool!"
   exit 1
 fi

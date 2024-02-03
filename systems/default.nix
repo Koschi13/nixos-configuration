@@ -53,17 +53,6 @@
       excludePackages = [ pkgs.xterm ];
     };
 
-    programs.regreet.enable = true;
-    services.greetd = {
-      enable = true;
-      settings = {
-        initial_session = {
-          user = "max";
-          command = "$SHELL -l";
-        };
-      };
-    };
-
     # Enable sound (pipewire)
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true; # For realtime acquisition
@@ -100,13 +89,12 @@
       systemPackages = with pkgs; [ git wget gnupg pcsclite ];
 
       # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enableCompletion
-      pathsToLink = [ "/share/zsh" ];
+      pathsToLink = [ "/share/zsh" "/libexec"];
     };
 
     xdg = {
       portal = {
         enable = true;
-        wlr.enable = true;
 
         # Fix warning which recently popped up
         # TODO: figure out if something needs to be specified here
@@ -115,8 +103,6 @@
         extraPortals = with pkgs;
           [
             xdg-desktop-portal-gtk
-            # Enable the hyprland portal (if using hyprland)
-            # xdg-desktop-portal-hyprland
           ];
       };
     };

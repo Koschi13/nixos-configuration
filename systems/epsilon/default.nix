@@ -10,6 +10,28 @@
   networking = { hostName = "epsilon"; };
 
   programs.light.enable = true;
+  xdg = {
+    portal = {
+      wlr.enable = true;
+
+      extraPortals = with pkgs;
+        [
+          # Enable the hyprland portal (if using hyprland)
+          # xdg-desktop-portal-hyprland
+        ];
+    };
+  };
+
+  programs.regreet.enable = true;
+  services.greetd = {
+    enable = true;
+    settings = {
+      initial_session = {
+        user = "max";
+        command = "$SHELL -l";
+      };
+    };
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05"; # Did you read the comment?
