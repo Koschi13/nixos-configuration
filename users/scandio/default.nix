@@ -53,6 +53,7 @@ in {
 
         # coding
         jetbrains.pycharm-professional
+        jetbrains-toolbox
         android-studio
         nixfmt  # TODO provide via dev shell?
 
