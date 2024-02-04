@@ -36,6 +36,7 @@
     xfce4-power-manager
     xfce4-taskmanager
     xfce4-screenshooter
+    xfce4-screensaver
     xfce4-terminal
     xfce4-appfinder
     xfce4-panel
