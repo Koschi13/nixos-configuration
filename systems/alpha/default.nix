@@ -12,17 +12,15 @@
   services.xserver = {
     windowManager.i3.enable = true;
 
-    displayManager = {
-      defaultSession = "xfce+i3";
-    };
+    displayManager = { defaultSession = "xfce+i3"; };
 
     desktopManager = {
       xterm.enable = false;
       xfce = {
         enable = true;
-	      noDesktop = true;
-	      enableXfwm = false;
-	      enableScreensaver = false;
+        noDesktop = true;
+        enableXfwm = false;
+        enableScreensaver = false;
       };
     };
 
@@ -43,9 +41,7 @@
     xfce4-panel
   ]);
 
-  environment.systemPackages = (with pkgs; [
-    xfce.xfce4-settings
-  ]);
+  environment.systemPackages = (with pkgs; [ xfce.xfce4-settings ]);
 
   programs.thunar.enable = lib.mkForce false;
 

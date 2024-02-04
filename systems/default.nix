@@ -89,7 +89,7 @@
       systemPackages = with pkgs; [ git wget gnupg pcsclite ];
 
       # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enableCompletion
-      pathsToLink = [ "/share/zsh" "/libexec"];
+      pathsToLink = [ "/share/zsh" "/libexec" ];
     };
 
     xdg = {
@@ -100,10 +100,7 @@
         # TODO: figure out if something needs to be specified here
         config.common.default = "*";
 
-        extraPortals = with pkgs;
-          [
-            xdg-desktop-portal-gtk
-          ];
+        extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
       };
     };
 
