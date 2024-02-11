@@ -6,7 +6,12 @@ in {
     enable = true;
     settings = {
       env.TERM = "xterm-256color";
-      # TODO: set font
+      font = {
+        normal = {
+          family = "DejaVuSansMono";
+        };
+        size = 10;
+      };
       import = [
         # TODO: instead of ~ use home variable
         "~/${catppuccin-frappe-toml}"

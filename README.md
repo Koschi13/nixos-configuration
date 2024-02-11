@@ -51,3 +51,4 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 - [ ] Add dnd shortcut
 - [ ] Install and use a formatter: https://www.reddit.com/r/NixOS/comments/1acemjr/overview_of_nix_formatters_ecosystem
 - [ ] `bd` not working
+- [ ] Caps <-> Ctrl only for notebook
