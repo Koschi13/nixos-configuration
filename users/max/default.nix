@@ -34,7 +34,7 @@
 
       # coding
       nixfmt
-      jetbrains-toolbox
+      jetbrains.rust-rover
 
       # encryption
       git-crypt
@@ -47,6 +47,7 @@
       tdesktop
       signal-desktop
       element-desktop
+      discord
 
       # other
       firefox-wayland

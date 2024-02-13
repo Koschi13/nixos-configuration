@@ -7,9 +7,7 @@ in {
     settings = {
       env.TERM = "xterm-256color";
       font = {
-        normal = {
-          family = "DejaVuSansMono";
-        };
+        normal = { family = "DejaVuSansMono"; };
         size = 10;
       };
       import = [

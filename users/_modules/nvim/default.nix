@@ -1,4 +1,4 @@
-{ astronvim, ... }:
+{ astronvim, pkgs, ... }:
 
 # AstroVim is installed manually since it is not supported by flakes
 # TODO: clone git via nix to ~/.config/nvim
@@ -10,7 +10,10 @@
     defaultEditor = true;
   };
 
-  home.sessionVariables = { VISUAL = "vim"; };
+  home = {
+    sessionVariables = { VISUAL = "vim"; };
+    packages = with pkgs; [ gcc ];
+  };
 
   #
   # AstroNvim

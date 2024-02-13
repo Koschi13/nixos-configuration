@@ -2,11 +2,12 @@
 
 # TODO: find a way to share the common stuff with sway
 let
-  l = "j";          # left
-  d = "k";          # down
-  u = "l";          # up
-  r = "semicolon";  # right
-  i3lock-color-lock = pkgs.writeShellScriptBin "i3lock-color-lock" (builtins.readFile ./i3lock-color-lock.sh);
+  l = "j"; # left
+  d = "k"; # down
+  u = "l"; # up
+  r = "semicolon"; # right
+  i3lock-color-lock = pkgs.writeShellScriptBin "i3lock-color-lock"
+    (builtins.readFile ./i3lock-color-lock.sh);
 in {
   imports = [ ./env.nix ];
 
@@ -34,7 +35,6 @@ in {
       terminal = "alacritty";
 
       menu = "rofiWindow"; # See rofi/default.nix
-
 
       # Set colors according to https://github.com/catppuccin/i3
       colors = rec {
@@ -85,8 +85,10 @@ in {
         "${m}+r" = "mode 'resize'";
 
         # Screenshot
-        "${m}+p" = ''exec --no-startup-id maim --select | xclip -selection clipboard -t image/png'';
-        "${m}+Shift+p" = ''exec --no-startup-id maim | xclip -selection clipboard -t image/png"'';
+        "${m}+p" =
+          "exec --no-startup-id maim --select | xclip -selection clipboard -t image/png";
+        "${m}+Shift+p" = ''
+          exec --no-startup-id maim | xclip -selection clipboard -t image/png"'';
 
         # Audio
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
@@ -104,7 +106,8 @@ in {
         "${m}+BackSpace" = "exec i3lock-color-lock";
 
         # Exit xfce managed i3 session
-        "${m}+Shift+e" = "i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'xfce4-session-logout'";
+        "${m}+Shift+e" =
+          "i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'xfce4-session-logout'";
 
         #
         # Moving around:
@@ -199,12 +202,10 @@ in {
 
       window = {
         border = 0;
-        commands = [
-          {
-            command = "border pixel 0";
-            criteria = { class = "^.*"; };
-          }
-        ];
+        commands = [{
+          command = "border pixel 0";
+          criteria = { class = "^.*"; };
+        }];
       };
 
       gaps = {
@@ -219,8 +220,7 @@ in {
       # Despite the name, also works for non-floating windows.
       # Change normal to inverse to use left mouse button for resizing and right
       # mouse button for dragging.
-      floating = let
-        m = config.xsession.windowManager.i3.config.modifier;
+      floating = let m = config.xsession.windowManager.i3.config.modifier;
       in lib.mkOptionDefault {
         modifier = "${m}";
         criteria = [

@@ -229,8 +229,8 @@
       gaps = {
         smartGaps = true;
         smartBorders = "on";
-        inner = 5;
-        outer = 15;
+        inner = 10;
+        outer = 10;
       };
 
       input = {

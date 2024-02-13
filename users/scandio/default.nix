@@ -55,7 +55,7 @@ in {
         jetbrains.pycharm-professional
         jetbrains.rust-rover
         android-studio
-        nixfmt  # TODO provide via dev shell?
+        nixfmt # TODO provide via dev shell?
 
         # encryption
         git-crypt
