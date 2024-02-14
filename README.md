@@ -52,3 +52,4 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 - [ ] Install and use a formatter: https://www.reddit.com/r/NixOS/comments/1acemjr/overview_of_nix_formatters_ecosystem
 - [ ] `bd` not working
 - [ ] Caps <-> Ctrl only for notebook
+- [ ] See if it is possible to save JetBrains settings in this repo, while still being able to change something via the UI
