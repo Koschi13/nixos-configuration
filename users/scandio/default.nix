@@ -83,6 +83,7 @@ in {
         podman-compose
         kubernetes-helm
         google-chrome
+        dive
       ] ++ [ obsidian ];
 
     sessionPath = [ "$HOME/.local/bin" ];
