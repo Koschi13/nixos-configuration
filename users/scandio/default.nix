@@ -1,19 +1,6 @@
 { config, pkgs, firefox-addons, rootPath, lib, ... }:
 
-let
-  # Override Obsidian's electron_25 version to not include any vulnerabilities
-  # This is needed to even be able to install and use the package
-  obsidian = lib.throwIf (lib.versionOlder "1.5.3" pkgs.obsidian.version)
-    "Obsidian no longer requires EOL Electron" (pkgs.obsidian.override {
-      electron = pkgs.electron_25.overrideAttrs (_: {
-        preFixup =
-          "patchelf --add-needed ${pkgs.libglvnd}/lib/libEGL.so.1 $out/bin/electron"; # https://github.com/NixOS/nixpkgs/issues/272912
-        meta.knownVulnerabilities =
-          [ ]; # https://github.com/NixOS/nixpkgs/issues/273611
-      });
-    });
-
-in {
+{
   imports = [
     ../_modules/zsh/default.nix
     ../_modules/firefox.nix
@@ -86,7 +73,8 @@ in {
         kubernetes-helm
         google-chrome
         dive
-      ] ++ [ obsidian ];
+        obsidian
+      ];
 
     sessionPath = [ "$HOME/.local/bin" ];
 
