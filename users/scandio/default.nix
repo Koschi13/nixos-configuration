@@ -73,6 +73,8 @@ in {
         firefox-wayland
         spotify
         pavucontrol
+        photoqt
+        cifs-utils
 
         # work
         _1password-gui

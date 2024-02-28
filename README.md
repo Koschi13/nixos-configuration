@@ -56,3 +56,5 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 - [ ] Use docker, since podman is making problems
 - [ ] Git config `rerere.enabled true`
 - [ ] Git config `branch.sort -committerdate`
+- [ ] Git config `core.fsmonitor true`
+- [ ] Git config `core.untrackedCache true`
