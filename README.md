@@ -58,3 +58,6 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 - [ ] Git config `branch.sort -committerdate`
 - [ ] Git config `core.fsmonitor true`
 - [ ] Git config `core.untrackedCache true`
+- [ ] Figure out how to install a LSP in AstroNvim (The installation is globally...)
+  - Maybe there is a way to install AstroNvim through Nix and add custom dependencies for the LSP to it?
+- [ ] Dunstctl font blurry

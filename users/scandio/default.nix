@@ -69,11 +69,11 @@
         awscli2 # TODO: now available as module
         kubectl
         kubectx
-        podman-compose
         kubernetes-helm
         google-chrome
         dive
         obsidian
+        docker-compose
       ];
 
     sessionPath = [ "$HOME/.local/bin" ];

@@ -55,6 +55,7 @@
 
     # Enable sound (pipewire)
     hardware.pulseaudio.enable = false;
+    sound.enable = false;
     security.rtkit.enable = true; # For realtime acquisition
     security.polkit.enable = true; # Needed for Hyprland/Sway
     # See https://github.com/hyprwm/Hyprland/issues/2727
@@ -79,14 +80,17 @@
         "wheel"
         # Enable light control for the user
         "video"
-        # Enalbe networkmanager control for the user
+        # Enable networkmanager control for the user
         "networkmanager"
+        # Audio related groups
+        "audio"
+        "sound"
       ];
     };
 
     # default package available to the system
     environment = {
-      systemPackages = with pkgs; [ git wget gnupg pcsclite ];
+      systemPackages = with pkgs; [ git wget gnupg pcsclite helvum];
 
       # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enableCompletion
       pathsToLink = [ "/share/zsh" "/libexec" ];
@@ -120,14 +124,12 @@
     documentation.doc.enable = false;
 
     virtualisation = {
-      podman = {
+      docker = {
         enable = true;
-
-        # Create a `docker` alias for podman, to use it as a drop-in replacement
-        dockerCompat = true;
-
-        # Required for containers under podman-compose to be able to talk to each other.
-        defaultNetwork.settings.dns_enabled = true;
+        rootless = {
+          enable = true;
+          setSocketVariable = true;
+        };
       };
     };
 

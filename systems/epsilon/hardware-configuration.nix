@@ -32,6 +32,9 @@
 
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
+    # Needed for onboard audio, see:
+    # https://discourse.nixos.org/t/realtek-audio-sound-card-not-recognized-by-pipewire/36637
+    kernelParams = [ "snd-intel-dspcfg.dsp_driver=1" ];
   };
 
   fileSystems = {
