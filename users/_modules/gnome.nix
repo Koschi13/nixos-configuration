@@ -2,7 +2,7 @@
 
   # GNOME related packages
   home.packages = with pkgs; [
-    pinentry-gnome
+    pinentry-gnome3
     gnome.gnome-tweaks
     gnome.seahorse
     gnome.nautilus
