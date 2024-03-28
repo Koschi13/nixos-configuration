@@ -61,3 +61,4 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 - [ ] Figure out how to install a LSP in AstroNvim (The installation is globally...)
   - Maybe there is a way to install AstroNvim through Nix and add custom dependencies for the LSP to it?
 - [ ] Dunstctl font blurry
+- [ ] Dunstctl window in the middle of the screen, E-Mails and Messages should appear longer (maybe with sound even?)
