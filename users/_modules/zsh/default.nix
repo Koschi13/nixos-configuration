@@ -9,7 +9,7 @@
   # ZSH
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     defaultKeymap = "viins";
     syntaxHighlighting = {
@@ -45,11 +45,11 @@
 
       # eza
       ls = "eza";
-      l = "eza -lgFh";
-      la = "eza -lgaFh";
-      lr = "eza -lRFr";
-      lrr = "eza -lRFL";
-      lt = "eza -lgRFhs date";
+      l = "eza -lgh";
+      la = "eza -lgah";
+      lr = "eza -lRr";
+      lrr = "eza -lRF";
+      lt = "eza -lgRhs date";
       ll = "eza -lh";
 
       # ip

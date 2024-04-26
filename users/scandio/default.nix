@@ -18,6 +18,7 @@
     ../_modules/swww.nix
     ../_modules/alacritty.nix
     ../_modules/librewolf.nix
+    ../_modules/git.nix
   ];
 
   home = {
@@ -75,6 +76,10 @@
         dive
         obsidian
         docker-compose
+
+        # Screen-share
+        obs-studio
+        obs-studio-plugins.wlrobs
       ];
 
     sessionPath = [ "$HOME/.local/bin" ];

@@ -16,7 +16,8 @@
     ../_modules/i3/default.nix
     ../_modules/swww.nix
     ../_modules/alacritty.nix
-  ];
+    ../_modules/git.nix
+  ]
 
   home = {
     # Home Manager needs a bit of information about you and the

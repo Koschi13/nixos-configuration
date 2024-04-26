@@ -30,8 +30,12 @@
       };
     };
 
-    kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ ];
+    kernelModules = [ "kvm-intel" "v4l2loopback" ];
+    extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+    # Enable OBS virtual camera
+    extraModprobeConfig = ''
+      options v4l2loopback devices=1 video_nr=1 card_label="OBS Cam" exclusive_caps=1
+    '';
     # Needed for onboard audio, see:
     # https://discourse.nixos.org/t/realtek-audio-sound-card-not-recognized-by-pipewire/36637
     kernelParams = [ "snd-intel-dspcfg.dsp_driver=1" ];
