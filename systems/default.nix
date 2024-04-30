@@ -1,10 +1,18 @@
-{ inputs, lib, config, pkgs, ... }:
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   config = {
     nixpkgs = {
       overlays = [ ];
-      config = { allowUnfree = true; };
+      config = {
+        allowUnfree = true;
+      };
     };
 
     # Get ready for nix flakes
@@ -15,8 +23,7 @@
 
       # This will additionally add your inputs to the system's legacy channels
       # Making legacy nix commands consistent as well, awesome!
-      nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}")
-        config.nix.registry;
+      nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
       settings = {
         # Enable flakes and new 'nix' command
@@ -90,10 +97,19 @@
 
     # default package available to the system
     environment = {
-      systemPackages = with pkgs; [ git wget gnupg pcsclite helvum];
+      systemPackages = with pkgs; [
+        git
+        wget
+        gnupg
+        pcsclite
+        helvum
+      ];
 
       # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enableCompletion
-      pathsToLink = [ "/share/zsh" "/libexec" ];
+      pathsToLink = [
+        "/share/zsh"
+        "/libexec"
+      ];
     };
 
     xdg = {
@@ -133,9 +149,14 @@
       };
     };
 
-    boot = { tmp.useTmpfs = true; };
+    boot = {
+      tmp.useTmpfs = true;
+    };
 
-    services.dbus.packages = with pkgs; [ gnome3.gnome-keyring gcr ];
+    services.dbus.packages = with pkgs; [
+      gnome3.gnome-keyring
+      gcr
+    ];
     services.gnome.gnome-keyring.enable = true;
   };
 }

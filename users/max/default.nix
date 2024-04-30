@@ -1,4 +1,9 @@
-{ config, pkgs, firefox-addons, ... }:
+{
+  config,
+  pkgs,
+  firefox-addons,
+  ...
+}:
 
 {
   imports = [
@@ -17,7 +22,7 @@
     ../_modules/swww.nix
     ../_modules/alacritty.nix
     ../_modules/git.nix
-  ]
+  ];
 
   home = {
     # Home Manager needs a bit of information about you and the
@@ -34,7 +39,7 @@
       (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
 
       # coding
-      nixfmt
+      nixfmt-rfc-style
       jetbrains.rust-rover
 
       # encryption

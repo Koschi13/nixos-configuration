@@ -1,7 +1,12 @@
 # IMPORTANT:
 # You need to add the xdg-desktop-portal-hyprland in the system config if you want to enable hyprland
 #
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ ./env.nix ];
@@ -206,10 +211,8 @@
 
   home.file.".config/hypr/colors/frappe.conf" = {
     source = builtins.fetchurl {
-      url =
-        "https://github.com/catppuccin/hyprland/releases/download/v1.2/frappe.conf";
-      sha256 =
-        "927a528d42ad435b6c3a8b538bf7be38c74709c860048ded49ad78f1d17752a0";
+      url = "https://github.com/catppuccin/hyprland/releases/download/v1.2/frappe.conf";
+      sha256 = "927a528d42ad435b6c3a8b538bf7be38c74709c860048ded49ad78f1d17752a0";
     };
   };
 }

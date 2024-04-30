@@ -36,8 +36,18 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, firefox-addons, hyprland, zsh-calc
-    , zsh-enhancd, zsh-alias-finder, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      firefox-addons,
+      hyprland,
+      zsh-calc,
+      zsh-enhancd,
+      zsh-alias-finder,
+      ...
+    }@inputs:
     let
       # don't know what this is for, but without we do not have outputs available
       inherit (self) outputs;
@@ -47,20 +57,27 @@
 
       # Just an alias
       lib = nixpkgs.lib;
-
-    in {
+    in
+    {
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
         alpha = lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = {
+            inherit inputs outputs;
+          };
 
           modules = [ ./systems/alpha/default.nix ];
         };
         epsilon = lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = {
+            inherit inputs outputs;
+          };
 
-          modules = [ ./systems/default.nix ./systems/epsilon/default.nix ];
+          modules = [
+            ./systems/default.nix
+            ./systems/epsilon/default.nix
+          ];
         };
       };
 
@@ -70,20 +87,34 @@
         "max" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
           extraSpecialArgs = {
-            inherit inputs outputs firefox-addons zsh-calc zsh-enhancd
-              zsh-alias-finder;
+            inherit
+              inputs
+              outputs
+              firefox-addons
+              zsh-calc
+              zsh-enhancd
+              zsh-alias-finder
+              ;
             rootPath = ./.;
           };
-          modules =
-            [ ./users/max/default.nix inputs.nixvim.homeManagerModules.nixvim ];
+          modules = [
+            ./users/max/default.nix
+            inputs.nixvim.homeManagerModules.nixvim
+          ];
         };
 
         # This user will also be called "max"
         "scandio" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
           extraSpecialArgs = {
-            inherit inputs outputs firefox-addons zsh-calc zsh-enhancd
-              zsh-alias-finder;
+            inherit
+              inputs
+              outputs
+              firefox-addons
+              zsh-calc
+              zsh-enhancd
+              zsh-alias-finder
+              ;
             rootPath = ./.;
           };
           modules = [

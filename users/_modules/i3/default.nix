@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 # TODO: find a way to share the common stuff with sway
 let
@@ -6,9 +11,11 @@ let
   d = "k"; # down
   u = "l"; # up
   r = "semicolon"; # right
-  i3lock-color-lock = pkgs.writeShellScriptBin "i3lock-color-lock"
-    (builtins.readFile ./i3lock-color-lock.sh);
-in {
+  i3lock-color-lock = pkgs.writeShellScriptBin "i3lock-color-lock" (
+    builtins.readFile ./i3lock-color-lock.sh
+  );
+in
+{
   imports = [ ./env.nix ];
 
   home.packages = with pkgs; [
@@ -37,178 +44,179 @@ in {
       menu = "rofiWindow"; # See rofi/default.nix
 
       # Set colors according to https://github.com/catppuccin/i3
-      colors = let
-        rosewater = "#f2d5cf";
-        flamingo = "#eebebe";
-        pink = "#f4b8e4";
-        mauve = "#ca9ee6";
-        red = "#e78284";
-        maroon = "#ea999c";
-        peach = "#ef9f76";
-        yellow = "#e5c890";
-        green = "#a6d189";
-        teal = "#81c8be";
-        sky = "#99d1db";
-        sapphire = "#85c1dc";
-        blue = "#8caaee";
-        lavender = "#babbf1";
-        text = "#c6d0f5";
-        subtext1 = "#b5bfe2";
-        subtext0 = "#a5adce";
-        overlay2 = "#949cbb";
-        overlay1 = "#838ba7";
-        overlay0 = "#737994";
-        surface2 = "#626880";
-        surface1 = "#51576d";
-        surface0 = "#414559";
-        base = "#303446";
-        mantle = "#292c3c";
-        crust = "#232634";
-      in rec {
-        focused = {
-          border = lavender;
+      colors =
+        let
+          rosewater = "#f2d5cf";
+          flamingo = "#eebebe";
+          pink = "#f4b8e4";
+          mauve = "#ca9ee6";
+          red = "#e78284";
+          maroon = "#ea999c";
+          peach = "#ef9f76";
+          yellow = "#e5c890";
+          green = "#a6d189";
+          teal = "#81c8be";
+          sky = "#99d1db";
+          sapphire = "#85c1dc";
+          blue = "#8caaee";
+          lavender = "#babbf1";
+          text = "#c6d0f5";
+          subtext1 = "#b5bfe2";
+          subtext0 = "#a5adce";
+          overlay2 = "#949cbb";
+          overlay1 = "#838ba7";
+          overlay0 = "#737994";
+          surface2 = "#626880";
+          surface1 = "#51576d";
+          surface0 = "#414559";
+          base = "#303446";
+          mantle = "#292c3c";
+          crust = "#232634";
+        in
+        rec {
+          focused = {
+            border = lavender;
+            background = base;
+            text = text;
+            indicator = rosewater;
+            childBorder = lavender;
+          };
+          unfocused = {
+            border = overlay0;
+            background = base;
+            text = text;
+            indicator = rosewater;
+            childBorder = overlay0;
+          };
+          focusedInactive = unfocused;
+          urgent = {
+            border = peach;
+            background = base;
+            text = peach;
+            indicator = overlay0;
+            childBorder = peach;
+          };
+          placeholder = {
+            border = overlay0;
+            background = base;
+            text = text;
+            indicator = overlay0;
+            childBorder = overlay0;
+          };
           background = base;
-          text = text;
-          indicator = rosewater;
-          childBorder = lavender;
         };
-        unfocused = {
-          border = overlay0;
-          background = base;
-          text = text;
-          indicator = rosewater;
-          childBorder = overlay0;
-        };
-        focusedInactive = unfocused;
-        urgent = {
-          border = peach;
-          background = base;
-          text = peach;
-          indicator = overlay0;
-          childBorder = peach;
-        };
-        placeholder = {
-          border = overlay0;
-          background = base;
-          text = text;
-          indicator = overlay0;
-          childBorder = overlay0;
-        };
-        background = base;
-      };
 
       # It is super important that the left side of the binding does not include any spaces!
-      keybindings = let
-        m = config.xsession.windowManager.i3.config.modifier;
-        term = config.xsession.windowManager.i3.config.terminal;
-        menu = config.xsession.windowManager.i3.config.menu;
-      in lib.mkOptionDefault {
-        #
-        # System
-        #
-        "${m}+Shift+q" = "kill";
-        "${m}+space" = "exec ${menu}";
-        "${m}+Shift+r" = "reload";
-        "${m}+r" = "mode 'resize'";
+      keybindings =
+        let
+          m = config.xsession.windowManager.i3.config.modifier;
+          term = config.xsession.windowManager.i3.config.terminal;
+          menu = config.xsession.windowManager.i3.config.menu;
+        in
+        lib.mkOptionDefault {
+          #
+          # System
+          #
+          "${m}+Shift+q" = "kill";
+          "${m}+space" = "exec ${menu}";
+          "${m}+Shift+r" = "reload";
+          "${m}+r" = "mode 'resize'";
 
-        # Screenshot
-        "${m}+p" =
-          "exec --no-startup-id maim --select | xclip -selection clipboard -t image/png";
-        "${m}+Shift+p" = ''
-          exec --no-startup-id maim | xclip -selection clipboard -t image/png"'';
+          # Screenshot
+          "${m}+p" = "exec --no-startup-id maim --select | xclip -selection clipboard -t image/png";
+          "${m}+Shift+p" = ''exec --no-startup-id maim | xclip -selection clipboard -t image/png"'';
 
-        # Audio
-        "XF86AudioRaiseVolume" = "exec pamixer -i 5";
-        "XF86AudioLowerVolume" = "exec pamixer -d 5";
-        "XF86AudioMute" = "exec pamixer -t";
-        "XF86AudioMicMute" = "exec pamixer --default-source -t";
-        "XF86MonBrightnessDown" = "exec light -U 5"; # Installed via system
-        "XF86MonBrightnessUp" = "exec light -A 5"; # Installed via system
-        "XF86AudioPlay" = "exec playerctl play-pause";
-        "XF86AudioPause" = "exec playerctl play-pause";
-        "XF86AudioNext" = "exec playerctl next";
-        "XF86AudioPrev" = "exec playerctl previous";
+          # Audio
+          "XF86AudioRaiseVolume" = "exec pamixer -i 5";
+          "XF86AudioLowerVolume" = "exec pamixer -d 5";
+          "XF86AudioMute" = "exec pamixer -t";
+          "XF86AudioMicMute" = "exec pamixer --default-source -t";
+          "XF86MonBrightnessDown" = "exec light -U 5"; # Installed via system
+          "XF86MonBrightnessUp" = "exec light -A 5"; # Installed via system
+          "XF86AudioPlay" = "exec playerctl play-pause";
+          "XF86AudioPause" = "exec playerctl play-pause";
+          "XF86AudioNext" = "exec playerctl next";
+          "XF86AudioPrev" = "exec playerctl previous";
 
-        # Lock screen
-        "${m}+BackSpace" = "exec i3lock-color-lock";
+          # Lock screen
+          "${m}+BackSpace" = "exec i3lock-color-lock";
 
-        # Exit xfce managed i3 session
-        "${m}+Shift+e" =
-          "i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'xfce4-session-logout'";
+          # Exit xfce managed i3 session
+          "${m}+Shift+e" = "i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'xfce4-session-logout'";
 
-        #
-        # Moving around:
-        #
-        # Focus
-        "${m}+${l}" = "focus left";
-        "${m}+${d}" = "focus down";
-        "${m}+${u}" = "focus up";
-        "${m}+${r}" = "focus right";
+          #
+          # Moving around:
+          #
+          # Focus
+          "${m}+${l}" = "focus left";
+          "${m}+${d}" = "focus down";
+          "${m}+${u}" = "focus up";
+          "${m}+${r}" = "focus right";
 
-        # Move window
-        "${m}+Shift+${l}" = "move left";
-        "${m}+Shift+${d}" = "move down";
-        "${m}+Shift+${u}" = "move up";
-        "${m}+Shift+${r}" = "move right";
+          # Move window
+          "${m}+Shift+${l}" = "move left";
+          "${m}+Shift+${d}" = "move down";
+          "${m}+Shift+${u}" = "move up";
+          "${m}+Shift+${r}" = "move right";
 
-        #
-        # Workspaces:
-        #
-        # Switch to workspace
-        "${m}+1" = "workspace 1";
-        "${m}+2" = "workspace 2";
-        "${m}+3" = "workspace 3";
-        "${m}+4" = "workspace 4";
-        "${m}+5" = "workspace 5";
-        "${m}+6" = "workspace 6";
-        "${m}+7" = "workspace 7";
-        "${m}+8" = "workspace 8";
-        "${m}+9" = "workspace 9";
-        "${m}+0" = "workspace 10";
+          #
+          # Workspaces:
+          #
+          # Switch to workspace
+          "${m}+1" = "workspace 1";
+          "${m}+2" = "workspace 2";
+          "${m}+3" = "workspace 3";
+          "${m}+4" = "workspace 4";
+          "${m}+5" = "workspace 5";
+          "${m}+6" = "workspace 6";
+          "${m}+7" = "workspace 7";
+          "${m}+8" = "workspace 8";
+          "${m}+9" = "workspace 9";
+          "${m}+0" = "workspace 10";
 
-        # Move focused container to workspace
-        "${m}+Shift+1" = "move container to workspace 1";
-        "${m}+Shift+2" = "move container to workspace 2";
-        "${m}+Shift+3" = "move container to workspace 3";
-        "${m}+Shift+4" = "move container to workspace 4";
-        "${m}+Shift+5" = "move container to workspace 5";
-        "${m}+Shift+6" = "move container to workspace 6";
-        "${m}+Shift+7" = "move container to workspace 7";
-        "${m}+Shift+8" = "move container to workspace 8";
-        "${m}+Shift+9" = "move container to workspace 9";
-        "${m}+Shift+0" = "move container to workspace 10";
+          # Move focused container to workspace
+          "${m}+Shift+1" = "move container to workspace 1";
+          "${m}+Shift+2" = "move container to workspace 2";
+          "${m}+Shift+3" = "move container to workspace 3";
+          "${m}+Shift+4" = "move container to workspace 4";
+          "${m}+Shift+5" = "move container to workspace 5";
+          "${m}+Shift+6" = "move container to workspace 6";
+          "${m}+Shift+7" = "move container to workspace 7";
+          "${m}+Shift+8" = "move container to workspace 8";
+          "${m}+Shift+9" = "move container to workspace 9";
+          "${m}+Shift+0" = "move container to workspace 10";
 
-        #
-        # Layout stuff:
-        #
-        # You can "split" the current object of your focus with
-        # ${modifier}+b or $mod+v, for horizontal and vertical splits
-        # respectively.
-        "${m}+b" = "splith";
-        "${m}+v" = "splitv";
+          #
+          # Layout stuff:
+          #
+          # You can "split" the current object of your focus with
+          # ${modifier}+b or $mod+v, for horizontal and vertical splits
+          # respectively.
+          "${m}+b" = "splith";
+          "${m}+v" = "splitv";
 
-        # Switch the current container between different layout styles
-        "${m}+s" = "layout stacking";
-        "${m}+w" = "layout tabbed";
-        "${m}+e" = "layout toggle split";
+          # Switch the current container between different layout styles
+          "${m}+s" = "layout stacking";
+          "${m}+w" = "layout tabbed";
+          "${m}+e" = "layout toggle split";
 
-        # Make the current focus fullscreen
-        "${m}+f" = "fullscreen";
+          # Make the current focus fullscreen
+          "${m}+f" = "fullscreen";
 
-        # Toggle the current focus between tiling and floating mode
-        "${m}+Shift+space" = "floating toggle";
+          # Toggle the current focus between tiling and floating mode
+          "${m}+Shift+space" = "floating toggle";
 
-        # Swap focus between the tiling area and the floating area
-        "${m}+i" = "focus mode_toggle";
+          # Swap focus between the tiling area and the floating area
+          "${m}+i" = "focus mode_toggle";
 
-        # Move focus to the parent container
-        "${m}+a" = "focus parent";
+          # Move focus to the parent container
+          "${m}+a" = "focus parent";
 
-        #
-        # Applications
-        #
-        "${m}+Return" = "exec ${term}";
-      };
+          #
+          # Applications
+          #
+          "${m}+Return" = "exec ${term}";
+        };
 
       modes = {
         "resize" = {
@@ -229,10 +237,14 @@ in {
 
       window = {
         border = 0;
-        commands = [{
-          command = "border pixel 0";
-          criteria = { class = "^.*"; };
-        }];
+        commands = [
+          {
+            command = "border pixel 0";
+            criteria = {
+              class = "^.*";
+            };
+          }
+        ];
       };
 
       gaps = {
@@ -247,15 +259,18 @@ in {
       # Despite the name, also works for non-floating windows.
       # Change normal to inverse to use left mouse button for resizing and right
       # mouse button for dragging.
-      floating = let m = config.xsession.windowManager.i3.config.modifier;
-      in lib.mkOptionDefault {
-        modifier = "${m}";
-        criteria = [
-          { title = "Emulator"; }
-          { title = "Android Emulator"; }
-          { class = "Pavucontrol"; }
-        ];
-      };
+      floating =
+        let
+          m = config.xsession.windowManager.i3.config.modifier;
+        in
+        lib.mkOptionDefault {
+          modifier = "${m}";
+          criteria = [
+            { title = "Emulator"; }
+            { title = "Android Emulator"; }
+            { class = "Pavucontrol"; }
+          ];
+        };
 
       # TODO: Replace with x11 package
       #startup = [{

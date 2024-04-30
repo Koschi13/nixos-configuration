@@ -1,7 +1,10 @@
 { pkgs, zsh-calc, ... }:
 
 {
-  imports = [ ./plugins/default.nix ./starship.nix ];
+  imports = [
+    ./plugins/default.nix
+    ./starship.nix
+  ];
 
   # BASH
   programs.bash.enable = true;
@@ -36,7 +39,10 @@
       extended = true;
 
       # patterns listed here will not be added to the history
-      ignorePatterns = [ "rm *" "pkill *" ];
+      ignorePatterns = [
+        "rm *"
+        "pkill *"
+      ];
     };
 
     shellAliases = {
@@ -65,7 +71,9 @@
     htop.enable = true;
     bat = {
       enable = true;
-      config = { pager = "less -FR"; };
+      config = {
+        pager = "less -FR";
+      };
     };
     jq.enable = true;
 

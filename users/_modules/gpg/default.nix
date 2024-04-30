@@ -1,13 +1,21 @@
-{ inputs, lib, config, pkgs, ... }:
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   programs = {
     gpg = {
       enable = true;
-      publicKeys = [{
-        source = ./925FFE9DE0563625C9990979FCD1C7696CB6672A.asc;
-        trust = 5;
-      }];
+      publicKeys = [
+        {
+          source = ./925FFE9DE0563625C9990979FCD1C7696CB6672A.asc;
+          trust = 5;
+        }
+      ];
     };
   };
 

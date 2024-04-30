@@ -2,11 +2,15 @@
 { zsh-enhancd, ... }:
 
 {
-  programs.zsh.plugins = [{
-    name = "zsh-enhancd";
-    file = "enhancd.plugin.zsh";
-    src = "${zsh-enhancd}";
-  }];
+  programs.zsh.plugins = [
+    {
+      name = "zsh-enhancd";
+      file = "enhancd.plugin.zsh";
+      src = "${zsh-enhancd}";
+    }
+  ];
 
-  home.sessionVariables = { ENHANCD_FILTER = "fzf --height 40%"; };
+  home.sessionVariables = {
+    ENHANCD_FILTER = "fzf --height 40%";
+  };
 }

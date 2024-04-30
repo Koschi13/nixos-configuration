@@ -1,4 +1,10 @@
-{ inputs, lib, config, pkgs, ... }:
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -7,18 +13,19 @@
     ../default.nix
   ];
 
-  networking = { hostName = "epsilon"; };
+  networking = {
+    hostName = "epsilon";
+  };
 
   programs.light.enable = true;
   xdg = {
     portal = {
       wlr.enable = true;
 
-      extraPortals = with pkgs;
-        [
-          # Enable the hyprland portal (if using hyprland)
-          # xdg-desktop-portal-hyprland
-        ];
+      extraPortals = with pkgs; [
+        # Enable the hyprland portal (if using hyprland)
+        # xdg-desktop-portal-hyprland
+      ];
     };
   };
 

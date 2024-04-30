@@ -8,7 +8,8 @@ let
       -theme "$HOME/.config/rofi/theme.rasi"
   '';
   catppuccin-filename = "colors/catppuccin.rasi";
-in {
+in
+{
   home.packages = with pkgs; [ rofiWindow ];
 
   programs.rofi = {
@@ -18,10 +19,11 @@ in {
   };
 
   home.file = {
-    ".config/rofi/theme.rasi".text = ''
-      @import "./${catppuccin-filename}"
-    '' + (builtins.readFile ./theme.rasi);
-    ".config/rofi/${catppuccin-filename}".text =
-      (builtins.readFile ./${catppuccin-filename});
+    ".config/rofi/theme.rasi".text =
+      ''
+        @import "./${catppuccin-filename}"
+      ''
+      + (builtins.readFile ./theme.rasi);
+    ".config/rofi/${catppuccin-filename}".text = (builtins.readFile ./${catppuccin-filename});
   };
 }

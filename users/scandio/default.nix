@@ -1,4 +1,11 @@
-{ config, pkgs, firefox-addons, rootPath, lib, ... }:
+{
+  config,
+  pkgs,
+  firefox-addons,
+  rootPath,
+  lib,
+  ...
+}:
 
 {
   imports = [
@@ -30,57 +37,56 @@
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "23.05";
 
-    packages = with pkgs;
-      [
-        # tools
-        ripgrep
-        (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
-        zip
-        unzip
-        blueman
+    packages = with pkgs; [
+      # tools
+      ripgrep
+      (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
+      zip
+      unzip
+      blueman
 
-        # coding
-        jetbrains.pycharm-professional
-        jetbrains.rust-rover
-        android-studio
-        nixfmt # TODO provide via dev shell?
+      # coding
+      jetbrains.pycharm-professional
+      jetbrains.rust-rover
+      android-studio
+      nixfmt-rfc-style # TODO provide via dev shell?
 
-        # encryption
-        git-crypt
-        gnupg
-        yubikey-manager
-        bitwarden
-        bitwarden-cli
+      # encryption
+      git-crypt
+      gnupg
+      yubikey-manager
+      bitwarden
+      bitwarden-cli
 
-        # Messengers
-        tdesktop
-        signal-desktop
-        element-desktop
+      # Messengers
+      tdesktop
+      signal-desktop
+      element-desktop
 
-        # other
-        firefox-wayland
-        spotify
-        pavucontrol
-        photoqt
-        cifs-utils
-        nfs-utils
+      # other
+      firefox-wayland
+      spotify
+      pavucontrol
+      photoqt
+      cifs-utils
+      nfs-utils
 
-        # work
-        _1password-gui
-        slack
-        awscli2 # TODO: now available as module
-        kubectl
-        kubectx
-        kubernetes-helm
-        google-chrome
-        dive
-        obsidian
-        docker-compose
+      # work
+      _1password-gui
+      slack
+      awscli2 # TODO: now available as module
+      kubectl
+      kubectx
+      kubernetes-helm
+      google-chrome
+      dive
+      obsidian
+      docker-compose
 
-        # Screen-share
-        obs-studio
-        obs-studio-plugins.wlrobs
-      ];
+      # Screen-share
+      obs-studio
+      obs-studio-plugins.wlrobs
+    ];
 
     sessionPath = [ "$HOME/.local/bin" ];
 

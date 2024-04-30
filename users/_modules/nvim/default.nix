@@ -11,7 +11,9 @@
   };
 
   home = {
-    sessionVariables = { VISUAL = "vim"; };
+    sessionVariables = {
+      VISUAL = "vim";
+    };
     packages = with pkgs; [ gcc ];
   };
 
@@ -20,9 +22,9 @@
   #
   # Custom user settings for AstroNvim: https://github.com/AstroNvim/user_example
   home.file = {
-    ".config/astronvim/lua/user/init.lua".text =
-      (builtins.readFile ./astronvim/lua/user/init.lua);
-    ".config/astronvim/lua/user/plugins/init.lua".text =
-      (builtins.readFile ./astronvim/lua/user/plugins/init.lua);
+    ".config/astronvim/lua/user/init.lua".text = (builtins.readFile ./astronvim/lua/user/init.lua);
+    ".config/astronvim/lua/user/plugins/init.lua".text = (
+      builtins.readFile ./astronvim/lua/user/plugins/init.lua
+    );
   };
 }

@@ -1,4 +1,10 @@
-{ inputs, lib, config, pkgs, ... }:
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -7,12 +13,16 @@
     ../default.nix
   ];
 
-  networking = { hostName = "alpha"; };
+  networking = {
+    hostName = "alpha";
+  };
 
   services.xserver = {
     windowManager.i3.enable = true;
 
-    displayManager = { defaultSession = "xfce+i3"; };
+    displayManager = {
+      defaultSession = "xfce+i3";
+    };
 
     desktopManager = {
       xterm.enable = false;
@@ -27,20 +37,23 @@
     videoDrivers = [ "nvidia" ];
   };
 
-  environment.xfce.excludePackages = (with pkgs.xfce; [
-    thunar
-    exo
-    mousepad
-    parole
-    ristretto
-    xfce4-power-manager
-    xfce4-taskmanager
-    xfce4-screenshooter
-    xfce4-screensaver
-    xfce4-terminal
-    xfce4-appfinder
-    xfce4-panel
-  ]);
+  environment.xfce.excludePackages = (
+    with pkgs.xfce;
+    [
+      thunar
+      exo
+      mousepad
+      parole
+      ristretto
+      xfce4-power-manager
+      xfce4-taskmanager
+      xfce4-screenshooter
+      xfce4-screensaver
+      xfce4-terminal
+      xfce4-appfinder
+      xfce4-panel
+    ]
+  );
 
   environment.systemPackages = (with pkgs; [ xfce.xfce4-settings ]);
 
