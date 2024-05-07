@@ -44,6 +44,7 @@
       zip
       unzip
       blueman
+      timewarrior
 
       # coding
       jetbrains.pycharm-professional
