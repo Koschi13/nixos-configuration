@@ -154,7 +154,7 @@
     };
 
     services.dbus.packages = with pkgs; [
-      gnome3.gnome-keyring
+      gnome-keyring
       gcr
     ];
     services.gnome.gnome-keyring.enable = true;
