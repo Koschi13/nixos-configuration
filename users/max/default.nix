@@ -9,7 +9,7 @@
   imports = [
     ../_modules/zsh/default.nix
     ../_modules/firefox.nix
-    ../_modules/nvim/default.nix
+    ../_modules/nvim.nix
     ../_modules/homemanager.nix
     ../_modules/nixpkgs.nix
     ../_modules/gnome.nix

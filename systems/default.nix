@@ -127,6 +127,11 @@
     programs = {
       zsh.enable = true;
       dconf.enable = true;
+      neovim = {
+        enable = true;
+        vimAlias = true;
+        viAlias = true;
+      };
     };
 
     # YubiKey configuration

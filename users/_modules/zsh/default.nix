@@ -63,6 +63,9 @@
 
       # kubectl
       k = "kubectl";
+
+      # nvim
+      vim = "nvim";
     };
   };
 
