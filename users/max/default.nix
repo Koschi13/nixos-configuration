@@ -39,7 +39,6 @@
       (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
 
       # coding
-      nixfmt-rfc-style
       jetbrains.rust-rover
 
       # encryption

@@ -27,6 +27,13 @@
       url = "github:akash329d/zsh-alias-finder";
       flake = false;
     };
+
+    ## nvim
+    # TODO: move this to this repository
+    astro-nvim-config = {
+      url = "github:Koschi13/AstroNvim-config";
+      flake = false;
+    };
   };
 
   outputs =
@@ -38,6 +45,7 @@
       zsh-calc,
       zsh-enhancd,
       zsh-alias-finder,
+      astro-nvim-config,
       ...
     }@inputs:
     let
@@ -49,6 +57,7 @@
 
       # Just an alias
       lib = nixpkgs.lib;
+      pkgs = nixpkgs.legacyPackages.${system};
     in
     {
       # NixOS configuration entrypoint
@@ -77,7 +86,7 @@
       # Available through 'home-manager --flake .#your-username@your-hostname'
       homeConfigurations = {
         "max" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${system};
+          inherit pkgs;
           extraSpecialArgs = {
             inherit
               inputs
@@ -86,17 +95,16 @@
               zsh-calc
               zsh-enhancd
               zsh-alias-finder
+              astro-nvim-config
               ;
             rootPath = ./.;
           };
-          modules = [
-            ./users/max/default.nix
-          ];
+          modules = [ ./users/max/default.nix ];
         };
 
         # This user will also be called "max"
         "scandio" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${system};
+          inherit pkgs;
           extraSpecialArgs = {
             inherit
               inputs
@@ -105,13 +113,14 @@
               zsh-calc
               zsh-enhancd
               zsh-alias-finder
+              astro-nvim-config
               ;
             rootPath = ./.;
           };
-          modules = [
-            ./users/scandio/default.nix
-          ];
+          modules = [ ./users/scandio/default.nix ];
         };
       };
+
+      formatter."${system}" = pkgs.nixfmt-rfc-style;
     };
 }

@@ -1,24 +1,27 @@
-{ astronvim, pkgs, ... }:
+{ astro-nvim-config, pkgs, ... }:
 
 {
   home = {
     sessionVariables = {
       VISUAL = "nvim";
+      EDITOR = "nvim";
     };
 
     packages = with pkgs; [
       gcc
       gnumake
+
+      # TODO: enable once the astrolsp file was removed from my fork
+      #       then write the file using nix as described here:
+      #       https://docs.astronvim.com/recipes/advanced_lsp/#lsp-setup-without-installer
+      #
+      # LSPs
+      # pyright
     ];
 
     file = {
       "./.config/nvim/" = {
-        source = builtins.fetchGit {
-          url = "https://github.com/Koschi13/AstroNvim-template";
-          # TODO: use flake input
-          rev = "f89ab0a163dcf667121750c5bca0f097ec5f7b9a";
-          shallow = true;
-        };
+        source = astro-nvim-config;
         recursive = true;
       };
     };

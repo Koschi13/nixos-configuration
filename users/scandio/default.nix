@@ -49,7 +49,6 @@
       jetbrains.pycharm-professional
       jetbrains.rust-rover
       android-studio
-      nixfmt-rfc-style # TODO provide via dev shell?
 
       # encryption
       git-crypt
