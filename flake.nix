@@ -14,13 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland.url = "github:hyprwm/Hyprland";
-
     ## ZSH plugins which are not in nixpkgs
     zsh-calc = {
       url = "github:arzzen/calc.plugin.zsh";
@@ -42,7 +35,6 @@
       nixpkgs,
       home-manager,
       firefox-addons,
-      hyprland,
       zsh-calc,
       zsh-enhancd,
       zsh-alias-finder,
@@ -99,7 +91,6 @@
           };
           modules = [
             ./users/max/default.nix
-            inputs.nixvim.homeManagerModules.nixvim
           ];
         };
 
@@ -119,8 +110,6 @@
           };
           modules = [
             ./users/scandio/default.nix
-            inputs.nixvim.homeManagerModules.nixvim
-            hyprland.homeManagerModules.default
           ];
         };
       };

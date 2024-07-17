@@ -16,7 +16,6 @@
     ../_modules/gpg/default.nix
     ../_modules/homemanager.nix
     ../_modules/nixpkgs.nix
-    #../_modules/hyprland/default.nix
     ../_modules/rofi/default.nix
     ../_modules/dunst.nix
     ../_modules/waybar/default.nix
