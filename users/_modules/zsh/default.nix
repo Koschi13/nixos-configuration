@@ -66,6 +66,9 @@
 
       # nvim
       vim = "nvim";
+
+      # delta (diff tool)
+      diffd = "delta";
     };
   };
 

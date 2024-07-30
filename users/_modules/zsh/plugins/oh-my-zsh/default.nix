@@ -1,7 +1,14 @@
+# See ../default.nix for a description on how to select the 'file'.
 { pkgs, ... }:
 
 {
   programs.zsh.plugins = [
+    {
+      # This is needed since oh-my-zsh.git requires some functions from lib
+      name = "oh-my-zsh.git.functions";
+      file = "git.zsh";
+      src = "${pkgs.oh-my-zsh}/share/oh-my-zsh/lib";
+    }
     {
       name = "oh-my-zsh.vi-mode";
       file = "vi-mode.plugin.zsh";
@@ -11,12 +18,6 @@
       name = "oh-my-zsh.git";
       file = "git.plugin.zsh";
       src = "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/git";
-    }
-    {
-      # This is needed since oh-my-zsh.git requires some functions from lib
-      name = "oh-my-zsh.git.functions";
-      file = "git.zsh";
-      src = "${pkgs.oh-my-zsh}/share/oh-my-zsh/lib";
     }
     {
       # TODO: still not colored...
@@ -30,7 +31,6 @@
       src = "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/kubectl";
     }
     {
-      # TODO: read https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/aws
       name = "oh-my-zsh.aws";
       file = "aws.plugin.zsh";
       src = "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/aws";

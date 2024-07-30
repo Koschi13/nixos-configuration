@@ -1,4 +1,10 @@
-# TODO: For more go here -> https://github.com/unixorn/awesome-zsh-plugins
+# The 'file' which is needed for each plugin entry must be looked up in the
+# repository. Some are named as the plugin while others have different names.
+# For the packages comming from the NIX store you need to look into the source
+# and see which files are added to the build context (or look up the original
+# repo)
+#
+# For more plugins go here -> https://github.com/unixorn/awesome-zsh-plugins
 {
   pkgs,
   zsh-calc,
@@ -46,7 +52,7 @@
     }
     {
       name = "zsh-bd";
-      file = "zsh-bd.zsh";
+      file = "bd.zsh";
       src = "${pkgs.zsh-bd}/share/zsh-bd";
     }
     {

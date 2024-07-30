@@ -11,7 +11,7 @@
   imports = [
     ../_modules/zsh/default.nix
     ../_modules/firefox.nix
-    ../_modules/nvim.nix
+    ../_modules/nvim/default.nix
     ../_modules/gnome.nix
     ../_modules/gpg/default.nix
     ../_modules/homemanager.nix

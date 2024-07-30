@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "astro-nvim-config": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1721135737,
-        "narHash": "sha256-YQ24xlqiMWGBuSAOjSWjCrMmoA0FZLPA2cy8FPuFREc=",
-        "owner": "Koschi13",
-        "repo": "AstroNvim-config",
-        "rev": "f89ab0a163dcf667121750c5bca0f097ec5f7b9a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Koschi13",
-        "repo": "AstroNvim-config",
-        "type": "github"
-      }
-    },
     "firefox-addons": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -91,7 +75,6 @@
     },
     "root": {
       "inputs": {
-        "astro-nvim-config": "astro-nvim-config",
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",

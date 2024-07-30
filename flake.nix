@@ -27,13 +27,6 @@
       url = "github:akash329d/zsh-alias-finder";
       flake = false;
     };
-
-    ## nvim
-    # TODO: move this to this repository
-    astro-nvim-config = {
-      url = "github:Koschi13/AstroNvim-config";
-      flake = false;
-    };
   };
 
   outputs =
@@ -45,7 +38,6 @@
       zsh-calc,
       zsh-enhancd,
       zsh-alias-finder,
-      astro-nvim-config,
       ...
     }@inputs:
     let
@@ -95,7 +87,6 @@
               zsh-calc
               zsh-enhancd
               zsh-alias-finder
-              astro-nvim-config
               ;
             rootPath = ./.;
           };
@@ -113,7 +104,6 @@
               zsh-calc
               zsh-enhancd
               zsh-alias-finder
-              astro-nvim-config
               ;
             rootPath = ./.;
           };
