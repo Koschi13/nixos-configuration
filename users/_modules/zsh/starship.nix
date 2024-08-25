@@ -40,7 +40,7 @@ let
     builtins.readFile (
       # TODO: utilize flake and let it decide the hash
       builtins.fetchurl {
-        url = "https://raw.githubusercontent.com/catppuccin/starship/main/palettes/frappe.toml";
+        url = "https://raw.githubusercontent.com/catppuccin/starship/3c4749512e7d552adf48e75e5182a271392ab176/themes/frappe.toml";
         sha256 = "d040b8442d60eb99143269b1d777650c4e4495f1dfb9583f9a0ab8c730f44e5f";
       }
     )

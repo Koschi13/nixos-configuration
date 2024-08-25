@@ -17,24 +17,27 @@
     hostName = "alpha";
   };
 
-  services.xserver = {
-    windowManager.i3.enable = true;
-
+  services = {
     displayManager = {
       defaultSession = "xfce+i3";
     };
 
-    desktopManager = {
-      xterm.enable = false;
-      xfce = {
-        enable = true;
-        noDesktop = true;
-        enableXfwm = false;
-        enableScreensaver = false;
-      };
-    };
+    xserver = {
+      windowManager.i3.enable = true;
 
-    videoDrivers = [ "nvidia" ];
+
+      desktopManager = {
+        xterm.enable = false;
+        xfce = {
+          enable = true;
+          noDesktop = true;
+          enableXfwm = false;
+          enableScreensaver = false;
+        };
+      };
+
+      videoDrivers = [ "nvidia" ];
+    };
   };
 
   environment.xfce.excludePackages = (
