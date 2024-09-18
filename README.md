@@ -46,20 +46,15 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 
 - [ ] Set up Python via shells
 - [ ] Install VS-Code. Either on a per-project basis or globally (maybe there are shell templates?)
-- [ ] Figure out, why the git config isn't working
 - [ ] Configure AWS cli via HomeManager using the .secrets directory
 - [ ] Add dnd shortcut
-- [ ] Install and use a formatter: https://www.reddit.com/r/NixOS/comments/1acemjr/overview_of_nix_formatters_ecosystem
-- [ ] `bd` not working
 - [ ] Caps <-> Ctrl only for notebook
 - [ ] See if it is possible to save JetBrains settings in this repo, while still being able to change something via the UI
-- [ ] Use docker, since podman is making problems
 - [ ] Git config `rerere.enabled true`
 - [ ] Git config `branch.sort -committerdate`
 - [ ] Git config `core.fsmonitor true`
 - [ ] Git config `core.untrackedCache true`
-- [ ] Figure out how to install a LSP in AstroNvim (The installation is globally...)
-  - Maybe there is a way to install AstroNvim through Nix and add custom dependencies for the LSP to it?
 - [ ] Dunstctl font blurry
 - [ ] Dunstctl window in the middle of the screen, E-Mails and Messages should appear longer (maybe with sound even?)
-- [ ] Remove Hyprland completely
+- [ ] Install and configure https://github.com/denisidoro/navi
+- [ ] Create a windows like desktop as alternative (and maybe for gaming and office stuff)

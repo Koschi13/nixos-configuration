@@ -91,6 +91,8 @@
         # Audio related groups
         "audio"
         "sound"
+        # USB mount
+        "storage"
       ];
     };
 
@@ -162,5 +164,10 @@
       gcr
     ];
     services.gnome.gnome-keyring.enable = true;
+
+    # USB mounting
+    services.devmon.enable = true;
+    services.gvfs.enable = true; 
+    services.udisks2.enable = true;
   };
 }
