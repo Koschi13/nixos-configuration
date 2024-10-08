@@ -63,7 +63,6 @@
       element-desktop
 
       # other
-      firefox-wayland
       spotify
       pavucontrol
       photoqt
@@ -88,11 +87,6 @@
     ];
 
     sessionPath = [ "$HOME/.local/bin" ];
-
-    sessionVariables = {
-      TERMINAL = "alacritty";
-      BROWSER = "firefox";
-    };
   };
 
   services.mpris-proxy.enable = true;

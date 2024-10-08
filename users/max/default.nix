@@ -55,7 +55,6 @@
       discord
 
       # other
-      firefox-wayland
       spotify
       pavucontrol
     ];
