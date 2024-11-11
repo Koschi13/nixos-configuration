@@ -14,7 +14,7 @@ in
         };
         size = 10;
       };
-      import = [
+      general.import = [
         # TODO: instead of ~ use home variable
         "~/${catppuccin-frappe-toml}"
       ];

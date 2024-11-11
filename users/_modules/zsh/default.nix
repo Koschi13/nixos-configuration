@@ -85,7 +85,7 @@
 
     eza = {
       enable = true;
-      icons = true;
+      icons = "auto";
       extraOptions = [ "--group-directories-first" ];
     };
 
