@@ -39,7 +39,7 @@
     packages = with pkgs; [
       # tools
       ripgrep
-      (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
+      nerd-fonts.dejavu-sans-mono
       zip
       unzip
       blueman
@@ -48,6 +48,7 @@
       # coding
       jetbrains.pycharm-professional
       jetbrains.rust-rover
+      jetbrains.gateway
       android-studio
 
       # encryption

@@ -36,7 +36,7 @@
     packages = with pkgs; [
       # tools
       ripgrep
-      (nerdfonts.override { fonts = [ "DejaVuSansMono" ]; })
+      nerd-fonts.dejavu-sans-mono
 
       # coding
       jetbrains.rust-rover

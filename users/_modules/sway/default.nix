@@ -273,7 +273,7 @@
 
       startup = [
         {
-          command = "command -v swww >/dev/null 2>&1 && swww init & sleep 0.5 && exec wallpaper_random || echo 'swww not installed'";
+          command = "command -v swww >/dev/null 2>&1 && swww init & sleep 5 && exec wallpaper_random || echo 'swww not installed'";
         }
       ];
     };
