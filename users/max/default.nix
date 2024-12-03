@@ -24,6 +24,18 @@
     ../_modules/git.nix
   ];
 
+  # Enable fonts
+  fonts = {
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        serif = ["NotoSerif Nerd Font"];
+        sansSerif = ["NotoSans Nerd Font"];
+        monospace = ["NotoSansM Nerd Font Mono"];
+      };
+    };
+  };
+
   home = {
     # Home Manager needs a bit of information about you and the
     # paths it should manage.
@@ -34,9 +46,12 @@
     stateVersion = "23.05";
 
     packages = with pkgs; [
+      # fonts
+      nerd-fonts.dejavu-sans-mono
+      nerd-fonts.noto  # alt until dejavu is fixed
+
       # tools
       ripgrep
-      nerd-fonts.dejavu-sans-mono
 
       # coding
       jetbrains.rust-rover

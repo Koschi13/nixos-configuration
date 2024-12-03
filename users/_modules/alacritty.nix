@@ -10,7 +10,7 @@ in
       env.TERM = "xterm-256color";
       font = {
         normal = {
-          family = "DejaVuSansMono";
+          family = "NotoSansM Nerd Font Mono";
         };
         size = 10;
       };

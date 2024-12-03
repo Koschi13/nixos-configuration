@@ -8,6 +8,7 @@ configuration {
     display-window:             " Windows";
     drun-display-format:        "{name}";
     window-format:              "{w} · {c} · {t}";
+    font:                       "NotoSansM Nerd Font Mono 10";
 }
 
 /*****----- Global Properties -----*****/
