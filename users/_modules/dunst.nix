@@ -15,7 +15,7 @@
     settings = {
       global = {
         rounded = "yes";
-        origin = "top-right";
+        origin = "top-center";
         monitor = "0";
         alignment = "left";
         vertical_alignment = "center";
