@@ -11,6 +11,12 @@
       gcc
       gnumake
 
+      # Tools
+      #
+      # See requirements here: https://docs.astronvim.com/
+      bottom
+      gdu
+
       # LSPs
       #
       # All LSPs must be added in ./astronvim/lua/plugins/astrolsp.lua

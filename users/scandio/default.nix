@@ -59,6 +59,7 @@
       unzip
       blueman
       timewarrior
+      bruno # postman alternative
 
       # coding
       jetbrains.pycharm-professional
