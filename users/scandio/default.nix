@@ -81,6 +81,7 @@
 
       # other
       spotify
+      tidal-hifi
       pavucontrol
       photoqt
       cifs-utils
