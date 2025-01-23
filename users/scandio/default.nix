@@ -63,7 +63,6 @@
 
       # coding
       jetbrains.pycharm-professional
-      jetbrains.rust-rover
       jetbrains.gateway
       android-studio
 
