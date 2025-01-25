@@ -63,7 +63,7 @@
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-    # NvidiaConfig (opengl)
+    # Default graphic acceleration
     graphics = {
       enable = true;
       enable32Bit = true;
@@ -77,6 +77,17 @@
 
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.latest;
+
+      prime = {
+		    # Make sure to use the correct Bus ID values for your system!
+		    nvidiaBusId = "PCI:10:0:0";
+        amdgpuBusId = "PCI:5:0:0";
+
+        offload = {
+          enable = true;
+          enableOffloadCmd = true;
+        };
+      };
     };
   };
 

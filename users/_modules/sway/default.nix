@@ -6,7 +6,10 @@
 }:
 
 {
-  imports = [ ./env.nix ];
+  imports = [
+    ./env.nix
+    ./kanshi.nix
+  ];
 
   # TODO move to extra file and import
   #      use let like here to define the package bins
@@ -194,6 +197,11 @@
           # Applications
           #
           "${m}+Return" = "exec ${term}";
+
+          #
+          # Misc
+          #
+          "${m}+g" = "input * xkb_switch_layout next";
         };
 
       modes =

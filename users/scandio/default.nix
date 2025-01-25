@@ -9,22 +9,22 @@
 
 {
   imports = [
-    ../_modules/zsh/default.nix
+    ../_modules/alacritty.nix
+    ../_modules/direnv.nix
+    ../_modules/dunst.nix
     ../_modules/firefox.nix
-    ../_modules/nvim/default.nix
+    ../_modules/git.nix
     ../_modules/gnome.nix
     ../_modules/gpg/default.nix
     ../_modules/homemanager.nix
+    ../_modules/librewolf.nix
     ../_modules/nixpkgs.nix
+    ../_modules/nvim/default.nix
     ../_modules/rofi/default.nix
-    ../_modules/dunst.nix
-    ../_modules/waybar/default.nix
-    ../_modules/direnv.nix
     ../_modules/sway/default.nix
     ../_modules/swww.nix
-    ../_modules/alacritty.nix
-    ../_modules/librewolf.nix
-    ../_modules/git.nix
+    ../_modules/waybar/default.nix
+    ../_modules/zsh/default.nix
   ];
 
   # Enable fonts
@@ -67,24 +67,23 @@
       android-studio
 
       # encryption
+      bitwarden
+      bitwarden-cli
       git-crypt
       gnupg
       yubikey-manager
-      bitwarden
-      bitwarden-cli
 
       # Messengers
-      tdesktop
-      signal-desktop
       element-desktop
+      signal-desktop
+      tdesktop
 
       # other
-      spotify
-      tidal-hifi
-      pavucontrol
-      photoqt
       cifs-utils
       nfs-utils
+      pavucontrol
+      photoqt
+      tidal-hifi
 
       # work
       _1password-gui
