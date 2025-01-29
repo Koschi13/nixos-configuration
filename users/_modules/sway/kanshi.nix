@@ -28,6 +28,24 @@
           ];
         };
       }
+      {
+        profile = {
+          name = "epsilon";
+          outputs = [
+            {
+              criteria = "AOC U34G2G4R3 0x00002347";
+              position = "1440,0";
+              mode = "3440x1440@30Hz";
+            }
+            {
+              criteria = "eDP-1";
+              position = "0,0";
+              mode = "2880x1800@90Hz";
+              scale = 2.0;
+            }
+          ];
+        };
+      }
     ];
   };
 }
