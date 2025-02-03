@@ -30,7 +30,7 @@
       }
       {
         profile = {
-          name = "epsilon";
+          name = "epsilon-homeoffice";
           outputs = [
             {
               criteria = "AOC U34G2G4R3 0x00002347";
@@ -42,6 +42,19 @@
               position = "0,0";
               mode = "2880x1800@90Hz";
               scale = 2.0;
+            }
+          ];
+        };
+      }
+      {
+        profile = {
+          name = "epsilon";
+          outputs = [
+            {
+              criteria = "eDP-1";
+              position = "0,0";
+              mode = "2880x1800@90Hz";
+              scale = 1.5;
             }
           ];
         };
