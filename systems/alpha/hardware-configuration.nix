@@ -60,6 +60,9 @@
 
   swapDevices = [ { device = "/dev/disk/by-label/NIXSWAP"; } ];
 
+  # Enable nvidia drivers
+  services.xserver.videoDrivers = [ "nvidia" ];
+
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 

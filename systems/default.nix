@@ -61,7 +61,7 @@
     };
 
     # Enable sound (pipewire)
-    hardware.pulseaudio.enable = false;
+    services.pulseaudio.enable = false;
     security.rtkit.enable = true; # For realtime acquisition
     security.polkit.enable = true; # Needed for Hyprland/Sway
     # See https://github.com/hyprwm/Hyprland/issues/2727

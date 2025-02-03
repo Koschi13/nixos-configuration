@@ -15,7 +15,6 @@
     ../_modules/gnome.nix
     ../_modules/gpg/default.nix
     ../_modules/homemanager.nix
-    #../_modules/i3/default.nix
     ../_modules/nixpkgs.nix
     ../_modules/nvim/default.nix
     ../_modules/rofi/default.nix
@@ -53,7 +52,7 @@
 
       # tools
       ripgrep
-      niv
+      nvtopPackages.full
 
       # encryption
       bitwarden

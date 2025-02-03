@@ -8,9 +8,11 @@
 
 {
   imports = [
+    ../default.nix
+    ./cache.nix
     # Include the results of the hardware scan
     ./hardware-configuration.nix
-    ../default.nix
+    ./ollama.nix
     ./radeon.nix
   ];
 
