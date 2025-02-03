@@ -58,6 +58,7 @@
         alpha = lib.nixosSystem {
           specialArgs = {
             inherit inputs outputs;
+            rootPath = ./.;
           };
 
           modules = [ ./systems/alpha/default.nix ];
