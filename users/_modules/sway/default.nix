@@ -37,10 +37,10 @@
     config = {
       modifier = "Mod4"; # Logo key
 
-      left = "j";
-      down = "k";
-      up = "l";
-      right = "Semicolon";
+      left = "h";
+      down = "j";
+      up = "k";
+      right = "l";
 
       terminal = "alacritty";
 
