@@ -66,11 +66,6 @@
         fullscreen = "delay";
       };
 
-      disable_tidal = {
-        appname = "tidal-hifi";
-        skip_display = "true";
-      };
-
       urgency_critical = {
         background = "#d64e4e";
         foreground = "#f0e0e0";
