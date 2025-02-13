@@ -18,7 +18,6 @@
     ../_modules/nixpkgs.nix
     ../_modules/nvim/default.nix
     ../_modules/rofi/default.nix
-    ../_modules/spotify.nix
     ../_modules/sway/default.nix
     ../_modules/swww.nix
     ../_modules/waybar/default.nix
@@ -70,6 +69,10 @@
 
       # other
       pavucontrol
+
+      # entertainment
+      vlc
+      spotify
     ];
 
     sessionPath = [ "$HOME/.local/bin" ];
