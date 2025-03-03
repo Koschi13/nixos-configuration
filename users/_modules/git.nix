@@ -6,12 +6,14 @@
   rootPath,
   ...
 }:
-
 let
-
   vars = import "${rootPath}/.secrets/git_vars.nix";
 in
 {
+  home.packages = with pkgs; [
+    git-autofixup
+  ];
+
   programs.git = {
     enable = true;
     userName = "Maximilian Konter";
@@ -20,6 +22,7 @@ in
     signing = {
       signByDefault = true;
       key = "FCD1C7696CB6672A";
+      format = "openpgp";
     };
 
     extraConfig = {
@@ -52,7 +55,19 @@ in
       }
 
       {
-        condition = "gitdir:~/Git/BSH/**";
+        condition = "gitdir:~/Git/BSH/GitHub/**";
+        contents = {
+          user = {
+            name = vars.bshGit.name;
+            email = vars.bshGit.email;
+          };
+          commit.gpgsign = false;
+          tag.gpgsign = false;
+        };
+      }
+
+      {
+        condition = "gitdir:~/Git/BSH/BitBucket/**";
         contents = {
           user = {
             name = vars.bsh.name;
