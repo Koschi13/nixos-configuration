@@ -53,6 +53,7 @@
       # tools
       ripgrep
       nvtopPackages.full
+      blueman
 
       # encryption
       bitwarden
@@ -70,9 +71,13 @@
       # other
       pavucontrol
 
+      # office
+      pdfsam-basic
+
       # entertainment
       vlc
       spotify
+      photoqt
     ];
 
     sessionPath = [ "$HOME/.local/bin" ];
