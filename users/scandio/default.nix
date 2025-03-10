@@ -21,6 +21,7 @@
     ../_modules/nixpkgs.nix
     ../_modules/nvim/default.nix
     ../_modules/rofi/default.nix
+    ../_modules/ssh.nix
     ../_modules/sway/default.nix
     ../_modules/swww.nix
     ../_modules/waybar/default.nix
