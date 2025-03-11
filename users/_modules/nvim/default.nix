@@ -20,9 +20,14 @@
       # LSPs
       #
       # All LSPs must be added in ./astronvim/lua/plugins/astrolsp.lua
-      pyright
+      basedpyright
       ruff
+      lua-language-server
+      rust-analyzer
+      harper  # Grammar checker
     ];
+
+    # TODO: The harper dictionary is located at `~/.config/harper-ls/dictionary.txt`, it would be nice if we could manage that via this repo
 
     file = {
       "./.config/nvim/" = {

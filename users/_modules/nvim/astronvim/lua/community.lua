@@ -6,4 +6,5 @@
 return {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.colorscheme.catppuccin" },
+  { import = "astrocommunity.recipes.astrolsp-no-insert-inlay-hints" },
 }
