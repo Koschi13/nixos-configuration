@@ -8,14 +8,15 @@ in {
   programs.ssh = {
     enable = true;
     matchBlocks = {
-      # Together with the git config this enables us to have a ssh config on a
-      # directory basis.
-      # See: https://superuser.com/a/366656
+      # Instead of using `git@github.com:<url>` use `vars.bshGit.host:<url>`
       "${vars.bshGit.host}" = {
         user = "git";
         hostname = vars.bshGit.hostname;
         identityFile = vars.bshGit.identityFile;
         identitiesOnly = true;
+        extraOptions = {
+          IdentityAgent = "none";
+        };
       };
       "${vars.bsh.host}" = {
         user = "git";

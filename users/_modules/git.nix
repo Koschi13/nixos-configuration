@@ -61,14 +61,6 @@ in
             name = vars.bshGit.name;
             email = vars.bshGit.email;
           };
-          # Together with the ssh config this enables us to have a ssh config on a
-          # directory basis.
-          # See: https://superuser.com/a/366656
-          url = {
-            "${vars.bshGit.user}:" = {
-              instreadOf = "git@github.com:";
-            };
-          };
           commit.gpgsign = false;
           tag.gpgsign = false;
         };

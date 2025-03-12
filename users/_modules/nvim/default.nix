@@ -28,6 +28,7 @@
     ];
 
     # TODO: The harper dictionary is located at `~/.config/harper-ls/dictionary.txt`, it would be nice if we could manage that via this repo
+    # TODO: The spell dictionary is located at `~/.config/nvim/spell/en.utf-8.add`, it would be nice if we could manage that via this repo (https://github.com/psliwka/vim-dirtytalk)
 
     file = {
       "./.config/nvim/" = {
