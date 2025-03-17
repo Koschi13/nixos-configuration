@@ -1,6 +1,10 @@
-{ pkgs, ... }:
+{ rootPath, pkgs, ... }:
 
-{
+let
+  vars = import "${rootPath}/.secrets/git_vars.nix";
+  octoTemplate = builtins.readFile ./astronvim_templated/lua/plugins/octo-nvim.lua;
+  octoConfig = builtins.replaceStrings ["<githubAlias>"] [vars.bshGit.host] octoTemplate;
+in {
   home = {
     sessionVariables = {
       VISUAL = "nvim";
@@ -17,14 +21,24 @@
       bottom
       gdu
 
-      # LSPs
+      # LSPs and Languages
       #
-      # All LSPs must be added in ./astronvim/lua/plugins/astrolsp.lua
-      basedpyright
-      ruff
-      lua-language-server
-      rust-analyzer
-      harper  # Grammar checker
+      ## Rust
+      rust-analyzer  # required by astrocommunity.pack.rust
+
+      ## Python
+      python3  # required by astrocommunity.pack.python-ruff
+
+      ## Nix
+      nixd  # required by astrocommunity.pack.nix
+      deadnix  # required by astrocommunity.pack.nix
+      statix  # required by astrocommunity.pack.nix
+
+      ## Node
+      nodejs_23
+
+      # GitHub
+      gh  # required by astrocommunity.git.octo-nvim
     ];
 
     # TODO: The harper dictionary is located at `~/.config/harper-ls/dictionary.txt`, it would be nice if we could manage that via this repo
@@ -36,5 +50,6 @@
         recursive = true;
       };
     };
+    file.".config/nvim/lua/plugins/octo-nvim.lua".text = octoConfig;
   };
 }

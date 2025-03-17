@@ -10,18 +10,7 @@ return {
   -- we must use the function override because table merging
   -- does not play nicely with list-like tables
   ---@param opts AstroLSPOpts
-  opts = function(plugin, opts)
-    -- safely extend the servers list
-    opts.servers = opts.servers or {}
-    vim.list_extend(opts.servers, {
-      "basedpyright",
-      "ruff",
-      "lua_ls",  -- lua-language-server
-      "rust_analyzer",
-      "harper_ls",  -- harper
-      -- add more (installed) servers as needed...
-    })
-
+  opts = function(_, opts)
     opts.features = require("astrocore").extend_tbl(opts.features or {}, {
       codelens = true, -- enable/disable codelens refresh on start
       inlay_hints = true, -- enable/disable inlay hints on start
@@ -45,15 +34,6 @@ return {
         settings = {
           basedpyright = {
             disableOrganizeImports = true, -- Using Ruff
-            -- capabilities = {
-            --   textDocument = {
-            --     publishDiagnostics = {
-            --       tagSupport = {
-            --         valueSet = { 2 },
-            --       },
-            --     },
-            --   },
-            -- },
           },
           -- python = {
           --   analysis = {
