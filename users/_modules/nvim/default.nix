@@ -20,6 +20,7 @@ in {
       # See requirements here: https://docs.astronvim.com/
       bottom
       gdu
+      unzip  # needed for Mason
 
       # LSPs and Languages
       #
