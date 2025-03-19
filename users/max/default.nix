@@ -52,6 +52,7 @@
 
       # tools
       ripgrep
+      fd
       nvtopPackages.full
       blueman
 

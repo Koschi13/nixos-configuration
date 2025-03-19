@@ -21,6 +21,7 @@ in {
       bottom
       gdu
       unzip  # needed for Mason
+      lazydocker
 
       # LSPs and Languages
       #

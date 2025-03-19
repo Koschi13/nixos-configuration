@@ -56,6 +56,7 @@
 
       # tools
       ripgrep
+      fd
       zip
       unzip
       blueman

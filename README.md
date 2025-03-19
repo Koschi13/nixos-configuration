@@ -1,6 +1,5 @@
 # My NixOS configuration
 
-
 ## Development
 
 ### Formatting
@@ -18,6 +17,7 @@ set up your disks. **Handle with care, this will automatically overwrite your
 disk!**
 
 After that run:
+
 ```
 sudo nixos-install --flake .#<hostname>
 ```
@@ -25,12 +25,14 @@ sudo nixos-install --flake .#<hostname>
 ### Setting up your system
 
 Use the `apply-system` scripts to apply the configuration. E.g.:
+
 ```
 ./scripts/apply-system
 ```
 
 This should use your hostname to generate the right config. If you don't have
 the hostname set yet, you can use:
+
 ```
 sudo nixos-rebuild switch --flake .#<hostname>
 ```
@@ -38,6 +40,7 @@ sudo nixos-rebuild switch --flake .#<hostname>
 ### Setting up your user
 
 Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
+
 ```
 ./scripts/apply-user-max.sh
 ```
