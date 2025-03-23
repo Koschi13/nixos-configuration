@@ -1,12 +1,4 @@
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}:
-
-{
+{pkgs, ...}: {
   imports = [
     # Include the results of the hardware scan
     ./hardware-configuration.nix
@@ -30,7 +22,7 @@
     settings = {
       initial_session = {
         user = "max";
-        command = "$SHELL -l";
+        command = "${pkgs.sway}/bin/sway";
       };
     };
   };

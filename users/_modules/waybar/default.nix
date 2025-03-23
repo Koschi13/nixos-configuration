@@ -3,16 +3,14 @@
   lib,
   pkgs,
   ...
-}:
-
-{
+}: {
   programs.waybar = {
     enable = true;
     systemd = {
       enable = false;
       target = "graphical-session.target";
     };
-    style = (builtins.readFile ./style.css);
+    style = builtins.readFile ./style.css;
     settings = [
       {
         "layer" = "top";
@@ -24,7 +22,7 @@
           "cpu"
           "temperature"
         ];
-        modules-center = [ "clock" ];
+        modules-center = ["clock"];
         modules-right = [
           "pulseaudio"
           "backlight"

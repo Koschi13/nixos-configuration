@@ -4,7 +4,6 @@
   pkgs,
   ...
 }:
-
 # TODO: find a way to share the common stuff with sway
 let
   l = "j"; # left
@@ -14,9 +13,8 @@ let
   i3lock-color-lock = pkgs.writeShellScriptBin "i3lock-color-lock" (
     builtins.readFile ./i3lock-color-lock.sh
   );
-in
-{
-  imports = [ ./env.nix ];
+in {
+  imports = [./env.nix];
 
   home.packages = with pkgs; [
     pamixer
@@ -44,75 +42,72 @@ in
       menu = "rofiWindow"; # See rofi/default.nix
 
       # Set colors according to https://github.com/catppuccin/i3
-      colors =
-        let
-          rosewater = "#f2d5cf";
-          flamingo = "#eebebe";
-          pink = "#f4b8e4";
-          mauve = "#ca9ee6";
-          red = "#e78284";
-          maroon = "#ea999c";
-          peach = "#ef9f76";
-          yellow = "#e5c890";
-          green = "#a6d189";
-          teal = "#81c8be";
-          sky = "#99d1db";
-          sapphire = "#85c1dc";
-          blue = "#8caaee";
-          lavender = "#babbf1";
-          text = "#c6d0f5";
-          subtext1 = "#b5bfe2";
-          subtext0 = "#a5adce";
-          overlay2 = "#949cbb";
-          overlay1 = "#838ba7";
-          overlay0 = "#737994";
-          surface2 = "#626880";
-          surface1 = "#51576d";
-          surface0 = "#414559";
-          base = "#303446";
-          mantle = "#292c3c";
-          crust = "#232634";
-        in
-        rec {
-          focused = {
-            border = lavender;
-            background = base;
-            text = text;
-            indicator = rosewater;
-            childBorder = lavender;
-          };
-          unfocused = {
-            border = overlay0;
-            background = base;
-            text = text;
-            indicator = rosewater;
-            childBorder = overlay0;
-          };
-          focusedInactive = unfocused;
-          urgent = {
-            border = peach;
-            background = base;
-            text = peach;
-            indicator = overlay0;
-            childBorder = peach;
-          };
-          placeholder = {
-            border = overlay0;
-            background = base;
-            text = text;
-            indicator = overlay0;
-            childBorder = overlay0;
-          };
+      colors = let
+        rosewater = "#f2d5cf";
+        flamingo = "#eebebe";
+        pink = "#f4b8e4";
+        mauve = "#ca9ee6";
+        red = "#e78284";
+        maroon = "#ea999c";
+        peach = "#ef9f76";
+        yellow = "#e5c890";
+        green = "#a6d189";
+        teal = "#81c8be";
+        sky = "#99d1db";
+        sapphire = "#85c1dc";
+        blue = "#8caaee";
+        lavender = "#babbf1";
+        text = "#c6d0f5";
+        subtext1 = "#b5bfe2";
+        subtext0 = "#a5adce";
+        overlay2 = "#949cbb";
+        overlay1 = "#838ba7";
+        overlay0 = "#737994";
+        surface2 = "#626880";
+        surface1 = "#51576d";
+        surface0 = "#414559";
+        base = "#303446";
+        mantle = "#292c3c";
+        crust = "#232634";
+      in rec {
+        focused = {
+          border = lavender;
           background = base;
+          text = text;
+          indicator = rosewater;
+          childBorder = lavender;
         };
+        unfocused = {
+          border = overlay0;
+          background = base;
+          text = text;
+          indicator = rosewater;
+          childBorder = overlay0;
+        };
+        focusedInactive = unfocused;
+        urgent = {
+          border = peach;
+          background = base;
+          text = peach;
+          indicator = overlay0;
+          childBorder = peach;
+        };
+        placeholder = {
+          border = overlay0;
+          background = base;
+          text = text;
+          indicator = overlay0;
+          childBorder = overlay0;
+        };
+        background = base;
+      };
 
       # It is super important that the left side of the binding does not include any spaces!
-      keybindings =
-        let
-          m = config.xsession.windowManager.i3.config.modifier;
-          term = config.xsession.windowManager.i3.config.terminal;
-          menu = config.xsession.windowManager.i3.config.menu;
-        in
+      keybindings = let
+        m = config.xsession.windowManager.i3.config.modifier;
+        term = config.xsession.windowManager.i3.config.terminal;
+        menu = config.xsession.windowManager.i3.config.menu;
+      in
         lib.mkOptionDefault {
           #
           # System
@@ -259,16 +254,15 @@ in
       # Despite the name, also works for non-floating windows.
       # Change normal to inverse to use left mouse button for resizing and right
       # mouse button for dragging.
-      floating =
-        let
-          m = config.xsession.windowManager.i3.config.modifier;
-        in
+      floating = let
+        m = config.xsession.windowManager.i3.config.modifier;
+      in
         lib.mkOptionDefault {
           modifier = "${m}";
           criteria = [
-            { title = "Emulator"; }
-            { title = "Android Emulator"; }
-            { class = "Pavucontrol"; }
+            {title = "Emulator";}
+            {title = "Android Emulator";}
+            {class = "Pavucontrol";}
           ];
         };
 

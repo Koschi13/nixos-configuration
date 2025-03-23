@@ -1,7 +1,5 @@
 # TODO: it is not fully working, probably due to zsh-fzf-tab
-{ zsh-enhancd, ... }:
-
-{
+{zsh-enhancd, ...}: {
   programs.zsh.plugins = [
     {
       name = "zsh-enhancd";

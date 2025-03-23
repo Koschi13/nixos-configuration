@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   rofiWindow = pkgs.writeShellScriptBin "rofiWindow" ''
     #!/usr/bin/env bash
     ## Run
@@ -8,9 +11,8 @@ let
       -theme "$HOME/.config/rofi/theme.rasi"
   '';
   catppuccin-filename = "colors/catppuccin.rasi";
-in
-{
-  home.packages = with pkgs; [ rofiWindow ];
+in {
+  home.packages = with pkgs; [rofiWindow];
 
   programs.rofi = {
     enable = true;
@@ -24,6 +26,6 @@ in
         @import "./${catppuccin-filename}"
       ''
       + (builtins.readFile ./theme.rasi);
-    ".config/rofi/${catppuccin-filename}".text = (builtins.readFile ./${catppuccin-filename});
+    ".config/rofi/${catppuccin-filename}".text = builtins.readFile ./${catppuccin-filename};
   };
 }

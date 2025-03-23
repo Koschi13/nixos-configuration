@@ -3,9 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-
-{
+}: {
   programs.direnv = {
     enable = true;
     enableBashIntegration = true;

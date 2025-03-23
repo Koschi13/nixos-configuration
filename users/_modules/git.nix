@@ -2,11 +2,9 @@
   pkgs,
   rootPath,
   ...
-}:
-let
+}: let
   vars = import "${rootPath}/.secrets/git_vars.nix";
-in
-{
+in {
   home.packages = with pkgs; [
     git-autofixup
   ];

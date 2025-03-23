@@ -3,9 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-
-{
+}: {
   imports = [
     ./env.nix
     ./kanshi.nix
@@ -46,7 +44,7 @@
 
       menu = "rofiWindow"; # See scripts
 
-      bars = [ { command = "${pkgs.waybar}/bin/waybar"; } ];
+      bars = [{command = "${pkgs.waybar}/bin/waybar";}];
 
       # Set colors according to https://github.com/catppuccin/i3
       colors = rec {
@@ -83,16 +81,15 @@
       };
 
       # It is super important that the left side of the binding does not include any spaces!
-      keybindings =
-        let
-          m = config.wayland.windowManager.sway.config.modifier;
-          l = config.wayland.windowManager.sway.config.left;
-          r = config.wayland.windowManager.sway.config.right;
-          u = config.wayland.windowManager.sway.config.up;
-          d = config.wayland.windowManager.sway.config.down;
-          term = config.wayland.windowManager.sway.config.terminal;
-          menu = config.wayland.windowManager.sway.config.menu;
-        in
+      keybindings = let
+        m = config.wayland.windowManager.sway.config.modifier;
+        l = config.wayland.windowManager.sway.config.left;
+        r = config.wayland.windowManager.sway.config.right;
+        u = config.wayland.windowManager.sway.config.up;
+        d = config.wayland.windowManager.sway.config.down;
+        term = config.wayland.windowManager.sway.config.terminal;
+        menu = config.wayland.windowManager.sway.config.menu;
+      in
         lib.mkOptionDefault {
           #
           # System
@@ -204,29 +201,27 @@
           "${m}+g" = "input * xkb_switch_layout next";
         };
 
-      modes =
-        let
-          l = config.wayland.windowManager.sway.config.left;
-          r = config.wayland.windowManager.sway.config.right;
-          u = config.wayland.windowManager.sway.config.up;
-          d = config.wayland.windowManager.sway.config.down;
-        in
-        {
-          "resize" = {
-            # left will shrink the containers width
-            "${l}" = "resize shrink width 25px";
-            # down will grow the containers height
-            "${d}" = "resize grow height 25px";
-            # up will shrink the containers height
-            "${u}" = "resize shrink height 25px";
-            # right will grow the containers width
-            "${r}" = "resize grow width 25px";
+      modes = let
+        l = config.wayland.windowManager.sway.config.left;
+        r = config.wayland.windowManager.sway.config.right;
+        u = config.wayland.windowManager.sway.config.up;
+        d = config.wayland.windowManager.sway.config.down;
+      in {
+        "resize" = {
+          # left will shrink the containers width
+          "${l}" = "resize shrink width 25px";
+          # down will grow the containers height
+          "${d}" = "resize grow height 25px";
+          # up will shrink the containers height
+          "${u}" = "resize shrink height 25px";
+          # right will grow the containers width
+          "${r}" = "resize grow width 25px";
 
-            # Return to default mode
-            "Return" = "mode 'default'";
-            "Escape" = "mode 'default'";
-          };
+          # Return to default mode
+          "Return" = "mode 'default'";
+          "Escape" = "mode 'default'";
         };
+      };
 
       window = {
         border = 2;
@@ -266,16 +261,15 @@
       # Despite the name, also works for non-floating windows.
       # Change normal to inverse to use left mouse button for resizing and right
       # mouse button for dragging.
-      floating =
-        let
-          m = config.wayland.windowManager.sway.config.modifier;
-        in
+      floating = let
+        m = config.wayland.windowManager.sway.config.modifier;
+      in
         lib.mkOptionDefault {
           modifier = "${m} normal";
           criteria = [
-            { title = "Emulator"; }
-            { title = "Android Emulator"; }
-            { app_id = "pavucontrol"; }
+            {title = "Emulator";}
+            {title = "Android Emulator";}
+            {app_id = "pavucontrol";}
           ];
         };
 

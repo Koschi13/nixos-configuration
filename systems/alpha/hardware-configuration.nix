@@ -4,10 +4,8 @@
   pkgs,
   modulesPath,
   ...
-}:
-
-{
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+}: {
+  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
   boot = {
     loader = {
@@ -34,7 +32,7 @@
         "usb_storage"
         "sd_mod"
       ];
-      kernelModules = [ "dm-snapshot" ];
+      kernelModules = ["dm-snapshot"];
       luks.devices.luksroot = {
         name = "luksroot";
         device = "/dev/disk/by-uuid/8e424358-602c-490d-9a00-ad3d00108f32";
@@ -43,8 +41,8 @@
       };
     };
 
-    kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
+    kernelModules = ["kvm-amd" "amd_iommu=on"];
+    extraModulePackages = [];
   };
 
   fileSystems = {
@@ -58,10 +56,10 @@
     };
   };
 
-  swapDevices = [ { device = "/dev/disk/by-label/NIXSWAP"; } ];
+  swapDevices = [{device = "/dev/disk/by-label/NIXSWAP";}];
 
   # Enable nvidia drivers
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
 
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -86,8 +84,8 @@
       package = config.boot.kernelPackages.nvidiaPackages.latest;
 
       prime = {
-		    # Make sure to use the correct Bus ID values for your system!
-		    nvidiaBusId = "PCI:10:0:0";
+        # Make sure to use the correct Bus ID values for your system!
+        nvidiaBusId = "PCI:10:0:0";
         amdgpuBusId = "PCI:5:0:0";
 
         offload = {

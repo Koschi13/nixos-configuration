@@ -5,9 +5,7 @@
   rootPath,
   lib,
   ...
-}:
-
-{
+}: {
   imports = [
     ../_modules/alacritty.nix
     ../_modules/direnv.nix
@@ -52,7 +50,7 @@
     packages = with pkgs; [
       # fonts
       nerd-fonts.dejavu-sans-mono
-      nerd-fonts.noto  # alt until dejavu is fixed
+      nerd-fonts.noto # alt until dejavu is fixed
 
       # tools
       ripgrep
@@ -106,7 +104,7 @@
       spotify
     ];
 
-    sessionPath = [ "$HOME/.local/bin" ];
+    sessionPath = ["$HOME/.local/bin"];
   };
 
   services.mpris-proxy.enable = true;

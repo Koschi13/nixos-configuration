@@ -4,12 +4,15 @@
   config,
   pkgs,
   ...
-}:
-
-{
+}: let
+  alphaGroups =
+    if config.networking.hostName == "alpha"
+    then ["libvirtd"]
+    else [];
+in {
   config = {
     nixpkgs = {
-      overlays = [ ];
+      overlays = [];
       config = {
         allowUnfree = true;
       };
@@ -19,7 +22,7 @@
     nix = {
       # This will add each flake input as a registry
       # To make nix3 commands consistent with your flake
-      registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+      registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
 
       # This will additionally add your inputs to the system's legacy channels
       # Making legacy nix commands consistent as well, awesome!
@@ -57,7 +60,7 @@
     services.xserver = {
       # Enable the X11 windowing system.
       enable = true;
-      excludePackages = [ pkgs.xterm ];
+      excludePackages = [pkgs.xterm];
     };
 
     # Enable sound (pipewire)
@@ -66,7 +69,8 @@
     security.polkit.enable = true; # Needed for Hyprland/Sway
     # See https://github.com/hyprwm/Hyprland/issues/2727
     # Need for Swaylock to accept password
-    security.pam.services.swaylock = { };
+    security.pam.services.swaylock = {};
+    security.pam.services.greetd.enableGnomeKeyring = true;
     services.pipewire = {
       enable = true;
       alsa.enable = true;
@@ -81,19 +85,21 @@
       initialPassword = "P@ssw0rd";
       shell = pkgs.zsh;
 
-      extraGroups = [
-        # Enable ‘sudo’ for the user.
-        "wheel"
-        # Enable light control for the user
-        "video"
-        # Enable networkmanager control for the user
-        "networkmanager"
-        # Audio related groups
-        "audio"
-        "sound"
-        # USB mount
-        "storage"
-      ];
+      extraGroups =
+        [
+          # Enable ‘sudo’ for the user.
+          "wheel"
+          # Enable light control for the user
+          "video"
+          # Enable networkmanager control for the user
+          "networkmanager"
+          # Audio related groups
+          "audio"
+          "sound"
+          # USB mount
+          "storage"
+        ]
+        ++ alphaGroups;
     };
 
     # default package available to the system
@@ -121,7 +127,7 @@
         # TODO: figure out if something needs to be specified here
         config.common.default = "*";
 
-        extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+        extraPortals = with pkgs; [xdg-desktop-portal-gtk];
       };
     };
 
@@ -136,7 +142,7 @@
     };
 
     # YubiKey configuration
-    services.udev.packages = [ pkgs.yubikey-personalization ];
+    services.udev.packages = [pkgs.yubikey-personalization];
     services.pcscd.enable = true;
 
     # Use GPG instead of SSH
@@ -167,7 +173,7 @@
 
     # USB mounting
     services.devmon.enable = true;
-    services.gvfs.enable = true; 
+    services.gvfs.enable = true;
     services.udisks2.enable = true;
 
     # Games

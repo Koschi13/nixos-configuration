@@ -1,13 +1,13 @@
-{ lib, pkgs, ... }:
-
+{
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with builtins;
-
-let
+with builtins; let
   isRustFile = path: type: hasSuffix ".rs" path && type == "regular" && path != "mod.rs";
-  mergeAllAttrSets = attrsSets: foldl' (recursiveUpdate) { } attrsSets;
-  disableModules =
-    isDisabled: modules: mergeAllAttrSets (map (mod: { "${mod}".disabled = isDisabled; }) modules);
+  mergeAllAttrSets = attrsSets: foldl' recursiveUpdate {} attrsSets;
+  disableModules = isDisabled: modules: mergeAllAttrSets (map (mod: {"${mod}".disabled = isDisabled;}) modules);
 
   starshipPackage = pkgs.starship;
   promptOrder = [
@@ -45,67 +45,64 @@ let
       }
     )
   );
-in
-{
-  programs.starship =
-    let
-      flavor = "frappe";
-    in
-    {
-      package = starshipPackage;
-      enable = true;
-      enableZshIntegration = true;
-      settings = mergeAllAttrSets [
-        enabledModules
-        disabledModules
-        {
-          format = promptFormat;
-          palette = "catppuccin_frappe";
-          directory = {
-            format = "\\[[  $path]($style)\\] ";
-            style = "Blue";
-            truncation_length = 30;
-            truncation_symbol = "…/";
-          };
-          git_branch = {
-            format = "\\[[$symbol$branch(:$remote_branch)]($style)\\] ";
-            symbol = " ";
-            style = "Muave";
-          };
-          git_metrics = {
-            format = "([+$added]($added_style) )([-$deleted]($deleted_style) )";
-            added_style = "Green";
-            deleted_style = "Yellow";
-          };
-          git_status = {
-            style = "Peach";
-          };
-          aws = {
-            style = "Pink";
-            symbol = "󰸏 ";
-          };
-          kubernetes = {
-            style = "Sky";
-            contexts = [
-              {
-                context_pattern = ".*prod.*";
-                style = "Red";
-              }
-            ];
-          };
-          sudo = {
-            style = "bold Rosewater";
-          };
-          nix_shell = {
-            style = "Teal";
-          };
-          character = {
-            success_symbol = "[](bold Green) ";
-            error_symbol = "[](bold Red) ";
-            vimcmd_symbol = "[](bold Mauve) ";
-          };
-        }
-        paletteSet
-      ];
-    };
+in {
+  programs.starship = let
+    flavor = "frappe";
+  in {
+    package = starshipPackage;
+    enable = true;
+    enableZshIntegration = true;
+    settings = mergeAllAttrSets [
+      enabledModules
+      disabledModules
+      {
+        format = promptFormat;
+        palette = "catppuccin_frappe";
+        directory = {
+          format = "\\[[  $path]($style)\\] ";
+          style = "Blue";
+          truncation_length = 30;
+          truncation_symbol = "…/";
+        };
+        git_branch = {
+          format = "\\[[$symbol$branch(:$remote_branch)]($style)\\] ";
+          symbol = " ";
+          style = "Muave";
+        };
+        git_metrics = {
+          format = "([+$added]($added_style) )([-$deleted]($deleted_style) )";
+          added_style = "Green";
+          deleted_style = "Yellow";
+        };
+        git_status = {
+          style = "Peach";
+        };
+        aws = {
+          style = "Pink";
+          symbol = "󰸏 ";
+        };
+        kubernetes = {
+          style = "Sky";
+          contexts = [
+            {
+              context_pattern = ".*prod.*";
+              style = "Red";
+            }
+          ];
+        };
+        sudo = {
+          style = "bold Rosewater";
+        };
+        nix_shell = {
+          style = "Teal";
+        };
+        character = {
+          success_symbol = "[](bold Green) ";
+          error_symbol = "[](bold Red) ";
+          vimcmd_symbol = "[](bold Mauve) ";
+        };
+      }
+      paletteSet
+    ];
+  };
 }

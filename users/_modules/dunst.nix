@@ -3,9 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-
-{
+}: {
   services.dunst = {
     enable = true;
     iconTheme = {

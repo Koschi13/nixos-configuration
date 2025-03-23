@@ -1,6 +1,8 @@
-{ pkgs, zsh-calc, ... }:
-
 {
+  pkgs,
+  zsh-calc,
+  ...
+}: {
   imports = [
     ./plugins/default.nix
     ./starship.nix
@@ -22,9 +24,9 @@
     autocd = true;
     dotDir = ".config/zsh";
 
-    envExtra = (builtins.readFile ./envExtra);
-    initExtra = (builtins.readFile ./initExtra);
-    initExtraBeforeCompInit = (builtins.readFile ./initExtraBeforeCompInit);
+    envExtra = builtins.readFile ./envExtra;
+    initExtra = builtins.readFile ./initExtra;
+    initExtraBeforeCompInit = builtins.readFile ./initExtraBeforeCompInit;
 
     history = {
       share = true;
@@ -86,7 +88,7 @@
     eza = {
       enable = true;
       icons = "auto";
-      extraOptions = [ "--group-directories-first" ];
+      extraOptions = ["--group-directories-first"];
     };
 
     fzf = {

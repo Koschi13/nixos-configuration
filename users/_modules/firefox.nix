@@ -3,9 +3,7 @@
   pkgs,
   firefox-addons,
   ...
-}:
-
-{
+}: {
   programs.firefox = {
     enable = true;
 

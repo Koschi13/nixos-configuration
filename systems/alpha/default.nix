@@ -1,12 +1,4 @@
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}:
-
-{
+{pkgs, ...}: {
   imports = [
     ../default.nix
     ./cache.nix
@@ -15,6 +7,7 @@
     ./mounts.nix
     ./ollama.nix
     ./radeon.nix
+    ./virtualization.nix
   ];
 
   networking = {
@@ -33,7 +26,7 @@
     settings = {
       initial_session = {
         user = "max";
-        command = "$SHELL -l";
+        command = "${pkgs.sway}/bin/sway --unsupported-gpu";
       };
     };
   };

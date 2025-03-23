@@ -10,9 +10,7 @@
   zsh-calc,
   zsh-alias-finder,
   ...
-}:
-
-{
+}: {
   imports = [
     ./enhancd.nix
     ./forgit.nix

@@ -1,9 +1,6 @@
-{ ... }:
-
-let
+{...}: let
   catppuccin-frappe-toml = ".config/alacritty/catppuccin-frappe.toml";
-in
-{
+in {
   programs.alacritty = {
     enable = true;
     settings = {

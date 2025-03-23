@@ -1,7 +1,5 @@
 # See ../default.nix for a description on how to select the 'file'.
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.zsh.plugins = [
     {
       # This is needed since oh-my-zsh.git requires some functions from lib

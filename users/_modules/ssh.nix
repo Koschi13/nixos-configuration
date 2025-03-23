@@ -1,8 +1,4 @@
-{
-  rootPath,
-  ...
-}:
-let
+{rootPath, ...}: let
   vars = import "${rootPath}/.secrets/git_vars.nix";
 in {
   programs.ssh = {
