@@ -71,6 +71,7 @@ in {
     # Need for Swaylock to accept password
     security.pam.services.swaylock = {};
     security.pam.services.greetd.enableGnomeKeyring = true;
+    security.pam.services.login.enableGnomeKeyring = true;
     services.pipewire = {
       enable = true;
       alsa.enable = true;
