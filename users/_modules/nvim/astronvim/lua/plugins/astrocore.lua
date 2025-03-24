@@ -32,5 +32,12 @@ return {
         wrap = false, -- sets vim.opt.wrap
       },
     },
+    rooter = {
+      autochdir = false,
+      -- scope of working directory to change ("global"|"tab"|"win")
+      scope = "global",
+      -- show notification on every working directory change
+      notify = true,
+    },
   },
 }
