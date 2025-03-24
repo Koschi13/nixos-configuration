@@ -88,6 +88,7 @@
       _1password-gui
       slack
       awscli2 # TODO: now available as module
+      ssm-session-manager-plugin  # needed for SSM
       kubectl
       kubectx
       kubernetes-helm
