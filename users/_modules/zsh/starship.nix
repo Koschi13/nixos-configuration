@@ -46,9 +46,7 @@ with builtins; let
     )
   );
 in {
-  programs.starship = let
-    flavor = "frappe";
-  in {
+  programs.starship = {
     package = starshipPackage;
     enable = true;
     enableZshIntegration = true;

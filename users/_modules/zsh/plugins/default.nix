@@ -1,6 +1,6 @@
 # The 'file' which is needed for each plugin entry must be looked up in the
 # repository. Some are named as the plugin while others have different names.
-# For the packages comming from the NIX store you need to look into the source
+# For the packages coming from the NIX store you need to look into the source
 # and see which files are added to the build context (or look up the original
 # repo)
 #

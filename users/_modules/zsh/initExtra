@@ -13,3 +13,6 @@ setopt pushd_minus               # Reference stack entries with "-".
 
 # case insensitive completion
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# Force fzf as backwardssearch (stopped working...)
+bindkey '^R' fzf-history-widget
