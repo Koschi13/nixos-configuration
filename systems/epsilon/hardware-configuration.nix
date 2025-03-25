@@ -83,5 +83,9 @@
       enable = true;
       powerOnBoot = true;
     };
+    tuxedo-rs = {
+      enable = true;
+      tailor-gui.enable = true;
+    };
   };
 }
