@@ -21,6 +21,7 @@ return {
   { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.pack.nix" }, -- https://astronvim.github.io/astrocommunity/#nix
   { import = "astrocommunity.pack.python-ruff" },
+  { import = "astrocommunity.pack.rainbow-delimiter-indent-blankline" },
   { import = "astrocommunity.pack.rust" },
   { import = "astrocommunity.pack.terraform" },
   { import = "astrocommunity.recipes.astrolsp-no-insert-inlay-hints" },
