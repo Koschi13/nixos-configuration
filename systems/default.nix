@@ -85,6 +85,7 @@ in {
       isNormalUser = true;
       initialPassword = "P@ssw0rd";
       shell = pkgs.zsh;
+      uid = 1000;
 
       extraGroups =
         [
