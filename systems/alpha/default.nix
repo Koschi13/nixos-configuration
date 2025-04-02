@@ -2,11 +2,11 @@
   imports = [
     ../default.nix
     ./cache.nix
-    # Include the results of the hardware scan
     ./hardware-configuration.nix
     ./mounts.nix
     ./ollama.nix
     ./radeon.nix
+    ./nvidia.nix
     ./virtualization.nix
   ];
 
