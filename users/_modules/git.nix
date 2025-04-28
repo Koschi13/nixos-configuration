@@ -56,8 +56,9 @@ in {
             name = vars.bshGit.name;
             email = vars.bshGit.email;
           };
-          commit.gpgsign = false;
-          tag.gpgsign = false;
+          commit.gpgsign = true;
+          tag.gpgsign = true;
+          user.signingkey = vars.bshGit.signingkey;
         };
       }
 
@@ -68,8 +69,9 @@ in {
             name = vars.bsh.name;
             email = vars.bsh.email;
           };
-          commit.gpgsign = false;
-          tag.gpgsign = false;
+          commit.gpgsign = true;
+          tag.gpgsign = true;
+          user.signingkey = vars.bsh.signingkey;
         };
       }
     ];
