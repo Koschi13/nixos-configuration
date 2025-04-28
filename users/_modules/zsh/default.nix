@@ -1,8 +1,7 @@
-{
-  pkgs,
-  zsh-calc,
-  ...
-}: {
+{lib, ...}: let 
+  initExtra = lib.mkOrder 500 (builtins.readFile ./initExtra);
+  initExtraBeforeCompInit = lib.mkOrder 550 (builtins.readFile ./initExtraBeforeCompInit);
+in{
   imports = [
     ./plugins/default.nix
     ./starship.nix
@@ -25,8 +24,10 @@
     dotDir = ".config/zsh";
 
     envExtra = builtins.readFile ./envExtra;
-    initExtra = builtins.readFile ./initExtra;
-    initExtraBeforeCompInit = builtins.readFile ./initExtraBeforeCompInit;
+    initContent = lib.mkMerge [
+      initExtra
+      initExtraBeforeCompInit
+    ];
 
     history = {
       share = true;

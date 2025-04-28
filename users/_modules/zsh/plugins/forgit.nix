@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, lib, ...}: {
   programs.zsh = {
     plugins = [
       {
@@ -7,7 +7,7 @@
         src = "${pkgs.zsh-forgit}/share/zsh/zsh-forgit";
       }
     ];
-    initExtraBeforeCompInit = ''
+    initContent = lib.mkOrder 550 ''
       # forgit alias, prefix all with f
       forgit_log=fglo
       forgit_diff=fgd
