@@ -59,7 +59,7 @@
             {
               criteria = "AOC U34G2G4R3 0x00002347";
               position = "1440,0";
-              mode = "3440x1440@30Hz";
+              mode = "3440x1440@99.982Hz";
             }
             {
               criteria = "eDP-1";
