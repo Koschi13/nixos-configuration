@@ -40,7 +40,7 @@ in {
       alejandra # required by astrocommunity.pack.nix
 
       ## Node
-      nodejs_23
+      nodejs-slim_24
 
       # GitHub
       gh # required by astrocommunity.git.octo-nvim
