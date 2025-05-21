@@ -1,11 +1,4 @@
-{
-  config,
-  pkgs,
-  firefox-addons,
-  rootPath,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ../_modules/alacritty.nix
     ../_modules/direnv.nix
@@ -24,6 +17,7 @@
     ../_modules/swww.nix
     ../_modules/waybar/default.nix
     ../_modules/zsh/default.nix
+    ../_modules/vscode/default.nix
   ];
 
   # Enable fonts

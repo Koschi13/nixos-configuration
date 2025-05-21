@@ -1,0 +1,67 @@
+{
+  //
+  // editor
+  //
+  "editor.inlayHints.enabled": "onUnlessPressed",
+  "editor.fontFamily": "NotoSansM Nerd Font Mono",
+  "editor.mouseWheelZoom": false,
+  "editor.fontSize": 13,
+
+  //
+  // files
+  //
+  "files.autoSave": "onFocusChange",
+
+  //
+  // window
+  //
+  "window.autoDetectColorScheme": false,
+  "window.zoomLevel": 0,
+  "window.titleBarStyle": "custom",
+
+  //
+  // workbench
+  //
+  "workbench.colorTheme": "Catppuccin Frappé",
+  "workbench.iconTheme": "catppuccin-frappe",
+  "workbench.preferredDarkColorTheme": "Catppuccin Frappé",
+  "workbench.preferredLightColorTheme": "Catppuccin Latte",
+
+  //
+  // terminal
+  //
+  "terminal.integrated.fontSize": 13,
+
+  //
+  // markdown
+  //
+  "markdown.preview.fontSize": 13,
+
+  //
+  // chat
+  //
+  "chat.editor.fontSize": 13,
+
+  //
+  // debug
+  //
+  "debug.console.fontSize": 13,
+
+  //
+  // Python
+  //
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python3",
+  "python.languageServer": "Pylance",
+  "python.locator": "js", // There is a bug with the shipped (pet) executable which is linked to eza!?
+
+  "python.analysis.typeCheckingMode": "strict",
+  "python.analysis.autoImportCompletions": true,
+
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  }
+}
