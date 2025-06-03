@@ -19,7 +19,7 @@ return {
   { import = "astrocommunity.pack.harper" },
   { import = "astrocommunity.pack.helm" },
   { import = "astrocommunity.pack.lua" },
-  { import = "astrocommunity.pack.markdown" },
+  { import = "astrocommunity.pack.markdown" }, -- There is a problem with the `icu` package, which can be worked around with DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
   { import = "astrocommunity.pack.nix" }, -- https://astronvim.github.io/astrocommunity/#nix
   { import = "astrocommunity.pack.python-ruff" },
   { import = "astrocommunity.pack.rainbow-delimiter-indent-blankline" },

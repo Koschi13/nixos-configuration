@@ -43,6 +43,22 @@ return {
           -- },
         },
       },
+
+      harper_ls = {
+        settings = {
+          ["harper-ls"] = {
+            userDictPath = "~/.config/harper-ls/user-dictionary.txt",
+            linters = {
+              ToDoHyphen = false,
+              SentenceCapitalization = false,
+            },
+            markdown = {
+              IgnoreLinkTitle = true,
+            },
+          },
+        },
+      },
+
       -- add opts here
     })
   end,

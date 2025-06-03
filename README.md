@@ -47,17 +47,9 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 
 ## TODO
 
-- [ ] Set up Python via shells
-- [ ] Install VS-Code. Either on a per-project basis or globally (maybe there are shell templates?)
-- [ ] Configure AWS cli via HomeManager using the .secrets directory
 - [ ] Add dnd shortcut
 - [ ] Caps <-> Ctrl only for notebook
 - [ ] See if it is possible to save JetBrains settings in this repo, while still being able to change something via the UI
-- [ ] Git config `rerere.enabled true`
-- [ ] Git config `branch.sort -committerdate`
-- [ ] Git config `core.fsmonitor true`
-- [ ] Git config `core.untrackedCache true`
-- [ ] Dunstctl font blurry
 - [ ] Dunstctl window in the middle of the screen, E-Mails and Messages should appear longer (maybe with sound even?)
 - [ ] Install and configure https://github.com/denisidoro/navi
 - [ ] Create a windows like desktop as alternative (and maybe for gaming and office stuff)
