@@ -42,7 +42,7 @@ in {
 
       ## Node
       nodejs_24
-      icu  # requierd by nodejs
+      icu # requierd by nodejs
 
       # GitHub
       gh # required by astrocommunity.git.octo-nvim
