@@ -26,6 +26,7 @@
   "workbench.iconTheme": "catppuccin-frappe",
   "workbench.preferredDarkColorTheme": "Catppuccin Frappé",
   "workbench.preferredLightColorTheme": "Catppuccin Latte",
+  "workbench.tree.indent": 20,
 
   //
   // terminal
