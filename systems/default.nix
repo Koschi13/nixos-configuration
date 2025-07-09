@@ -54,7 +54,10 @@ in {
       #
       # Set the hostname in the host specific config
       #
-      networkmanager.enable = true;
+      networkmanager = {
+        enable = true;
+        plugins = [pkgs.networkmanager-openvpn];
+      };
     };
 
     services.xserver = {
