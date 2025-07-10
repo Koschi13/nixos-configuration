@@ -10,7 +10,7 @@
     ../_modules/homemanager.nix
     ../_modules/librewolf.nix
     ../_modules/nixpkgs.nix
-    ../_modules/nvim/default.nix
+    ../_modules/nvim/scandio.nix
     ../_modules/rofi/default.nix
     ../_modules/ssh.nix
     ../_modules/sway/default.nix

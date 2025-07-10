@@ -1,11 +1,4 @@
-{
-  rootPath,
-  pkgs,
-  ...
-}: let
-  vars = import "${rootPath}/.secrets/git_vars.nix";
-  octoTemplate = builtins.readFile ./astronvim_templated/lua/plugins/octo-nvim.lua;
-  octoConfig = builtins.replaceStrings ["<githubAlias>"] [vars.bshGit.host] octoTemplate;
+{pkgs, ...}: let
   userDictionary = builtins.readFile ./user-dictionary.txt;
 in {
   home = {
@@ -55,7 +48,6 @@ in {
         source = ./astronvim;
         recursive = true;
       };
-      ".config/nvim/lua/plugins/octo-nvim.lua".text = octoConfig;
       ".config/harper-ls/user-dictionary.txt".text = userDictionary;
     };
   };

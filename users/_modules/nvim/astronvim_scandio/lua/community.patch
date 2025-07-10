@@ -1,0 +1,11 @@
+diff --git a/users/_modules/nvim/astronvim/lua/community.lua b/users/_modules/nvim/astronvim/lua/community.lua
+index 9f19e18..ac75ce8 100644
+--- a/users/_modules/nvim/astronvim/lua/community.lua
++++ b/users/_modules/nvim/astronvim/lua/community.lua
+@@ -25,5 +25,6 @@ return {
+   { import = "astrocommunity.pack.rainbow-delimiter-indent-blankline" },
+   { import = "astrocommunity.pack.rust" },
+   { import = "astrocommunity.pack.terraform" },
++  { import = "astrocommunity.recipes.ai" },
+   { import = "astrocommunity.recipes.astrolsp-no-insert-inlay-hints" },
+ }
