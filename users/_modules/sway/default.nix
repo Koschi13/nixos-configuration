@@ -3,7 +3,9 @@
   lib,
   pkgs,
   ...
-}: {
+}: let 
+  screenshotScript = ".config/sway/screenshot.sh";
+  in {
   imports = [
     ./env.nix
     ./kanshi.nix
@@ -13,13 +15,16 @@
   #      use let like here to define the package bins
   #      https://github.com/nix-community/home-manager/issues/1521
   home.packages = with pkgs; [
-    waybar
     grim
-    swaylock-effects
+    libnotify
     pamixer
     playerctl
-    wl-clipboard
     slurp
+    swaylock-effects
+    waybar
+    wf-recorder
+    wl-clipboard
+    xdg-user-dirs
   ];
 
   wayland.windowManager.sway = {
@@ -101,7 +106,7 @@
 
           # Screenshot
           "${m}+p" = ''exec grim -g "$(slurp -d)" - | wl-copy'';
-          "${m}+Shift+p" = ''exec grim -g "$(slurp -d)"'';
+          "${m}+Shift+p" = ''exec ~/${screenshotScript}'';
 
           # Audio
           "XF86AudioRaiseVolume" = "exec pamixer -i 5";
@@ -281,11 +286,17 @@
     };
   };
 
-  home.file.".config/sway/colors/catppuccin-frappe" = {
-    # TODO: utilize flake and let it decide the hash
-    source = builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/catppuccin/i3/main/themes/catppuccin-frappe";
-      sha256 = "75b0e063b0ff670173641cb5fb456052af84b78774f77c37b6c3a886fc809c51";
+  home.file = {
+    ".config/sway/colors/catppuccin-frappe" = {
+      # TODO: utilize flake and let it decide the hash
+      source = builtins.fetchurl {
+        url = "https://raw.githubusercontent.com/catppuccin/i3/main/themes/catppuccin-frappe";
+        sha256 = "75b0e063b0ff670173641cb5fb456052af84b78774f77c37b6c3a886fc809c51";
+      };
+    };
+    "${screenshotScript}" = {
+      source = ./screenshot.sh;
+      executable = true;
     };
   };
 }

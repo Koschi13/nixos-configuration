@@ -25,6 +25,7 @@ S3
 SNS
 TODO
 Toml
+Wayland
 arg
 args
 cron
