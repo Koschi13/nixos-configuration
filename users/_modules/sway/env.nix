@@ -1,6 +1,4 @@
-{
-  ...
-}: {
+{...}: {
   home.sessionVariables = {
     XDG_CURRENT_DESKTOP = "sway";
     XDG_SESSION_DESKTOP = "sway";

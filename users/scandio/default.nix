@@ -15,6 +15,7 @@
     ../_modules/ssh.nix
     ../_modules/sway/default.nix
     ../_modules/swww.nix
+    ../_modules/vscode/default.nix
     ../_modules/waybar/default.nix
     ../_modules/zsh/default.nix
     ../_modules/vscode/default.nix

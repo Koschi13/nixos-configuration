@@ -3,9 +3,9 @@
   lib,
   pkgs,
   ...
-}: let 
+}: let
   screenshotScript = ".config/sway/screenshot.sh";
-  in {
+in {
   imports = [
     ./env.nix
     ./kanshi.nix

@@ -2,10 +2,17 @@
   //
   // editor
   //
-  "editor.inlayHints.enabled": "onUnlessPressed",
+  "editor.detectIndentation": false,
   "editor.fontFamily": "NotoSansM Nerd Font Mono",
-  "editor.mouseWheelZoom": false,
   "editor.fontSize": 13,
+  "editor.inlayHints.enabled": "onUnlessPressed",
+  "editor.mouseWheelZoom": false,
+
+  //
+  // explorer
+  //
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
 
   //
   // files
