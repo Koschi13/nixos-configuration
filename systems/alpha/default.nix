@@ -4,9 +4,8 @@
     ./cache.nix
     ./hardware-configuration.nix
     ./mounts.nix
-    ./ollama.nix
-    ./radeon.nix
     ./nvidia.nix
+    ./ollama.nix
     ./virtualization.nix
   ];
 

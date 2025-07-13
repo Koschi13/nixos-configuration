@@ -39,9 +39,6 @@
         allowDiscards = true;
       };
     };
-
-    kernelModules = ["kvm-amd" "amd_iommu=on"];
-    extraModulePackages = [];
   };
 
   fileSystems = {
