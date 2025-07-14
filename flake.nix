@@ -92,7 +92,7 @@
       };
 
       # This user will also be called "max"
-      "scandio" = home-manager.lib.homeManagerConfiguration {
+      "hiq" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
           inherit
@@ -105,7 +105,7 @@
             ;
           rootPath = ./.;
         };
-        modules = [./users/scandio/default.nix];
+        modules = [./users/hiq/default.nix];
       };
     };
 

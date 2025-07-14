@@ -1,9 +1,8 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Make sure the disk exists
 DISK=/dev/disk/by-id/$1
-if [ -e $DISK ]
-then
+if [ -e $DISK ]; then
     echo yes
 else
     echo "$DISK not found"
@@ -13,8 +12,7 @@ fi
 # Make sure the script is not executed by accident
 read -p "This will wipe $1, all data will be lost! Type uppercase yes: "
 echo
-if [[ ! $REPLY == "YES" ]]
-then
+if [[ ! $REPLY == "YES" ]]; then
     echo "Stopping execution"
     exit 2
 fi

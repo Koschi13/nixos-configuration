@@ -1,10 +1,10 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 if [[ "$HOSTNAME" == "epsilon" ]]; then
   echo "This is your work laptop you fool!"
   exit 1
 fi
 
-pushd ~/.dotfiles
+pushd ~/.dotfiles || exit
 home-manager switch --flake .#max
-popd
+popd || exit

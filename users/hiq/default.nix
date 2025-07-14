@@ -10,7 +10,7 @@
     ../_modules/homemanager.nix
     ../_modules/librewolf.nix
     ../_modules/nixpkgs.nix
-    ../_modules/nvim/scandio.nix
+    ../_modules/nvim/hiq.nix
     ../_modules/rofi/default.nix
     ../_modules/ssh.nix
     ../_modules/sway/default.nix
@@ -55,6 +55,7 @@
       blueman
       timewarrior
       bruno # postman alternative
+      vault
 
       # coding
       jetbrains.pycharm-professional

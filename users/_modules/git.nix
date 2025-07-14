@@ -38,11 +38,11 @@ in {
 
     includes = [
       {
-        condition = "gitdir:~/Git/Scandio/**";
+        condition = "gitdir:~/Git/HiQ/**";
         contents = {
           user = {
-            name = vars.scandio.name;
-            email = vars.scandio.email;
+            name = vars.hiq.name;
+            email = vars.hiq.email;
           };
           commit.gpgsign = false;
           tag.gpgsign = false;
