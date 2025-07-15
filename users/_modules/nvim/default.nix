@@ -18,6 +18,9 @@ in {
       gdu
       unzip # needed for Mason
       lazydocker
+      imagemagick # needed for snacks.nvim
+      ghostscript # needed for snacks.nvim
+      lua54Packages.luarocks  # needed for lazy.nvim
 
       # LSPs and Languages
       #
@@ -35,7 +38,7 @@ in {
 
       ## Node
       nodejs_24
-      icu # requierd by nodejs
+      icu # needed by nodejs
 
       # GitHub
       gh # required by astrocommunity.git.octo-nvim
