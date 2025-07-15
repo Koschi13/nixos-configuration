@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  catppuccinI3,
   ...
 }: let
   screenshotScript = ".config/sway/screenshot.sh";
@@ -288,11 +289,7 @@ in {
 
   home.file = {
     ".config/sway/colors/catppuccin-frappe" = {
-      # TODO: utilize flake and let it decide the hash
-      source = builtins.fetchurl {
-        url = "https://raw.githubusercontent.com/catppuccin/i3/main/themes/catppuccin-frappe";
-        sha256 = "75b0e063b0ff670173641cb5fb456052af84b78774f77c37b6c3a886fc809c51";
-      };
+      source = catppuccinI3 + "/themes/catppuccin-frappe";
     };
     "${screenshotScript}" = {
       source = ./screenshot.sh;

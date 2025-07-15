@@ -14,7 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ## ZSH plugins which are not in nixpkgs
+    # ZSH plugins which are not in nixpkgs
     zsh-calc = {
       url = "github:arzzen/calc.plugin.zsh";
       flake = false;
@@ -27,16 +27,33 @@
       url = "github:akash329d/zsh-alias-finder";
       flake = false;
     };
+
+    # Catppuccin colorschemes
+    catppuccinI3= {
+        url = "github:catppuccin/i3";
+        flake = false;
+    };
+    catppuccinStarship = {
+        url = "github:catppuccin/starship";
+        flake = false;
+    };
+    catppuccinAlacritty= {
+        url = "github:catppuccin/alacritty";
+        flake = false;
+    };
   };
 
   outputs = {
     self,
-    nixpkgs,
-    home-manager,
+    catppuccinAlacritty,
+    catppuccinI3,
+    catppuccinStarship,
     firefox-addons,
+    home-manager,
+    nixpkgs,
+    zsh-alias-finder,
     zsh-calc,
     zsh-enhancd,
-    zsh-alias-finder,
     ...
   } @ inputs: let
     # don't know what this is for, but without we do not have outputs available
@@ -81,10 +98,13 @@
           inherit
             inputs
             outputs
+            catppuccinAlacritty
+            catppuccinI3
+            catppuccinStarship
             firefox-addons
+            zsh-alias-finder
             zsh-calc
             zsh-enhancd
-            zsh-alias-finder
             ;
           rootPath = ./.;
         };
@@ -98,10 +118,13 @@
           inherit
             inputs
             outputs
+            catppuccinAlacritty
+            catppuccinI3
+            catppuccinStarship
             firefox-addons
+            zsh-alias-finder
             zsh-calc
             zsh-enhancd
-            zsh-alias-finder
             ;
           rootPath = ./.;
         };

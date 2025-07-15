@@ -1,5 +1,53 @@
 {
   "nodes": {
+    "catppuccinAlacritty": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1730074245,
+        "narHash": "sha256-H8bouVCS46h0DgQ+oYY8JitahQDj0V9p2cOoD4cQX+Q=",
+        "owner": "catppuccin",
+        "repo": "alacritty",
+        "rev": "f6cb5a5c2b404cdaceaff193b9c52317f62c62f7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "alacritty",
+        "type": "github"
+      }
+    },
+    "catppuccinI3": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1728869535,
+        "narHash": "sha256-H+ZueiYkCoBfS8JENLKhL/efFK6WFNDsbiMbTpGROUs=",
+        "owner": "catppuccin",
+        "repo": "i3",
+        "rev": "c072ada05271eec960dc893affe9ac55af63a745",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "i3",
+        "type": "github"
+      }
+    },
+    "catppuccinStarship": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1733541952,
+        "narHash": "sha256-1w0TJdQP5lb9jCrCmhPlSexf0PkAlcz8GBDEsRjPRns=",
+        "owner": "catppuccin",
+        "repo": "starship",
+        "rev": "e99ba6b210c0739af2a18094024ca0bdf4bb3225",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "starship",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -59,6 +107,9 @@
     },
     "root": {
       "inputs": {
+        "catppuccinAlacritty": "catppuccinAlacritty",
+        "catppuccinI3": "catppuccinI3",
+        "catppuccinStarship": "catppuccinStarship",
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
