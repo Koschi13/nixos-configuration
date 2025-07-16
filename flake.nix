@@ -41,6 +41,12 @@
         url = "github:catppuccin/alacritty";
         flake = false;
     };
+
+    # Navi cheats
+     denisidoroCheats = {
+      url = "github:denisidoro/cheats";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -48,6 +54,7 @@
     catppuccinAlacritty,
     catppuccinI3,
     catppuccinStarship,
+    denisidoroCheats,
     firefox-addons,
     home-manager,
     nixpkgs,
@@ -101,6 +108,7 @@
             catppuccinAlacritty
             catppuccinI3
             catppuccinStarship
+            denisidoroCheats
             firefox-addons
             zsh-alias-finder
             zsh-calc
@@ -121,6 +129,7 @@
             catppuccinAlacritty
             catppuccinI3
             catppuccinStarship
+            denisidoroCheats
             firefox-addons
             zsh-alias-finder
             zsh-calc

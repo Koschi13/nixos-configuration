@@ -51,6 +51,14 @@ in {
         source = ./astronvim;
         recursive = true;
       };
+      ".config/nvim/syntax/" = {
+        source = ./syntax;
+        recursive = true;
+      };
+      ".config/nvim/ftdetect/" = {
+        source = ./ftdetect;
+        recursive = true;
+      };
       ".config/harper-ls/user-dictionary.txt".text = userDictionary;
     };
   };

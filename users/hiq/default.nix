@@ -9,6 +9,7 @@
     ../_modules/gpg/default.nix
     ../_modules/homemanager.nix
     ../_modules/librewolf.nix
+    ../_modules/navi/default.nix
     ../_modules/nixpkgs.nix
     ../_modules/nvim/hiq.nix
     ../_modules/rofi/default.nix

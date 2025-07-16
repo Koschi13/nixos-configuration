@@ -17,6 +17,7 @@ Keycloak
 LD
 LazySpec
 MLflow
+Navi
 NixOS
 OpenAPI
 Pydantic
