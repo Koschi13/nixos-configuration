@@ -71,5 +71,10 @@
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit"
     }
-  }
+  },
+
+  //
+  // Copilot
+  //
+  "github.copilot.nextEditSuggestions.enabled": true
 }
