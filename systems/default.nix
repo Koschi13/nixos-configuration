@@ -186,6 +186,7 @@ in {
 
     programs.nix-ld.enable = true;
 
+    services.printing.enable = true;
     services.avahi = {
       enable = true;
       nssmdns4 = true;
