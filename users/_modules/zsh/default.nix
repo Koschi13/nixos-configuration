@@ -22,6 +22,7 @@ in {
     };
     autocd = true;
     dotDir = ".config/zsh";
+    completionInit = builtins.readFile ./comp_init.zsh;
 
     envExtra = builtins.readFile ./envExtra;
     initContent = lib.mkMerge [

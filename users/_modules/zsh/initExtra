@@ -1,3 +1,6 @@
+# Updates are handled via Nix
+DISABLE_AUTO_UPDATE="true"
+
 # Autosuggest
 ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
   forward-char
