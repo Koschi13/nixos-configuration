@@ -166,9 +166,7 @@ in {
       };
     };
 
-    boot = {
-      tmp.useTmpfs = true;
-    };
+    boot.tmp.cleanOnBoot = true;
 
     services.dbus.packages = with pkgs; [
       gnome-keyring
