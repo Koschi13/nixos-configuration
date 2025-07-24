@@ -1,8 +1,6 @@
-{ 
-            denisidoroCheats,
-... }: let
+{denisidoroCheats, ...}: let
   cheatsDir = ".local/share/navi/cheats";
-in{
+in {
   programs.navi = {
     enable = true;
 
