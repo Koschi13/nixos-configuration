@@ -20,7 +20,7 @@ in {
       lazydocker
       imagemagick # needed for snacks.nvim
       ghostscript # needed for snacks.nvim
-      lua54Packages.luarocks  # needed for lazy.nvim
+      lua54Packages.luarocks # needed for lazy.nvim
 
       # LSPs and Languages
       #
