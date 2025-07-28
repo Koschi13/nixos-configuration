@@ -29,21 +29,21 @@
     };
 
     # Catppuccin colorschemes
-    catppuccinI3= {
-        url = "github:catppuccin/i3";
-        flake = false;
+    catppuccinI3 = {
+      url = "github:catppuccin/i3";
+      flake = false;
     };
     catppuccinStarship = {
-        url = "github:catppuccin/starship";
-        flake = false;
+      url = "github:catppuccin/starship";
+      flake = false;
     };
-    catppuccinAlacritty= {
-        url = "github:catppuccin/alacritty";
-        flake = false;
+    catppuccinAlacritty = {
+      url = "github:catppuccin/alacritty";
+      flake = false;
     };
 
     # Navi cheats
-     denisidoroCheats = {
+    denisidoroCheats = {
       url = "github:denisidoro/cheats";
       flake = false;
     };
