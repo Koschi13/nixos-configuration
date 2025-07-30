@@ -13,6 +13,7 @@ ECS
 EKS
 FIXME
 FastAPI
+HashiCorp
 Keycloak
 LD
 LazySpec

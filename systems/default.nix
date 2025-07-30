@@ -110,11 +110,12 @@ in {
     # default package available to the system
     environment = {
       systemPackages = with pkgs; [
+        alsa-utils
         git
-        wget
         gnupg
-        pcsclite
         helvum
+        pcsclite
+        wget
       ];
 
       # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enableCompletion
