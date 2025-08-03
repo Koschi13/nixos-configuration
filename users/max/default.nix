@@ -13,7 +13,7 @@
     ../_modules/nvim/default.nix
     ../_modules/rofi/default.nix
     ../_modules/sway/default.nix
-    ../_modules/swww.nix
+    ../_modules/swww/default.nix
     ../_modules/vscode/default.nix
     ../_modules/waybar/default.nix
     ../_modules/zsh/default.nix

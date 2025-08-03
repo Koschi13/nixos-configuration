@@ -281,7 +281,8 @@ in {
 
       startup = [
         {
-          command = "command -v swww >/dev/null 2>&1 && swww-daemon & sleep 5 && exec wallpaper_random || echo 'swww not installed'";
+          command = "wallpaper_random || echo 'swww not installed'";
+          always = true;
         }
       ];
     };
