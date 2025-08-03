@@ -79,7 +79,6 @@
       cifs-utils
       nfs-utils
       pavucontrol
-      photoqt
 
       # work
       _1password-gui

@@ -19,5 +19,6 @@ in {
     gnome-tweaks
     seahorse
     nautilus
+    eog
   ];
 }

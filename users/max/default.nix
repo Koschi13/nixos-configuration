@@ -74,7 +74,6 @@
       # entertainment
       vlc
       spotify
-      photoqt
     ];
 
     sessionPath = ["$HOME/.local/bin"];
