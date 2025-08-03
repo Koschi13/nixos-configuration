@@ -1,4 +1,4 @@
-{lib, ...}: let
+{lib, config, ...}: let
   initExtra = lib.mkOrder 500 (builtins.readFile ./initExtra);
   initExtraBeforeCompInit = lib.mkOrder 550 (builtins.readFile ./initExtraBeforeCompInit);
 in {
@@ -21,7 +21,7 @@ in {
       enable = false;
     };
     autocd = true;
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}//zsh";
     completionInit = builtins.readFile ./comp_init.zsh;
 
     envExtra = builtins.readFile ./envExtra;
