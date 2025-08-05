@@ -1,4 +1,8 @@
-{lib, config, ...}: let
+{
+  lib,
+  config,
+  ...
+}: let
   initExtra = lib.mkOrder 500 (builtins.readFile ./initExtra);
   initExtraBeforeCompInit = lib.mkOrder 550 (builtins.readFile ./initExtraBeforeCompInit);
 in {

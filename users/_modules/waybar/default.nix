@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{...}: {
   programs.waybar = {
     enable = true;
     systemd = {
@@ -21,6 +16,7 @@
           "memory"
           "cpu"
           "temperature"
+          "custom/nvidia-gpu"
         ];
         modules-center = ["clock"];
         modules-right = [
@@ -52,7 +48,7 @@
           "tooltip" = false;
         };
         "clock" = {
-          "interval" = 1;
+          "interval" = 10;
           "format" = "{:%I:%M %p  %A %b %d}";
           "tooltip" = true;
           "tooltip-format" = "<tt><small>{calendar}</small></tt>";
@@ -113,6 +109,15 @@
             "󱊢"
             "󱊣"
           ];
+        };
+        "temperature" = {
+          "hwmon-path" = "/sys/class/hwmon/hwmon2/temp1_input";
+          "critical-threshold" = 70;
+        };
+        "custom/nvidia-gpu" = {
+          "exec" = "nvidia-smi --query-gpu=utilization.gpu,temperature.gpu --format=csv,nounits,noheader | sed 's/\\([0-9]\\+\\), \\([0-9]\\+\\)/\\1% 🌡️\\2°C/g'";
+          "format" = "󰍛 {}";
+          "interval" = 2;
         };
       }
     ];

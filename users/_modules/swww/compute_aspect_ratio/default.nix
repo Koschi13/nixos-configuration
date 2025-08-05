@@ -12,4 +12,3 @@
   };
 in
   compute_aspect_ratio
-

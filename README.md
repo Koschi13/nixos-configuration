@@ -48,8 +48,9 @@ Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
 ## TODO
 
 - [ ] Add dnd shortcut
-- [ ] Caps <-> Ctrl only for notebook
 - [ ] See if it is possible to save JetBrains settings in this repo, while still being able to change something via the UI
 - [ ] Dunstctl window in the middle of the screen, E-Mails and Messages should appear longer (maybe with sound even?)
-- [ ] Install and configure https://github.com/denisidoro/navi
+- [ ] Configure https://github.com/denisidoro/navi
 - [ ] Create a windows like desktop as alternative (and maybe for gaming and office stuff)
+- [ ] Define `~/.config/rofi/powermenu/type-3/powermenu.sh` (waybar)
+- [ ] Define `rofi2` (waybar)
