@@ -78,9 +78,11 @@ tooltip label {
 }
 #memory {
   color: rgb(181, 232, 224);
+  padding-right: 10px;
 }
 #cpu {
   color: rgb(245, 194, 231);
+  padding-right: 10px;
 }
 #clock {
   color: rgb(217, 224, 238);
@@ -90,6 +92,7 @@ tooltip label {
 }
 #temperature {
   color: rgb(150, 205, 251);
+  padding-right: 10px;
 }
 #custom-nvidia-gpu {
   color: rgb(181, 205, 251);
@@ -99,6 +102,7 @@ tooltip label {
 }
 #pulseaudio {
   color: rgb(245, 224, 220);
+  padding-right: 10px;
 }
 #battery {
   color: #00cc00;
