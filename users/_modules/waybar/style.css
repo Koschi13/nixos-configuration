@@ -99,6 +99,7 @@ tooltip label {
 }
 #backlight {
   color: rgb(248, 189, 150);
+  padding-right: 10px;
 }
 #pulseaudio {
   color: rgb(245, 224, 220);
@@ -106,6 +107,7 @@ tooltip label {
 }
 #battery {
   color: #00cc00;
+  padding-right: 10px;
 }
 #battery.warning {
   color: #ff9900;
@@ -121,9 +123,8 @@ tooltip label {
 }
 #custom-powermenu {
   color: rgb(242, 143, 173);
-  padding-right: 8px;
+  padding-right: 10px;
 }
 #tray {
-  padding-right: 8px;
-  padding-left: 10px;
+  padding-right: 10px;
 }
