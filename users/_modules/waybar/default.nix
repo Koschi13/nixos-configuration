@@ -112,12 +112,23 @@
         };
         "temperature" = {
           "hwmon-path" = "/sys/class/hwmon/hwmon2/temp1_input";
-          "critical-threshold" = 70;
+          "critical-threshold" = 75;
+          "format" = "{icon} {temperatureC}°C";
+          "format-icons" = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
         "custom/nvidia-gpu" = {
           "exec" = "nvidia-smi --query-gpu=utilization.gpu,temperature.gpu --format=csv,nounits,noheader | sed 's/\\([0-9]\\+\\), \\([0-9]\\+\\)/\\1% 🌡️\\2°C/g'";
           "format" = "󰍛 {}";
           "interval" = 2;
+        };
+        "backlight" = {
+          "format" = "󰃟 {percent}%";
         };
       }
     ];

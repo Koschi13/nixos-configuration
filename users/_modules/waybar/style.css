@@ -68,13 +68,9 @@ tooltip label {
 }
 #custom-launcher {
   font-size: 20px;
-  padding-left: 8px;
-  padding-right: 6px;
-  color: #7ebae4;
-}
-#custom-powermenu {
   padding-left: 10px;
   padding-right: 10px;
+  color: #7ebae4;
 }
 #memory {
   color: rgb(181, 232, 224);
@@ -111,15 +107,19 @@ tooltip label {
 }
 #battery.warning {
   color: #ff9900;
+  padding-right: 10px;
 }
 #battery.critical {
   color: #ff3300;
+  padding-right: 10px;
 }
 #network {
   color: #abe9b3;
+  padding-right: 10px;
 }
 #network.disconnected {
   color: rgb(255, 255, 255);
+  padding-right: 10px;
 }
 #custom-powermenu {
   color: rgb(242, 143, 173);
