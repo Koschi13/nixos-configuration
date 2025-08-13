@@ -80,9 +80,9 @@
         };
         "network" = {
           "format-disconnected" = "󰯡 Disconnected";
-          "format-ethernet" = "󰒢 Connected!";
+          "format-ethernet" = "󰒢 {ipaddr}";
           "format-linked" = "󰖪 {essid} (No IP)";
-          "format-wifi" = "󰖩 {essid}";
+          "format-wifi" = "󰖩 {essid} ({ipaddr})";
           "interval" = 1;
           "tooltip" = false;
         };
@@ -121,6 +121,7 @@
             ""
             ""
           ];
+          "tooltip" = false;
         };
         "custom/nvidia-gpu" = {
           "exec" = "nvidia-smi --query-gpu=utilization.gpu,temperature.gpu --format=csv,nounits,noheader | sed 's/\\([0-9]\\+\\), \\([0-9]\\+\\)/\\1% 🌡️\\2°C/g'";
@@ -129,6 +130,7 @@
         };
         "backlight" = {
           "format" = "󰃟 {percent}%";
+          "tooltip" = false;
         };
       }
     ];
