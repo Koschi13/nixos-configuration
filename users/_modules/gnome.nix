@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   unlockKeyring = pkgs.writeShellScriptBin "unlock-keyring" ''
     #!/usr/bin/env bash
     read -rsp "Password: " pass

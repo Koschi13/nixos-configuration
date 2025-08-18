@@ -10,6 +10,7 @@
     ../_modules/homemanager.nix
     ../_modules/librewolf.nix
     ../_modules/navi/default.nix
+    ../_modules/nh.nix
     ../_modules/nixpkgs.nix
     ../_modules/nvim/hiq.nix
     ../_modules/rofi/default.nix
@@ -69,7 +70,7 @@
       git-crypt
       gnupg
       yubikey-manager
-      openvpn  # Workaround for nm-openvpn not working
+      openvpn # Workaround for nm-openvpn not working
 
       # Messengers
       element-desktop

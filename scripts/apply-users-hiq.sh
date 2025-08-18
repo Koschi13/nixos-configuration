@@ -6,5 +6,6 @@ if [[ "$HOSTNAME" != "epsilon" ]]; then
 fi
 
 pushd ~/.dotfiles || exit
-home-manager switch --flake .#hiq
+# home-manager switch --flake .#hiq
+nh home switch -c hiq .
 popd || exit

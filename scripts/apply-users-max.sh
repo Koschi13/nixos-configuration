@@ -6,5 +6,6 @@ if [[ "$HOSTNAME" == "epsilon" ]]; then
 fi
 
 pushd ~/.dotfiles || exit
-home-manager switch --flake .#max
+#home-manager switch --flake .#max
+nh home switch -c max .
 popd || exit
