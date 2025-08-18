@@ -1,7 +1,4 @@
 {
-  inputs,
-  lib,
-  config,
   pkgs,
   ...
 }: let
@@ -14,11 +11,12 @@
 in {
   # GNOME related packages
   home.packages = with pkgs; [
-    unlockKeyring
-    pinentry-gnome3
-    gnome-tweaks
-    seahorse
-    nautilus
     eog
+    gnome-tweaks
+    nautilus
+    networkmanagerapplet
+    pinentry-gnome3
+    seahorse
+    unlockKeyring
   ];
 }

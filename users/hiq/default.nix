@@ -69,6 +69,7 @@
       git-crypt
       gnupg
       yubikey-manager
+      openvpn  # Workaround for nm-openvpn not working
 
       # Messengers
       element-desktop
