@@ -14,7 +14,7 @@ with builtins; let
   promptOrder = [
     "directory"
     "git_branch"
-    "git_commit" # TODO: is not displayed
+    "git_commit"
     "git_state"
     "git_metrics"
     "git_status"
@@ -63,6 +63,10 @@ in {
           format = "\\[[$symbol$branch(:$remote_branch)]($style)\\] ";
           symbol = " ";
           style = "Muave";
+        };
+        git_commit = {
+          tag_disabled = false;
+          only_detached = false;
         };
         git_metrics = {
           format = "([+$added]($added_style) )([-$deleted]($deleted_style) )";
