@@ -8,6 +8,7 @@
     ../_modules/gnome.nix
     ../_modules/gpg/default.nix
     ../_modules/homemanager.nix
+    ../_modules/mangohud.nix
     ../_modules/navi/default.nix
     ../_modules/nh.nix
     ../_modules/nixpkgs.nix

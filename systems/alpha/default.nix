@@ -4,8 +4,9 @@
     ./cache.nix
     ./hardware-configuration.nix
     ./mounts.nix
-    ./nvidia.nix
     ./ollama.nix
+    ./radeon.nix
+    ./rgb.nix
     ./virtualization.nix
   ];
 
@@ -25,7 +26,7 @@
     settings = {
       initial_session = {
         user = "max";
-        command = "${pkgs.sway}/bin/sway --unsupported-gpu";
+        command = "${pkgs.sway}/bin/sway";
       };
     };
   };

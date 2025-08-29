@@ -2,6 +2,7 @@
   config,
   lib,
   modulesPath,
+  pkgs,
   ...
 }: {
   imports = [(modulesPath + "/installer/scan/not-detected.nix")];
@@ -54,9 +55,6 @@
 
   swapDevices = [{device = "/dev/disk/by-label/NIXSWAP";}];
 
-  # Enable nvidia drivers
-  services.xserver.videoDrivers = ["nvidia"];
-
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
@@ -68,7 +66,14 @@
     # Default graphic acceleration
     graphics = {
       enable = true;
+      extraPackages = with pkgs; [
+        amdvlk
+      ];
+
       enable32Bit = true;
+      extraPackages32 = with pkgs; [
+        driversi686Linux.amdvlk
+      ];
     };
   };
 

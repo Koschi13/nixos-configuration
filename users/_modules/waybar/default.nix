@@ -15,8 +15,8 @@
           "battery"
           "memory"
           "cpu"
-          "temperature"
-          "custom/nvidia-gpu"
+          "temperature#cpu"
+          "temperature#gpu"
         ];
         modules-center = ["clock"];
         modules-right = [
@@ -110,9 +110,9 @@
             "󱊣"
           ];
         };
-        "temperature" = {
+        "temperature#cpu" = {
           "hwmon-path" = "/sys/class/hwmon/hwmon2/temp1_input";
-          "critical-threshold" = 75;
+          "critical-threshold" = 80;
           "format" = "{icon} {temperatureC}°C";
           "format-icons" = [
             ""
@@ -123,10 +123,18 @@
           ];
           "tooltip" = false;
         };
-        "custom/nvidia-gpu" = {
-          "exec" = "nvidia-smi --query-gpu=utilization.gpu,temperature.gpu --format=csv,nounits,noheader | sed 's/\\([0-9]\\+\\), \\([0-9]\\+\\)/\\1% 🌡️\\2°C/g'";
-          "format" = "󰍛 {}";
-          "interval" = 2;
+        "temperature#gpu" = {
+          "hwmon-path" = "/sys/class/hwmon/hwmon6/temp1_input";
+          "critical-threshold" = 80;
+          "format" = "{icon} {temperatureC}°C";
+          "format-icons" = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
+          "tooltip" = false;
         };
         "backlight" = {
           "format" = "󰃟 {percent}%";
