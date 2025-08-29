@@ -52,6 +52,7 @@
       fd
       nvtopPackages.full
       blueman
+      gimp
 
       # encryption
       bitwarden
