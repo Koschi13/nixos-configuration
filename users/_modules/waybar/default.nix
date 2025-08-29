@@ -80,9 +80,9 @@
         };
         "network" = {
           "format-disconnected" = "󰯡 Disconnected";
-          "format-ethernet" = "󰒢 {ipaddr}";
-          "format-linked" = "󰖪 {essid} (No IP)";
-          "format-wifi" = "󰖩 {essid} ({ipaddr})";
+          "format-ethernet" = "󰒢 {ipaddr}  {bandwidthDownBytes}  {bandwidthUpBytes}";
+          "format-linked" = "󰖪 {essid} (No IP)  {bandwidthDownBytes}  {bandwidthUpBytes}";
+          "format-wifi" = "󰖩 {essid} ({ipaddr})  {bandwidthDownBytes}  {bandwidthUpBytes}";
           "interval" = 1;
           "tooltip" = false;
         };
