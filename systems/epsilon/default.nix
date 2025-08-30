@@ -27,9 +27,9 @@
     };
   };
 
-  services.logind.extraConfig = ''
-    RuntimeDirectorySize=6G
-  '';
+  services.logind.settings.Login = {
+    RuntimeDirectorySize = "6G";
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05"; # Did you read the comment?
