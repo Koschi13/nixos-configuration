@@ -3,6 +3,8 @@
 in {
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
+
     matchBlocks = {
       # Instead of using `git@github.com:<url>` use `vars.bshGit.host:<url>`
       "${vars.bshGit.host}" = {

@@ -53,11 +53,18 @@
           outputs = [
             {
               criteria = "AOC U34G2G4R3 0x00002347";
-              position = "0,0";
-              mode = "3440x1440@99.982Hz";
+              position = "1440,0";
+              mode = "3440x1440@59.973Hz";
+            }
+            {
+              criteria = "Acer Technologies XF270HU T78EE0048521";
+              position = "0,-670";
+              transform = "90";
+              mode = "2560x1440@59.951Hz";
             }
             {
               criteria = "eDP-1";
+              status = "disable";
               position = "3440,0";
               mode = "2880x1800@90Hz";
               scale = 2.0;
