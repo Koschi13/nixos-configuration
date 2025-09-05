@@ -73,6 +73,7 @@
 
       # office
       pdfsam-basic
+      libreoffice-qt6-fresh
 
       # entertainment
       vlc

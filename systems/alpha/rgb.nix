@@ -8,7 +8,7 @@
     wantedBy = ["multi-user.target"];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.openrgb-with-all-plugins}/bin/openrgb --profile /home/max/.config/OpenRGB/alpha.orp";
+      ExecStart = "${pkgs.openrgb-with-all-plugins}/bin/openrgb --startminimized --profile /home/max/.config/OpenRGB/alpha.orp";
     };
     enable = true;
   };
