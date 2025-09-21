@@ -122,6 +122,7 @@
             ""
           ];
           "tooltip" = false;
+          "interval" = 1;
         };
         "temperature#gpu" = {
           "hwmon-path" = "/sys/class/hwmon/hwmon6/temp1_input";
@@ -135,6 +136,7 @@
             ""
           ];
           "tooltip" = false;
+          "interval" = 5;
         };
         "backlight" = {
           "format" = "󰃟 {percent}%";

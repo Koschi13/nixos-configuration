@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+set -euo pipefail
+
 USER_SCRIPT=""
 if [[ "$HOSTNAME" == "epsilon" ]]; then
   USER_SCRIPT="./scripts/apply-users-hiq.sh"
@@ -13,7 +16,7 @@ fi
 
 pushd ~/.dotfiles || exit
 
-sudo nixos-rebuild switch --flake .# &&
+./scripts/apply-system.sh &&
   eval $USER_SCRIPT
 
 popd || exit

@@ -2,6 +2,7 @@
   imports = [
     ../default.nix
     ./cache.nix
+    ./gaming.nix
     ./hardware-configuration.nix
     ./mounts.nix
     ./ollama.nix

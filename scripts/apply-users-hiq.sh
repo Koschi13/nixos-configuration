@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 if [[ "$HOSTNAME" != "epsilon" ]]; then
   echo "This is NOT your work laptop you fool!"
   exit 1

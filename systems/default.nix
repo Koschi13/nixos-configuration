@@ -7,7 +7,7 @@
 }: let
   alphaGroups =
     if config.networking.hostName == "alpha"
-    then ["libvirtd"]
+    then ["libvirtd" "gamemode"]
     else [];
 in {
   config = {
