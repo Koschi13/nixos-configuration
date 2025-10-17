@@ -35,13 +35,14 @@ in {
     ];
 
     history = {
-      share = true;
+      append = true;
       expireDuplicatesFirst = true;
-      save = 100000;
-      size = 100000;
-      ignoreDups = true;
       ignoreAllDups = true;
+      ignoreDups = true;
       ignoreSpace = true;
+      save = 100000;
+      share = true;
+      size = 100000;
 
       # Save timestamp of command
       extended = true;
