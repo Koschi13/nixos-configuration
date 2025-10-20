@@ -9,18 +9,18 @@ in {
     git-autofixup
   ];
 
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+  };
+
   programs.git = {
     enable = true;
-    userName = "Maximilian Konter";
-    userEmail = "maximilian.konter@protonmail.com";
-
-    signing = {
-      signByDefault = true;
-      key = "FCD1C7696CB6672A";
-      format = "openpgp";
-    };
-
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Maximilian Konter";
+        email = "maximilian.konter@protonmail.com";
+      };
       core = {
         fsmonitor = true;
         untrackedCache = true;
@@ -33,8 +33,11 @@ in {
       rerere.enable = true;
     };
 
-    # Better diff written in Rust
-    delta.enable = true;
+    signing = {
+      signByDefault = true;
+      key = "FCD1C7696CB6672A";
+      format = "openpgp";
+    };
 
     includes = [
       {
