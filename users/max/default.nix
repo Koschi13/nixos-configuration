@@ -55,7 +55,7 @@
       gimp
 
       # encryption
-      bitwarden
+      bitwarden-desktop
       bitwarden-cli
       git-crypt
       gnupg
@@ -66,7 +66,7 @@
       discord
       element-desktop
       signal-desktop
-      tdesktop
+      telegram-desktop
 
       # other
       pavucontrol

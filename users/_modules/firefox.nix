@@ -6,7 +6,7 @@
   programs.firefox = {
     enable = true;
 
-    package = pkgs.firefox-wayland;
+    package = pkgs.firefox;
 
     profiles.default = {
       id = 0;
@@ -25,7 +25,7 @@
 
   home.sessionVariables = {
     MOZ_ENABLE_WAYLAND = 1;
-    DEFAULT_BROWSER = "${pkgs.firefox-wayland}/bin/firefox";
+    DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
     BROWSER = "firefox";
   };
 }

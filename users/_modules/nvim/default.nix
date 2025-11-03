@@ -21,6 +21,7 @@ in {
       imagemagick # needed for snacks.nvim
       ghostscript # needed for snacks.nvim
       lua54Packages.luarocks # needed for lazy.nvim
+      lua51Packages.lua # needed for nvim-dap-python
 
       # LSPs and Languages
       #

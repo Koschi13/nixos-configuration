@@ -65,7 +65,7 @@
       android-studio
 
       # encryption
-      bitwarden
+      bitwarden-desktop
       bitwarden-cli
       git-crypt
       gnupg
@@ -75,7 +75,7 @@
       # Messengers
       element-desktop
       signal-desktop
-      tdesktop
+      telegram-desktop
 
       # other
       cifs-utils
