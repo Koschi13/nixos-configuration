@@ -21,7 +21,7 @@
     {
       name = "fast-syntax-highlighting";
       file = "fast-syntax-highlighting.plugin.zsh";
-      src = "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions";
+      src = "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/plugins/fast-syntax-highlighting";
     }
     {
       name = "zsh-fzf-tab";
