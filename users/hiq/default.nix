@@ -19,8 +19,8 @@
     ../_modules/swww/default.nix
     ../_modules/vscode/default.nix
     ../_modules/waybar/default.nix
+    ../_modules/zed.nix
     ../_modules/zsh/default.nix
-    ../_modules/vscode/default.nix
   ];
 
   # Enable fonts
