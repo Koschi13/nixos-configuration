@@ -181,7 +181,14 @@ in {
     services.udisks2.enable = true;
 
     # Games
-    programs.steam.enable = true;
+    programs.steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      gamescopeSession = {
+        enable = true;
+      };
+      localNetworkGameTransfers.openFirewall = true;
+    };
 
     programs.nix-ld.enable = true;
 

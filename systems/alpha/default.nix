@@ -5,7 +5,7 @@
     ./gaming.nix
     ./hardware-configuration.nix
     ./mounts.nix
-    ./ollama.nix
+    # ./ollama.nix
     ./radeon.nix
     ./rgb.nix
     ./virtualization.nix

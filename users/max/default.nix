@@ -54,6 +54,8 @@
       nvtopPackages.full
       blueman
       gimp
+      android-tools
+      jmtpfs
 
       # encryption
       bitwarden-desktop
@@ -79,6 +81,8 @@
       # entertainment
       vlc
       spotify
+      calibre
+      prismlauncher
     ];
 
     sessionPath = ["$HOME/.local/bin"];

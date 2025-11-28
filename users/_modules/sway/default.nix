@@ -285,6 +285,11 @@ in {
           always = true;
         }
       ];
+      focus = {
+        followMouse = "yes";
+        newWindow = "focus";
+        wrapping = "force";
+      };
     };
   };
 
