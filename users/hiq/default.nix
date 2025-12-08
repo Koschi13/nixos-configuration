@@ -81,6 +81,7 @@
       cifs-utils
       nfs-utils
       pavucontrol
+      gimp
 
       # work
       _1password-gui
