@@ -31,6 +31,7 @@ in {
       merge.conflictstyle = "diff3";
       diff.colorMoved = "default";
       rerere.enable = true;
+      push.followTags = true;
     };
 
     signing = {
