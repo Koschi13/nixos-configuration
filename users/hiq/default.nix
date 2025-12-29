@@ -14,6 +14,7 @@
     ../_modules/nixpkgs.nix
     ../_modules/nvim/hiq.nix
     ../_modules/rofi/default.nix
+    ../_modules/scripts/default.nix
     ../_modules/ssh.nix
     ../_modules/sway/default.nix
     ../_modules/swww/default.nix
