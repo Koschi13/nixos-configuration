@@ -9,9 +9,8 @@
       cpu_stats = 1;
       cpu_temp = 1;
       fps = 1;
+      frametime = 0;
       fps_limit = "144,120,90,60,0";
-      frame_timing = 1;
-      frametime = 1;
       gamemode = 1;
       gpu_color = lib.mkDefault "AAAAAA";
       gpu_power = 1;
@@ -22,6 +21,9 @@
       text_outline = 1;
       toggle_fps_limit = "F1";
       toggle_hud = "F2";
+      font_size = 18;
+      font_size_text = 18;
+      position = "bottom-left";
     };
   };
 }

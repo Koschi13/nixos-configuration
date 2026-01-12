@@ -74,6 +74,8 @@
 
       # other
       pavucontrol
+      xcursor-themes
+      adwaita-icon-theme
 
       # office
       pdfsam-basic
@@ -87,6 +89,17 @@
     ];
 
     sessionPath = ["$HOME/.local/bin"];
+
+    sessionVariables = {
+      XCURSOR_THEME="Adwaita";
+    };
+
+    file = {
+      ".icons/default/index.theme".text = ''
+        [Icon Theme]
+        Inherits=Adwaita
+      '';
+    };
   };
 
   services.mpris-proxy.enable = true;

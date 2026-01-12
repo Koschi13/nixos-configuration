@@ -12,6 +12,12 @@ in {
     ./kanshi.nix
   ];
 
+  xdg.portal = {
+    config = {
+      sway.preferred = [ "wlr" "gtk" ];
+    };
+  };
+
   # TODO move to extra file and import
   #      use let like here to define the package bins
   #      https://github.com/nix-community/home-manager/issues/1521
