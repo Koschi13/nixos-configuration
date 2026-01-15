@@ -9,6 +9,7 @@
     ../_modules/gpg/default.nix
     ../_modules/homemanager.nix
     ../_modules/mangohud.nix
+    ../_modules/minecraft.nix
     ../_modules/navi/default.nix
     ../_modules/nh.nix
     ../_modules/nixpkgs.nix
@@ -74,8 +75,6 @@
 
       # other
       pavucontrol
-      xcursor-themes
-      adwaita-icon-theme
 
       # office
       pdfsam-basic
@@ -85,21 +84,9 @@
       vlc
       spotify
       calibre
-      prismlauncher
     ];
 
     sessionPath = ["$HOME/.local/bin"];
-
-    sessionVariables = {
-      XCURSOR_THEME="Adwaita";
-    };
-
-    file = {
-      ".icons/default/index.theme".text = ''
-        [Icon Theme]
-        Inherits=Adwaita
-      '';
-    };
   };
 
   services.mpris-proxy.enable = true;
