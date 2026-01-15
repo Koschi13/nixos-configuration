@@ -290,6 +290,9 @@ in {
           command = "sleep 5 && wallpaper_random || echo 'swww not installed'";
           always = true;
         }
+        {
+          command = "which openrgb && openrgb --startminimized --profile /home/max/.config/OpenRGB/alpha.orp";
+        }
       ];
       focus = {
         followMouse = "yes";
