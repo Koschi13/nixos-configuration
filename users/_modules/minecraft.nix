@@ -1,17 +1,15 @@
-{pkgs, ...}:
-{
+{pkgs, ...}: {
   home = {
     packages = with pkgs; [
       # Cursor theme to fix crashes
       adwaita-icon-theme
-      
+
       # Launcher
       prismlauncher
-  ];
-
+    ];
 
     sessionVariables = {
-      XCURSOR_THEME="Adwaita";
+      XCURSOR_THEME = "Adwaita";
     };
 
     file = {

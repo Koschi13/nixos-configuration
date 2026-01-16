@@ -14,7 +14,7 @@ in {
 
   xdg.portal = {
     config = {
-      sway.preferred = [ "wlr" "gtk" ];
+      sway.preferred = ["wlr" "gtk"];
     };
   };
 

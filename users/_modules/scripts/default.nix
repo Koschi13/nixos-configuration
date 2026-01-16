@@ -1,4 +1,8 @@
-{pkgs, lib, ...}: let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   allFiles = builtins.readDir ./.;
   shFiles = lib.filterAttrs (name: type: lib.hasSuffix ".sh" name && type == "regular") allFiles;
   scriptNames = builtins.attrNames shFiles;
