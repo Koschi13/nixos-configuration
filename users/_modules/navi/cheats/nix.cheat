@@ -1,0 +1,7 @@
+% nix
+
+# Get Nix SHA256 sum for an archive. <archive-url> could also be `file://<path>`
+nix hash convert --hash-algo sha256 $(nix-prefetch-url --type sha256 --unpack <archive-url>)
+
+# Get Nix SHA256 sum for a file or directory. <url> could also be `file://<path>`
+nix hash convert --hash-algo sha256 $(nix-prefetch-url --type sha256 <url>)
