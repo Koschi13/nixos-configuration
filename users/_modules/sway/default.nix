@@ -297,7 +297,6 @@ in {
       focus = {
         followMouse = "yes";
         newWindow = "focus";
-        wrapping = "force";
       };
     };
   };
