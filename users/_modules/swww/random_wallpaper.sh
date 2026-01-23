@@ -6,8 +6,10 @@ if command -v swww >/dev/null 2>&1; then
 fi
 
 swww query | while read -r LINE; do
-  RESOLUTION=$(awk 'BEGIN { FS = " " } ; { print substr($2, 1, length($2) -1) }' <<<"$LINE")
-  OUTPUT=$(awk 'BEGIN { FS = ":" } ; { print $1 }' <<<"$LINE")
+  # Example LINE:
+  # : DP-3: 1440x2560, scale: 1, currently displaying: image: /home/max/Pictures/Wallpapers/16_9/2469565d2d302311.jpg
+  RESOLUTION=$(awk 'BEGIN { FS = " " } ; { print substr($3, 1, length($3) -1) }' <<<"$LINE")
+  OUTPUT=$(awk 'BEGIN { FS = ": " } ; { print $2 }' <<<"$LINE")
   ASPECT_RATIO=$(compute_aspect_ratio "$RESOLUTION")
 
   IMAGES=$(fd --type f --extension png --extension jpg --extension jpeg '' "$HOME/Pictures/Wallpapers/$ASPECT_RATIO" | shuf -n1)
