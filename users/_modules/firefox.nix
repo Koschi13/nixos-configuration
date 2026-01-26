@@ -12,7 +12,7 @@
       id = 0;
       name = "Default";
       isDefault = true;
-      extensions.packages = with firefox-addons.packages.${pkgs.system}; [
+      extensions.packages = with firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
         ublock-origin
         bitwarden
         tridactyl

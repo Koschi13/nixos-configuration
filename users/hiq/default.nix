@@ -61,7 +61,7 @@
       vault
 
       # coding
-      jetbrains.pycharm-professional
+      jetbrains.pycharm
       jetbrains.gateway
       android-studio
 
