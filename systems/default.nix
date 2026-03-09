@@ -113,7 +113,6 @@ in {
         alsa-utils
         git
         gnupg
-        helvum
         pcsclite
         wget
       ];

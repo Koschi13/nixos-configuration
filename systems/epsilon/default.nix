@@ -9,7 +9,7 @@
     hostName = "epsilon";
   };
 
-  programs.light.enable = true;
+  hardware.acpilight.enable = true;
   xdg = {
     portal = {
       wlr.enable = true;
