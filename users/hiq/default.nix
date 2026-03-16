@@ -16,6 +16,7 @@
     ../_modules/rofi/default.nix
     ../_modules/scripts/default.nix
     ../_modules/ssh.nix
+    ../_modules/ssm.nix
     ../_modules/sway/default.nix
     ../_modules/swww/default.nix
     ../_modules/tmux.nix
