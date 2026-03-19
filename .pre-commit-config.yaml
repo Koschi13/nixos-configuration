@@ -1,0 +1,12 @@
+repos:
+  - repo: local
+    hooks:
+      - id: format
+        name: Check Formatting
+        description: Check the formatting of the `.nix` files
+        language: unsupported
+        entry: nix fmt .
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.0
+    hooks:
+      - id: gitleaks
