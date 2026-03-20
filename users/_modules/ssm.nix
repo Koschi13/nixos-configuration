@@ -9,7 +9,7 @@
   regions = map (config: let
     regionProfile = "--region ${config.region} --profile ${vars.profile}";
     startInstanceCommand = "aws ec2 start-instances ${regionProfile} --instance-ids %h";
-    waitForInstanceCommand = "aws ec2 wait instance-running ${regionProfile} --instance-ids %h";
+    waitForInstanceCommand = "aws ec2 wait instance-status-ok ${regionProfile} --instance-ids %h";
     startSessionCommand = "aws ssm start-session  ${regionProfile} --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'";
     proxyCommand = "sh -c \"${startInstanceCommand} && ${waitForInstanceCommand} && ${startSessionCommand}\"";
   in
