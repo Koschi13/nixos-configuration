@@ -3,7 +3,7 @@
     enable = true;
     systemd = {
       enable = false;
-      target = "graphical-session.target";
+      targets = ["graphical-session.target"];
     };
     style = builtins.readFile ./style.css;
     settings = [
