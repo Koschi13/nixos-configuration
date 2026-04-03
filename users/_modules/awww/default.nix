@@ -7,5 +7,5 @@ in {
     wallpaper_random
   ];
 
-  services.swww.enable = true;
+  services.awww.enable = true;
 }
