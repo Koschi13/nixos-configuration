@@ -269,7 +269,7 @@ in {
       # TODO: Replace with x11 package
       #startup = [{
       #  command =
-      #    "command -v swww >/dev/null 2>&1 && swww init & sleep 0.5 && exec wallpaper_random || echo 'swww not installed'";
+      #    "command -v awww >/dev/null 2>&1 && awww init & sleep 0.5 && exec wallpaper_random || echo 'awww not installed'";
       #}];
     };
   };

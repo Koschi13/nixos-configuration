@@ -17,7 +17,7 @@
     ../_modules/rofi/default.nix
     ../_modules/scripts/default.nix
     ../_modules/sway/default.nix
-    ../_modules/swww/default.nix
+    ../_modules/awww/default.nix
     ../_modules/vscode/default.nix
     ../_modules/waybar/default.nix
     ../_modules/zed.nix
@@ -65,7 +65,7 @@
       git-crypt
       gnupg
       yubikey-manager
-      protonvpn-gui
+      proton-vpn
 
       # Messengers
       discord
