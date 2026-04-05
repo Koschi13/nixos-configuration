@@ -14,4 +14,5 @@
   };
 
   boot.kernelModules = ["kvm-amd"];
+  users.users.max.extraGroups = ["kvm"];
 }

@@ -84,6 +84,9 @@
       vlc
       spotify
       calibre
+
+      # emulaion
+      android-studio
     ];
 
     sessionPath = ["$HOME/.local/bin"];

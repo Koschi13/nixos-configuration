@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ../default.nix
+    ./android.nix
     ./cache.nix
     ./gaming.nix
     ./hardware-configuration.nix
