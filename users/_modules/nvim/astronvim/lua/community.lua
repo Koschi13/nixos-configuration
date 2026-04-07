@@ -22,7 +22,9 @@ return {
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.markdown" }, -- There is a problem with the `icu` package, which can be worked around with DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
   { import = "astrocommunity.pack.nix" }, -- https://astronvim.github.io/astrocommunity/#nix
-  { import = "astrocommunity.pack.python-ruff" },
+  { import = "astrocommunity.pack.python.base" },
+  { import = "astrocommunity.pack.python.basedpyright" },
+  { import = "astrocommunity.pack.python.ruff" },
   { import = "astrocommunity.pack.rainbow-delimiter-indent-blankline" },
   { import = "astrocommunity.pack.rust" },
   { import = "astrocommunity.pack.terraform" },
