@@ -25,6 +25,9 @@ in {
 
       # LSPs and Languages
       #
+      ## General
+      inotify-tools # better file watcher
+
       ## Rust
       rust-analyzer # required by astrocommunity.pack.rust
 
