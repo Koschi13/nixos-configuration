@@ -84,6 +84,7 @@
       vlc
       spotify
       calibre
+      easyeffects
 
       # emulaion
       android-studio

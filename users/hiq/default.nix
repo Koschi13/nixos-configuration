@@ -105,6 +105,7 @@
 
       # entertainment
       spotify
+      easyeffects
     ];
 
     sessionPath = ["$HOME/.local/bin"];
