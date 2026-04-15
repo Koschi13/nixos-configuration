@@ -14,14 +14,13 @@ return {
   { import = "astrocommunity.git.neogit" },
   { import = "astrocommunity.git.octo-nvim" },
   { import = "astrocommunity.markdown-and-latex.render-markdown-nvim" },
-  { import = "astrocommunity.media.codesnap-nvim" },
   { import = "astrocommunity.pack.bash" },
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.harper" },
   { import = "astrocommunity.pack.helm" },
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.markdown" }, -- There is a problem with the `icu` package, which can be worked around with DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-  { import = "astrocommunity.pack.nix" }, -- https://astronvim.github.io/astrocommunity/#nix
+  { import = "astrocommunity.pack.nix" },      -- https://astronvim.github.io/astrocommunity/#nix
   { import = "astrocommunity.pack.python.base" },
   { import = "astrocommunity.pack.python.basedpyright" },
   { import = "astrocommunity.pack.python.ruff" },
