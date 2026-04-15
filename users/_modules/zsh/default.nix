@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   initExtra = lib.mkOrder 500 (builtins.readFile ./initExtra);
@@ -78,6 +79,9 @@ in {
 
       # delta (diff tool)
       diffd = "delta";
+
+      # dust
+      du = "dust";
     };
   };
 
@@ -111,4 +115,8 @@ in {
       enableAliases = true;
     };
   };
+
+  home.packages = with pkgs; [
+    dust
+  ];
 }
