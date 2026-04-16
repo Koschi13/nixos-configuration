@@ -85,6 +85,7 @@
       nfs-utils
       pavucontrol
       gimp
+      libreoffice
 
       # work
       _1password-gui
