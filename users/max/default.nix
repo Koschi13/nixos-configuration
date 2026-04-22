@@ -85,6 +85,8 @@
       spotify
       calibre
       easyeffects
+      mp3cat
+      puddletag
 
       # emulaion
       android-studio
