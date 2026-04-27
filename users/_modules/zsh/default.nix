@@ -26,7 +26,7 @@ in {
       enable = false;
     };
     autocd = true;
-    dotDir = "${config.xdg.configHome}//zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
     completionInit = builtins.readFile ./comp_init.zsh;
 
     envExtra = builtins.readFile ./envExtra;
