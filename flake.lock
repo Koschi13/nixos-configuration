@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "catppuccinGhostty": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767812061,
+        "narHash": "sha256-Y6RFften1/6+1xdhIzEh/E7FBJTwY5a8NH4301HbgOM=",
+        "owner": "catppuccin",
+        "repo": "ghostty",
+        "rev": "5a58926563ddacbde4a12b4a347464c2c6945393",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "ghostty",
+        "type": "github"
+      }
+    },
     "catppuccinI3": {
       "flake": false,
       "locked": {
@@ -124,6 +140,7 @@
     "root": {
       "inputs": {
         "catppuccinAlacritty": "catppuccinAlacritty",
+        "catppuccinGhostty": "catppuccinGhostty",
         "catppuccinI3": "catppuccinI3",
         "catppuccinStarship": "catppuccinStarship",
         "denisidoroCheats": "denisidoroCheats",

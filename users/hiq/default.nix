@@ -4,6 +4,7 @@
     ../_modules/direnv.nix
     ../_modules/dunst.nix
     ../_modules/firefox.nix
+    ../_modules/ghostty.nix
     ../_modules/git.nix
     ../_modules/gnome.nix
     ../_modules/gpg/default.nix

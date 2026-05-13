@@ -41,6 +41,10 @@
       url = "github:catppuccin/alacritty";
       flake = false;
     };
+    catppuccinGhostty = {
+      url = "github:catppuccin/ghostty";
+      flake = false;
+    };
 
     # Navi cheats
     denisidoroCheats = {
@@ -52,6 +56,7 @@
   outputs = {
     self,
     catppuccinAlacritty,
+    catppuccinGhostty,
     catppuccinI3,
     catppuccinStarship,
     denisidoroCheats,
@@ -106,6 +111,7 @@
             inputs
             outputs
             catppuccinAlacritty
+            catppuccinGhostty
             catppuccinI3
             catppuccinStarship
             denisidoroCheats
@@ -127,6 +133,7 @@
             inputs
             outputs
             catppuccinAlacritty
+            catppuccinGhostty
             catppuccinI3
             catppuccinStarship
             denisidoroCheats
