@@ -5,16 +5,14 @@ in {
     enable = true;
     enableDefaultConfig = false;
 
-    matchBlocks = {
+    settings = {
       # Instead of using `git@github.com:<url>` use `vars.bshGit.host:<url>`
       "${vars.bshGit.host}" = {
         user = "git";
         hostname = vars.bshGit.hostname;
         identityFile = vars.bshGit.identityFile;
         identitiesOnly = true;
-        extraOptions = {
-          IdentityAgent = "none";
-        };
+        IdentityAgent = "none";
       };
       "${vars.bsh.host}" = {
         user = "git";

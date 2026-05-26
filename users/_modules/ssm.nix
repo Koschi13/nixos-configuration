@@ -52,7 +52,7 @@
   serviceAttrs = builtins.listToAttrs (builtins.concatLists (map (regionConfigs: builtins.concatLists (map (config: config.services) regionConfigs)) regions));
 in {
   programs.ssh = {
-    matchBlocks = hostAttrs // serviceAttrs;
+    settings = hostAttrs // serviceAttrs;
   };
 
   home = {
