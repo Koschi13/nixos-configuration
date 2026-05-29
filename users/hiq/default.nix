@@ -1,6 +1,8 @@
 {pkgs, ...}: {
   imports = [
+    ../_modules/agents/default.nix
     ../_modules/alacritty.nix
+    ../_modules/awww/default.nix
     ../_modules/direnv.nix
     ../_modules/dunst.nix
     ../_modules/firefox.nix
@@ -19,7 +21,6 @@
     ../_modules/ssh.nix
     ../_modules/ssm.nix
     ../_modules/sway/default.nix
-    ../_modules/awww/default.nix
     ../_modules/tmux.nix
     ../_modules/vscode/default.nix
     ../_modules/waybar/default.nix

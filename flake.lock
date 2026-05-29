@@ -122,6 +122,22 @@
         "type": "github"
       }
     },
+    "mattpocockSkills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779983310,
+        "narHash": "sha256-RRVV4V4h/9GkwnHU4G4PLQtwdU1Lm4istvGncwmQ9dg=",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "rev": "e3b90b5238f38cdea5996e16861dcae28ef52eda",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mattpocock",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1779560665,
@@ -146,6 +162,7 @@
         "denisidoroCheats": "denisidoroCheats",
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
+        "mattpocockSkills": "mattpocockSkills",
         "nixpkgs": "nixpkgs",
         "zsh-alias-finder": "zsh-alias-finder",
         "zsh-calc": "zsh-calc",

@@ -51,6 +51,12 @@
       url = "github:denisidoro/cheats";
       flake = false;
     };
+
+    # Agents
+    mattpocockSkills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -62,6 +68,7 @@
     denisidoroCheats,
     firefox-addons,
     home-manager,
+    mattpocockSkills,
     nixpkgs,
     zsh-alias-finder,
     zsh-calc,
@@ -116,6 +123,7 @@
             catppuccinStarship
             denisidoroCheats
             firefox-addons
+            mattpocockSkills
             zsh-alias-finder
             zsh-calc
             zsh-enhancd
@@ -138,6 +146,7 @@
             catppuccinStarship
             denisidoroCheats
             firefox-addons
+            mattpocockSkills
             zsh-alias-finder
             zsh-calc
             zsh-enhancd
