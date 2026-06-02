@@ -70,7 +70,7 @@
       android-studio
 
       # encryption
-      bitwarden-desktop
+      #bitwarden-desktop  # disabled because of https://github.com/NixOS/nixpkgs/issues/526914
       bitwarden-cli
       git-crypt
       gnupg
