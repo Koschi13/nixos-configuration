@@ -11,7 +11,7 @@
     ../_modules/gnome.nix
     ../_modules/gpg/default.nix
     ../_modules/homemanager.nix
-    ../_modules/librewolf.nix
+    #../_modules/librewolf.nix  # -> insecure atm
     ../_modules/navi/default.nix
     ../_modules/nh.nix
     ../_modules/nixpkgs.nix
