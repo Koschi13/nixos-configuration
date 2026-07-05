@@ -6,39 +6,59 @@
 }:
 with lib;
 with builtins; let
-  isRustFile = path: type: hasSuffix ".rs" path && type == "regular" && path != "mod.rs";
+  starshipPackage = pkgs.starship;
+
+  ##############################################################################
+  # Helper functions
+  ##############################################################################
+  # `cc.rs` is no module
+  isModuleFile = path: type: hasSuffix ".rs" path && type == "regular" && path != "mod.rs" && path != "cc.rs";
   mergeAllAttrSets = attrsSets: foldl' recursiveUpdate {} attrsSets;
+  # Set a module to `disable = true`
   disableModules = isDisabled: modules: mergeAllAttrSets (map (mod: {"${mod}".disabled = isDisabled;}) modules);
 
-  starshipPackage = pkgs.starship;
-  promptOrder = [
-    "directory"
-    "git_branch"
-    "git_commit"
-    "git_state"
-    "git_metrics"
-    "git_status"
-    "aws"
-    "kubernetes"
-    "line_break"
-    "sudo"
-    "nix_shell"
-    "rust"
-    "character"
-  ];
-  promptFormat = concatStrings (map (s: "\$${s}") promptOrder);
+  ##############################################################################
+  # Prompt
+  ##############################################################################
+  promptPrefix = "[](red)";
+  promptOne = ["os" "username" "sudo"];
+  promptOneSeparator = "[](bg:peach fg:red)";
+  promptTwo = ["directory"];
+  promptTwoSeparator = "[](bg:yellow fg:peach)";
+  promptThree = ["git_branch" "git_commit" "git_state" "git_metrics" "git_status"];
+  promptThreeSeparator = "[](fg:yellow bg:green)";
+  promptFour = ["python" "rust" "golang" "nodejs" "zig"];
+  promptFourSeparator = "[](fg:green bg:sapphire)";
+  promptFive = ["aws" "kubernetes"];
+  promptFiveSeparator = "[](fg:sapphire bg:lavender)";
+  promptSix = ["time"];
+  promptSixSeparator = "[ ](fg:lavender)";
+  promptSeven = ["cmd_duration" "line_break" "nix_shell" "character"];
+
+  promptModules = [promptOne promptTwo promptThree promptFour promptFive promptSix promptSeven];
+  promptCharacters = [promptPrefix promptOneSeparator promptTwoSeparator promptThreeSeparator promptFourSeparator promptFiveSeparator promptSixSeparator];
+  promptModulesFlat = concatLists promptModules;
+  promptFormat = concatStrings (lib.lists.zipListsWith (c: m: "${c}" + concatStrings (map (ms: "\$${ms}") m)) promptCharacters promptModules);
+
+  ##############################################################################
+  # Initial module config
+  ##############################################################################
   modulesSources = readDir "${starshipPackage.src}/src/modules";
-  enabledModules = disableModules false promptOrder; # <== enabled all modules used in the prompt are enabled
+  enabledModules = disableModules false promptModulesFlat; # <== enabled all modules used in the prompt are enabled
   disabledModules = pipe modulesSources [
-    # <== from starship's sources...
-    (filterAttrs isRustFile) # <== keep only Rust files...
-    attrNames # <== get the filenames...
-    (map (removeSuffix ".rs")) # <== remove Rust source extension...
-    (subtractLists promptOrder) # <== do not disable modules used in the prompt...
+    # <== from starship's sources…
+    (filterAttrs isModuleFile) # <== keep only Module files…
+    attrNames # <== get the filenames…
+    (map (removeSuffix ".rs")) # <== remove Rust source extension…
+    (subtractLists promptModulesFlat) # <== do not disable modules used in the prompt…
     (disableModules true) # <== and finally build the configuration
   ];
-  paletteSet = builtins.fromTOML (
-    builtins.readFile (
+
+  ##############################################################################
+  # Theme
+  ##############################################################################
+  paletteSet = fromTOML (
+    readFile (
       catppuccinStarship + "/themes/frappe.toml"
     )
   );
@@ -47,58 +67,128 @@ in {
     package = starshipPackage;
     enable = true;
     enableZshIntegration = true;
+
     settings = mergeAllAttrSets [
       enabledModules
       disabledModules
       {
+        "$schema" = "https://starship.rs/config-schema.json";
         format = promptFormat;
         palette = "catppuccin_frappe";
+
         directory = {
-          format = "\\[[  $path]($style)\\] ";
-          style = "Blue";
-          truncation_length = 30;
+          style = "bg:peach fg:crust";
+          format = "[ $path]($style)";
+          truncation_length = 9;
           truncation_symbol = "…/";
+
+          substitutions = {
+            "Documents" = "󰈙 ";
+            "Downloads" = " ";
+            "Music" = "󰝚 ";
+            "Pictures" = " ";
+            "Git" = " ";
+            ".config" = " ";
+            ".dotfiles" = " ";
+          };
         };
+
         git_branch = {
-          format = "\\[[$symbol$branch(:$remote_branch)]($style)\\] ";
-          symbol = " ";
-          style = "Muave";
+          format = "[[ $symbol $branch](fg:crust bg:yellow)]($style)";
+          symbol = "";
+          style = "bg:yellow";
         };
+
         git_commit = {
+          format = "[[ \\($hash$symbol$tag\\)](fg:crust bg:yellow)]($style)";
           tag_disabled = false;
           only_detached = false;
+          style = "bg:yellow";
         };
+
         git_metrics = {
-          format = "([+$added]($added_style) )([-$deleted]($deleted_style) )";
-          added_style = "Green";
-          deleted_style = "Yellow";
+          format = "([ {+$added]($added_style))([ -$deleted}]($deleted_style))($style)";
+
+          added_style = "fg:crust bg:yellow";
+          deleted_style = "fg:crust bg:yellow";
+          style = "bg:yellow";
         };
+
         git_status = {
-          style = "Peach";
+          style = "bg:yellow";
+          format = "([ $all_status$ahead_behind](fg:crust bg:yellow))($style)";
         };
+
         aws = {
-          style = "Pink";
+          style = "pink";
           symbol = "󰸏 ";
         };
+
         kubernetes = {
-          style = "Sky";
+          style = "sky";
           contexts = [
             {
               context_pattern = ".*prod.*";
-              style = "Red";
+              style = "bold red";
             }
           ];
         };
+
         sudo = {
-          style = "bold Rosewater";
+          style = "bold rosewater";
         };
+
         nix_shell = {
-          style = "Teal";
+          style = "teal";
         };
+
         character = {
-          success_symbol = "[](bold Green) ";
-          error_symbol = "[](bold Red) ";
-          vimcmd_symbol = "[](bold Mauve) ";
+          success_symbol = "[[󰄛](green) ❯](peach)";
+          error_symbol = "[[󰄛](red) ❯](peach)";
+          vimcmd_symbol = "[](subtext1)";
+        };
+
+        cmd_duration = {
+          show_milliseconds = true;
+          format = " in $duration ";
+          style = "bg:lavender";
+          min_time_to_notify = 45000;
+        };
+
+        time = {
+          disabled = false;
+          time_format = "%R";
+          style = "bg:lavender";
+          format = "[[  $time](fg:crust bg:lavender)]($style)";
+        };
+
+        username = {
+          show_always = true;
+          style_user = "bg:red fg:crust";
+          style_root = "bg:red fg:crust";
+          format = "[ $user]($style)";
+        };
+
+        os = {
+          style = "bg:red fg:crust";
+        };
+
+        python = {
+          symbol = "";
+          style = "bg:green";
+          format = "[[ $symbol( $version)(\(#$virtualenv\)) ](fg:crust bg:green)]($style)";
+        };
+
+        golang = {
+          symbol = "";
+          style = "bg:green";
+          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+        };
+
+        rust = {
+          symbol = "";
+          style = "bg:green";
+          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
         };
       }
       paletteSet

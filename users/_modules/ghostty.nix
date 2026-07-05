@@ -12,7 +12,14 @@ in {
       # TODO: make this global for with rewrite
       font-size = 10;
       font-family = "NotoSans Nerd Font Mono";
-      copy-on-select = true;
+
+      copy-on-select = "clipboard";
+      background-opacity = 0.85;
+      background-blur = 16;
+
+      mouse-hide-while-typing = true;
+
+      working-directory = "home";
     };
   };
 
