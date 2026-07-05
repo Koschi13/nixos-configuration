@@ -61,12 +61,6 @@
       blueman
       timewarrior
       bruno # postman alternative
-      vault
-
-      # coding
-      jetbrains.pycharm
-      jetbrains.gateway
-      android-studio
 
       # encryption
       #bitwarden-desktop  # disabled because of https://github.com/NixOS/nixpkgs/issues/526914
@@ -89,19 +83,11 @@
       libreoffice
 
       # work
-      _1password-gui
       slack
-      kubectl
-      kubectx
-      kubernetes-helm
       google-chrome
       dive
       obsidian
       docker-compose
-
-      # Screen-share
-      obs-studio
-      obs-studio-plugins.wlrobs
 
       # entertainment
       spotify
