@@ -52,32 +52,6 @@ in {
           tag.gpgsign = false;
         };
       }
-
-      {
-        condition = "gitdir:~/Git/BSH/GitHub/**";
-        contents = {
-          user = {
-            name = vars.bshGit.name;
-            email = vars.bshGit.email;
-          };
-          commit.gpgsign = true;
-          tag.gpgsign = true;
-          user.signingkey = vars.bshGit.signingkey;
-        };
-      }
-
-      {
-        condition = "gitdir:~/Git/BSH/BitBucket/**";
-        contents = {
-          user = {
-            name = vars.bsh.name;
-            email = vars.bsh.email;
-          };
-          commit.gpgsign = true;
-          tag.gpgsign = true;
-          user.signingkey = vars.bsh.signingkey;
-        };
-      }
     ];
   };
 }

@@ -19,7 +19,6 @@
     ../_modules/rofi/default.nix
     ../_modules/scripts/default.nix
     ../_modules/ssh.nix
-    ../_modules/ssm.nix
     ../_modules/sway/default.nix
     ../_modules/tmux.nix
     ../_modules/vscode/default.nix
@@ -92,8 +91,6 @@
       # work
       _1password-gui
       slack
-      awscli2
-      ssm-session-manager-plugin # needed for SSM
       kubectl
       kubectx
       kubernetes-helm
