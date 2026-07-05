@@ -1,4 +1,8 @@
-{catppuccinAlacritty, ...}: let
+{
+  config,
+  catppuccinAlacritty,
+  ...
+}: let
   catppuccin-frappe-toml = ".config/alacritty/catppuccin-frappe.toml";
 in {
   programs.alacritty = {
@@ -12,8 +16,7 @@ in {
         size = 10;
       };
       general.import = [
-        # TODO: instead of ~ use home variable
-        "~/${catppuccin-frappe-toml}"
+        "${config.home.homeDirectory}/${catppuccin-frappe-toml}"
       ];
     };
   };
@@ -22,7 +25,7 @@ in {
     source = catppuccinAlacritty + "/catppuccin-frappe.toml";
   };
 
-  home.sessionVariables = {
-    TERMINAL = "alacritty";
-  };
+  # home.sessionVariables = {
+  #   TERMINAL = "alacritty";
+  # };
 }

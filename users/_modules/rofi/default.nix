@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   rofiWindow = pkgs.writeShellScriptBin "rofiWindow" ''
     #!/usr/bin/env bash
     ## Run
@@ -16,7 +12,7 @@ in {
 
   programs.rofi = {
     enable = true;
-    terminal = "${pkgs.alacritty}/bin/alacritty";
+    terminal = "${pkgs.ghostty}/bin/ghostty";
     theme = ./theme.rasi;
   };
 

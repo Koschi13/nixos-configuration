@@ -52,7 +52,7 @@ in {
       up = "k";
       right = "l";
 
-      terminal = "alacritty";
+      terminal = "ghostty";
 
       menu = "rofiWindow"; # See scripts
 

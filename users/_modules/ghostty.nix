@@ -11,6 +11,8 @@ in {
       theme = "catppuccin-frappe.conf";
       # TODO: make this global for with rewrite
       font-size = 10;
+      font-family = "NotoSans Nerd Font Mono";
+      copy-on-select = true;
     };
   };
 
@@ -18,7 +20,7 @@ in {
     source = catppuccinGhostty + "/themes/catppuccin-frappe.conf";
   };
 
-  # home.sessionVariables = {
-  #   TERMINAL = "ghostty";
-  # };
+  home.sessionVariables = {
+    TERMINAL = "ghostty";
+  };
 }
