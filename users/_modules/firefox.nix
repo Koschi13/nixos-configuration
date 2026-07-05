@@ -8,8 +8,6 @@
     enable = true;
     configPath = "${config.xdg.configHome}/mozilla/firefox";
 
-    package = pkgs.firefox;
-
     profiles.default = {
       id = 0;
       name = "Default";
