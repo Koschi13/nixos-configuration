@@ -31,7 +31,7 @@ with builtins; let
   promptFourSeparator = "[](fg:green bg:sapphire)";
   promptFive = ["aws" "kubernetes"];
   promptFiveSeparator = "[](fg:sapphire bg:lavender)";
-  promptSix = ["time"];
+  promptSix = ["status" "time"];
   promptSixSeparator = "[ ](fg:lavender)";
   promptSeven = ["cmd_duration" "line_break" "nix_shell" "character"];
 
@@ -94,16 +94,16 @@ in {
         };
 
         git_branch = {
-          format = "[[ $symbol $branch](fg:crust bg:yellow)]($style)";
+          format = "[ $symbol $branch]($style)";
           symbol = "";
-          style = "bg:yellow";
+          style = "fg:crust bg:yellow";
         };
 
         git_commit = {
-          format = "[[ \\($hash$symbol$tag\\)](fg:crust bg:yellow)]($style)";
+          format = "[ \\($hash$symbol$tag\\)]($style)";
           tag_disabled = false;
           only_detached = false;
-          style = "bg:yellow";
+          style = "fg:crust bg:yellow";
         };
 
         git_metrics = {
@@ -115,8 +115,8 @@ in {
         };
 
         git_status = {
-          style = "bg:yellow";
-          format = "([ $all_status$ahead_behind](fg:crust bg:yellow))($style)";
+          style = "fg:crust bg:yellow";
+          format = "[ $all_status$ahead_behind]($style)";
         };
 
         aws = {
@@ -135,7 +135,7 @@ in {
         };
 
         sudo = {
-          style = "bg:red fg:crust";
+          style = "bold bg:red fg:crust";
           format = "[ as $symbol]($style)";
         };
 
@@ -152,21 +152,28 @@ in {
         cmd_duration = {
           show_milliseconds = true;
           format = " in $duration ";
-          style = "bg:lavender";
           min_time_to_notify = 45000;
         };
 
         time = {
-          disabled = false;
           time_format = "%R";
-          style = "bg:lavender";
-          format = "[[  $time](fg:crust bg:lavender)]($style)";
+          style = "fg:crust bg:lavender";
+          format = "[  $time]($style)";
+        };
+
+        status = {
+          format = "[ $symbol$status]($style)";
+          style = "fg:crust bg:lavender";
+          success_symbol = "✅";
+          pipestatus = true;
+          pipestatus_format = "[ \\[$pipestatus\\]]($style)";
+          pipestatus_segment_format = "[$symbol$status]($style)";
         };
 
         username = {
           show_always = true;
           style_user = "bg:red fg:crust";
-          style_root = "bg:red fg:crust";
+          style_root = "bold bg:red fg:crust";
           format = "[ $user]($style)";
         };
 
@@ -176,21 +183,23 @@ in {
 
         python = {
           symbol = "";
-          style = "bg:green";
-          format = "[[ $symbol( $version)(\(#$virtualenv\)) ](fg:crust bg:green)]($style)";
+          style = "fg:crust bg:green";
+          format = "[ $symbol( $version)(\(#$virtualenv\))]($style)";
         };
 
         golang = {
           symbol = "";
-          style = "bg:green";
-          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+          style = "fg:crust bg:green";
+          format = "[ $symbol( $version)]($style)";
         };
 
         rust = {
           symbol = "";
-          style = "bg:green";
-          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+          style = "fg:crust bg:green";
+          format = "[ $symbol( $version)]($style)";
         };
+
+        # continuation_prompt = "[▶▶ ](fg:lavender)"; # TODO: doesn't work
       }
       paletteSet
     ];
