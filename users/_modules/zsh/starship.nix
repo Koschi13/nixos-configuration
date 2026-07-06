@@ -83,13 +83,13 @@ in {
           truncation_symbol = "…/";
 
           substitutions = {
-            "Documents" = "󰈙 ";
-            "Downloads" = " ";
-            "Music" = "󰝚 ";
-            "Pictures" = " ";
-            "Git" = " ";
-            ".config" = " ";
-            ".dotfiles" = " ";
+            "Documents" = "󰈙";
+            "Downloads" = "";
+            "Music" = "󰝚";
+            "Pictures" = "";
+            "Git" = "";
+            ".config" = "";
+            ".dotfiles" = "";
           };
         };
 
@@ -107,11 +107,9 @@ in {
         };
 
         git_metrics = {
-          format = "([ {+$added]($added_style))([ -$deleted}]($deleted_style))($style)";
-
+          format = "([ {+$added]($added_style))([ -$deleted}]($deleted_style))";
           added_style = "fg:crust bg:yellow";
           deleted_style = "fg:crust bg:yellow";
-          style = "bg:yellow";
         };
 
         git_status = {

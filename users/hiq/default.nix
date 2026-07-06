@@ -32,9 +32,9 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        serif = ["NotoSerif Nerd Font"];
-        sansSerif = ["NotoSans Nerd Font"];
-        monospace = ["NotoSansM Nerd Font Mono"];
+        serif = ["Lilex Nerd Font Propo"];
+        sansSerif = ["Lilex Nerd Font"];
+        monospace = ["Lilex Nerd Font Mono"];
       };
     };
   };
@@ -50,8 +50,7 @@
 
     packages = with pkgs; [
       # fonts
-      nerd-fonts.dejavu-sans-mono
-      nerd-fonts.noto # alt until dejavu is fixed
+      nerd-fonts.lilex
 
       # tools
       ripgrep

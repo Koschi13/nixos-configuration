@@ -3,7 +3,7 @@
   // editor
   //
   "editor.detectIndentation": false,
-  "editor.fontFamily": "NotoSansM Nerd Font Mono",
+  "editor.fontFamily": "Lilex Nerd Font Mono",
   "editor.fontSize": 13,
   "editor.inlayHints.enabled": "onUnlessPressed",
   "editor.mouseWheelZoom": false,

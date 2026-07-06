@@ -11,7 +11,7 @@ in {
       theme = "catppuccin-frappe.conf";
       # TODO: make this global for with rewrite
       font-size = 10;
-      font-family = "NotoSans Nerd Font Mono";
+      font-family = "Lilex Nerd Font Mono";
 
       copy-on-select = "clipboard";
       background-opacity = 0.85;

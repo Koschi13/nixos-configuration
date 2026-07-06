@@ -28,6 +28,6 @@ return {
     has_breadcrumbs = true,
     show_workspace = true,
     has_line_number = true,
-    code_font_family = "NotoSansM Nerd Font Mono",
+    code_font_family = "Lilex Nerd Font Mono",
   },
 }

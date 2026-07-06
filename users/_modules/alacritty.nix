@@ -11,7 +11,7 @@ in {
       env.TERM = "xterm-256color";
       font = {
         normal = {
-          family = "NotoSansM Nerd Font Mono";
+          family = "Lilex Nerd Font Mono";
         };
         size = 10;
       };
