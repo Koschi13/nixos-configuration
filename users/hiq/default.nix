@@ -11,7 +11,7 @@
     ../_modules/gnome.nix
     ../_modules/gpg/default.nix
     ../_modules/homemanager.nix
-    #../_modules/librewolf.nix  # -> insecure atm
+    ../_modules/librewolf.nix
     ../_modules/navi/default.nix
     ../_modules/nh.nix
     ../_modules/nixpkgs.nix
@@ -61,6 +61,10 @@
       blueman
       timewarrior
       bruno # postman alternative
+
+      # coding
+      opencode
+      opencode-desktop
 
       # encryption
       #bitwarden-desktop  # disabled because of https://github.com/NixOS/nixpkgs/issues/526914

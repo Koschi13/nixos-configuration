@@ -135,7 +135,8 @@ in {
         };
 
         sudo = {
-          style = "bold rosewater";
+          style = "bg:red fg:crust";
+          format = "[ as $symbol]($style)";
         };
 
         nix_shell = {
