@@ -8,6 +8,7 @@
     ../_modules/git.nix
     ../_modules/gnome.nix
     ../_modules/gpg/default.nix
+    ../_modules/herdr.nix
     ../_modules/homemanager.nix
     ../_modules/mangohud.nix
     ../_modules/minecraft.nix

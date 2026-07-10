@@ -1,0 +1,3 @@
+{...}: {
+  programs.herdr.enable = true;
+}

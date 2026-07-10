@@ -10,6 +10,7 @@
     ../_modules/git.nix
     ../_modules/gnome.nix
     ../_modules/gpg/default.nix
+    ../_modules/herdr.nix
     ../_modules/homemanager.nix
     ../_modules/librewolf.nix
     ../_modules/navi/default.nix
