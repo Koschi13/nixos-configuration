@@ -121,7 +121,7 @@ in {
             "Downloads" = "";
             "Music" = "󰝚";
             "Pictures" = "";
-            "Git" = "";
+            "~/Git/GitHub" = "";
             ".config" = "";
             ".dotfiles" = "";
             "~" = "";
