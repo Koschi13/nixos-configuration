@@ -165,7 +165,7 @@ in {
         python = {
           symbol = "";
           style = promptFourStyle;
-          format = "[ $symbol( $version)(\(#$virtualenv\))]($style)";
+          format = "[ $symbol( $version)( \(#$virtualenv\))]($style)";
         };
 
         rust = {
@@ -183,11 +183,12 @@ in {
         nodejs = {
           symbol = "󰎙";
           style = promptFourStyle;
-          format = "[[ $symbol( $version) ](fg:crust bg:green)]($style)";
+          format = "[ $symbol( $version)]($style)";
         };
 
         zig = {
           symbol = "";
+          format = "[ $symbol( $version)]($style)";
           style = promptFourStyle;
         };
 
