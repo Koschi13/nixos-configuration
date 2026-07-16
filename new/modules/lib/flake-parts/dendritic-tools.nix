@@ -25,7 +25,7 @@
     '';
   };
 
-  # set flake.systems
+  # TODO: set flake.systems
   systems = [
     "aarch64-darwin"
     "aarch64-linux"

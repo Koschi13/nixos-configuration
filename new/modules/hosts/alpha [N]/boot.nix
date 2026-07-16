@@ -2,11 +2,14 @@
   flake.modules.nixos.alpha = {
     boot = {
       loader = {
+        efi.canTouchEfiVariables = true;
+
         grub = {
           enable = true;
           useOSProber = true;
           efiSupport = true;
           default = "saved";
+          # Required as we have a luks encrypted system
           device = "nodev";
           configurationLimit = 10;
         };

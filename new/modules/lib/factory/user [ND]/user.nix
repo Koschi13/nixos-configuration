@@ -1,4 +1,7 @@
-{self, ...}: {
+{self, ...}: let
+  # TODO: Should this be defined outside?
+  defaultShell = "zsh";
+in {
   config.flake.factory.user = username: isAdmin: {
     nixos."${username}" = {
       lib,
@@ -11,9 +14,9 @@
         extraGroups = lib.optionals isAdmin [
           "wheel"
         ];
-        shell = pkgs.zsh;
+        shell = pkgs."${defaultShell}";
       };
-      programs.zsh.enable = true;
+      programs."${defaultShell}".enable = true;
 
       home-manager.users."${username}" = {
         imports = [
@@ -29,8 +32,9 @@
     }: {
       users.users."${username}" = {
         home = "/Users/${username}";
-        shell = pkgs.zsh;
+        shell = pkgs."${defaultShell}";
       };
+      programs.${defaultShell}.enable = true;
 
       home-manager.users."${username}" = {
         imports = [
@@ -39,8 +43,6 @@
       };
 
       system.primaryUser = lib.mkIf isAdmin "${username}";
-
-      programs.zsh.enable = true;
     };
 
     homeManager."${username}" = {
