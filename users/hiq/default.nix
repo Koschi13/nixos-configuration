@@ -8,6 +8,7 @@
     ../_modules/firefox.nix
     ../_modules/ghostty.nix
     ../_modules/git.nix
+    ../_modules/glance.nix
     ../_modules/gnome.nix
     ../_modules/gpg/default.nix
     ../_modules/herdr.nix
