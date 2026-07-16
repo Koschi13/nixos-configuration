@@ -115,16 +115,17 @@ in {
           format = "[ $path]($style)";
           truncation_length = 9;
           truncation_symbol = "…/";
+          home_symbol = "";
+          truncate_to_repo = false;
 
           substitutions = {
-            "Documents" = "󰈙";
-            "Downloads" = "";
-            "Music" = "󰝚";
-            "Pictures" = "";
-            "~/Git/GitHub" = "";
-            ".config" = "";
-            ".dotfiles" = "";
-            "~" = "";
+            "/Documents" = "󰈙";
+            "/Downloads" = "";
+            "/Music" = "󰝚";
+            "/Pictures" = "";
+            "/Git/GitHub" = "";
+            "/.config" = "";
+            "/.dotfiles" = "";
           };
         };
 
@@ -149,7 +150,7 @@ in {
         };
 
         git_metrics = {
-          format = "([ {+$added]($added_style))([ -$deleted}]($deleted_style))";
+          format = "([ +$added]($added_style))([ -$deleted]($deleted_style))";
           added_style = promptThreeStyle;
           deleted_style = promptThreeStyle;
         };
