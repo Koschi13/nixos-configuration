@@ -1,0 +1,2 @@
+- [ ] Get rid of flake-file, one dependency to flake-parts is already enough
+- [ ] Streamline use of `system`

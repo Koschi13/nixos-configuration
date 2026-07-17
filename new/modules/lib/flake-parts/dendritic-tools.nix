@@ -1,9 +1,11 @@
 {inputs, ...}: {
   imports = [
     inputs.flake-parts.flakeModules.modules
+    # TODO: create the flake.nix yourself -- aligns with TODO.md
     inputs.flake-file.flakeModules.default
   ];
 
+  # TODO: create the flake.nix yourself -- aligns with TODO.md
   flake-file = {
     inputs = {
       # Simplify Nix Flakes with the module system
@@ -25,7 +27,7 @@
     '';
   };
 
-  # TODO: set flake.systems
+  # TODO: set flake.systems -- aligns with TODO.md
   systems = [
     "aarch64-darwin"
     "aarch64-linux"

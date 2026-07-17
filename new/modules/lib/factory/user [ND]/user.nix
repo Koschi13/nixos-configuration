@@ -18,6 +18,9 @@ in {
       };
       programs."${defaultShell}".enable = true;
 
+      # This wires Home-Manager into the `nixos` class, so that it is no longer
+      # a standalone module, but automatically includes in nixos-rebuild.
+      # The option `home-manager` is defined in home-manager.nix
       home-manager.users."${username}" = {
         imports = [
           self.modules.homeManager."${username}"
@@ -36,6 +39,9 @@ in {
       };
       programs.${defaultShell}.enable = true;
 
+      # This wires Home-Manager into the `darwin` class, so that it is no longer
+      # a standalone module, but automatically includes in nixos-rebuild.
+      # The option `home-manager` is defined in home-manager.nix
       home-manager.users."${username}" = {
         imports = [
           self.modules.homeManager."${username}"
