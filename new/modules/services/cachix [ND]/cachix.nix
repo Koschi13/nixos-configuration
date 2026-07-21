@@ -10,10 +10,10 @@ let
 in {
   flake.modules = {
     nixos.cachix = {
-      settings = settings;
+      nix.settings = settings;
     };
     darwin.cachix = {
-      settings = settings;
+      nix.settings = settings;
     };
   };
 }

@@ -1,15 +1,11 @@
-{
-  inputs,
-  self,
-  ...
-}: {
+{inputs, ...}: {
   flake.modules.nixos.alpha = {config, ...}: {
     imports = with inputs.self.modules.nixos;
     with inputs.self.factory; [
       secrets # -> Sets up `age`
       max # -> imports users/max
       (mount-cifs-nixos {
-        host = "home-server.lan";
+        host = "homeserver";
         resource = "home";
         destination = "/home/users/max/homeserver";
         credentialspath = "${config.age.secrets."homeserver-cred".path}";
@@ -19,7 +15,7 @@
     ];
 
     age.secrets."homeserver-cred" = {
-      file = "${self.inputs.secrets}/homeserver-cred.age";
+      file = "${inputs.secrets}/homeserver-cred.age";
     };
   };
 }

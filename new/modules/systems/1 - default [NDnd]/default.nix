@@ -1,5 +1,6 @@
 {inputs, ...}: let
   stateVersion = "26.05";
+  stateVersionDarwin = 7;
 
   experimental-features = [
     "nix-command"
@@ -9,13 +10,16 @@ in {
   flake.modules.nixos.system-default = {
     imports = with inputs.self.modules.nixos; [
       # services
-      logind
       cachix
+      firmware # TODO@comp disable
+      logind
+      ssh
+
       # lib/tools
       home-manager # This wires Home-Manager into the system
     ];
 
-    settings = {
+    nix.settings = {
       experimental-features = experimental-features;
       trusted-users = [
         "root"
@@ -30,13 +34,14 @@ in {
     import = with inputs.self.modules.darwin; [
       # services
       cachix
+      ssh
       # lib/tools
       home-manager # This wires Home-Manager into the system
     ];
 
-    settings.experimental-features = experimental-features;
+    nix.settings.experimental-features = experimental-features;
 
-    system.stateVersion = stateVersion;
+    system.stateVersion = stateVersionDarwin;
   };
 
   flake.modules.homeManager.system-default = {

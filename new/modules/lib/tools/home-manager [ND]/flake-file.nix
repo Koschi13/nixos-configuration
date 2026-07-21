@@ -1,5 +1,4 @@
 {inputs, ...}: {
-  # TODO: create the flake.nix yourself -- aligns with TODO.md
   flake-file.inputs = {
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

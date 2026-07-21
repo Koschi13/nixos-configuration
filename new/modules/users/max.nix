@@ -24,6 +24,7 @@
 
       homeManager.max = {pkgs, ...}: {
         imports = with self.modules.homeManager; [
+          system-default # default setup of homeManager system
           # adminTools
           # vscode
           # passwordManager
