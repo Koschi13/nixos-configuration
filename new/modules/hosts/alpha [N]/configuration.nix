@@ -18,7 +18,6 @@ in {
 
           # TODO: import here or through configurations (e.g.: system or other collection types)?
           bluetooth
-          graphics
           logind
           sway
           cachix

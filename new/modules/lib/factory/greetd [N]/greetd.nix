@@ -26,6 +26,7 @@
   */
   config.flake.factory.greetd = username: desktopExecutable: {
     nixos.greetd = {
+      security.pam.services.greetd.enableGnomeKeyring = true;
       services.greetd = {
         enable = true;
         settings = {

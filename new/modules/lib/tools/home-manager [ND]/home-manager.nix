@@ -3,6 +3,8 @@
     home-manager = {
       # See https://github.com/nix-community/home-manager/blob/master/nixos/common.nix
       # TODO: Review all and use or delete this
+      useGlobalPkgs = true;
+      useUserPackages = true;
     };
   };
 in {

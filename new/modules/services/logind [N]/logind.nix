@@ -5,6 +5,7 @@
         # Size of /run/user/<uid>
         RuntimeDirectorySize = "6G";
       };
+      security.pam.services.logind.enableGnomeKeyring = true;
     };
   };
 }
