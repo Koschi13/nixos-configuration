@@ -59,7 +59,6 @@
       blueman
       gimp
       android-tools
-      jmtpfs
 
       # encryption
       #bitwarden-desktop  # disabled because of https://github.com/NixOS/nixpkgs/issues/526914
