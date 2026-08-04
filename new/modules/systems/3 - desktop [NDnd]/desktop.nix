@@ -6,7 +6,7 @@
   };
 
   flake.modules.darwin.system-desktop = {
-    import = with inputs.self.modules.darwin; [
+    imports = with inputs.self.modules.darwin; [
       system-server
     ];
   };

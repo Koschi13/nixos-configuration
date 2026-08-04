@@ -6,7 +6,9 @@
     credentialspath,
     UID,
     GID,
-  }: {...}: {
+  }: {pkgs, ...}: {
+    environment.systemPackages = [pkgs.cifs-utils];
+
     fileSystems."${destination}" = {
       device = "//${host}/${resource}";
       fsType = "cifs";

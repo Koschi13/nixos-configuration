@@ -1,6 +1,9 @@
-{lib, ...}: {
+{
   flake.modules = {
-    nixos.pipewire = {pkgs, ...}: {
+    nixos.pipewire = {
+      lib,
+      pkgs,
+    }: {
       xdg.portal = {
         enable = true;
         wlr.enable = true;
@@ -18,7 +21,6 @@
       security.rtkit.enable = true; # For realtime acquisition
 
       environment.systemPackages = with pkgs; [alsa-utils];
-      # TODO: audio group
     };
   };
 }

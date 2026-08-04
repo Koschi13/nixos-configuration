@@ -81,7 +81,7 @@ in {
   };
 
   flake.modules.darwin.system-default = {pkgs, ...}: {
-    import = with inputs.self.modules.darwin; [
+    imports = with inputs.self.modules.darwin; [
       # services
       cachix
       ssh

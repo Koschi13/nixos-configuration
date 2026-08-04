@@ -2,17 +2,23 @@
   self,
   lib,
   ...
-}: {
+}: let
+  username = "max";
+in {
   flake.modules = lib.mkMerge [
-    (self.factory.user "max" true)
+    # Create the user in the system
+    (self.factory.user username true)
+    # Install android-tools and add user to group
+    (self.factory.android username)
+    # Setup audio
+    (self.factory.audio username)
     {
       nixos.max = {
         imports = with self.modules.nixos; [
           # developmentEnvironment
         ];
-        users.users.max = {
-          group = "audio";
-        };
+
+        users.users.${username}.group = "users";
       };
 
       darwin.max = {
