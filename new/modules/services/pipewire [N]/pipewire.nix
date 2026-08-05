@@ -3,6 +3,7 @@
     nixos.pipewire = {
       lib,
       pkgs,
+      ...
     }: {
       xdg.portal = {
         enable = true;

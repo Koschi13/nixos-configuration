@@ -28,11 +28,11 @@
   ```
   */
   config.flake.factory.virtualisation = host: users: cpuVendor: {
-    pkgs,
-    lib,
-    ...
-  }: {
     nixos.${host} = {
+      pkgs,
+      lib,
+      ...
+    }: {
       programs.virt-manager.enable = true;
 
       virtualisation.libvirtd = {

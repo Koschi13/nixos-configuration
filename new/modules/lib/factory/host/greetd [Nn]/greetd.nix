@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   /**
   Configures greetd with a default session.
 
@@ -16,25 +16,33 @@
   username
   : The name of the default user for the initial session.
 
-  desktopExecutable
-  : The path to the executable.
+  windowManager
+  : The name of the desired window manager
 
   # Example
 
   ```nix
   {self, pkgs, ...}: {
-    flake.modules = (self.factory.greetd "max" "${pkgs.sway}/bin/sway");
+    flake.modules = (self.factory.greetd "max" "sway");
   }
   ```
   */
-  config.flake.factory.greetd = hostname: username: desktopExecutable: {
-    nixos.${hostname} = {
+  config.flake.factory.greetd = hostname: username: windowManager: {
+    nixos.${hostname} = {pkgs, ...}: let
+      pkg = pkgs.${windowManager};
+      command = "${pkg}/bin/${windowManager}";
+    in {
+      # Make sure whatever windowManager is being used is imported
+      imports = [
+        self.modules.nixos.${windowManager}
+      ];
+
       services.greetd = {
         enable = true;
         settings = {
           initial_session = {
             user = username;
-            command = desktopExecutable;
+            command = command;
           };
         };
       };
@@ -42,6 +50,12 @@
 
     nixos.gnome-keyring = {
       security.pam.services.greetd.enableGnomeKeyring = true;
+    };
+
+    homeManager.${hostname} = {
+      imports = [
+        self.modules.homeManager.${windowManager}
+      ];
     };
   };
 }

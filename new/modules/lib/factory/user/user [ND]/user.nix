@@ -1,35 +1,34 @@
-/**
-Creates the given user(name)
-
-# Type
-
-```
-user :: String -> Bool -> Module
-```
-
-# Arguments
-
-username
-: The name of the user for which this aspect will be enabled
-
-isAdmin
-: Wether to make the user an admin (wheel group) or not.
-
-# Example
-
-```nix
-{self, pkgs, ...}: {
-  flake.modules = (self.factory.user "max", true);
-}
-```
-*/
-let
+{self, ...}: let
   # TODO: Should this be defined outside?
   defaultShell = "zsh";
 in {
+  /**
+  Creates the given user(name)
+
+  # Type
+
+  ```
+  user :: String -> Bool -> Module
+  ```
+
+  # Arguments
+
+  username
+  : The name of the user for which this aspect will be enabled
+
+  isAdmin
+  : Wether to make the user an admin (wheel group) or not.
+
+  # Example
+
+  ```nix
+  {self, pkgs, ...}: {
+    flake.modules = (self.factory.user "max", true);
+  }
+  ```
+  */
   config.flake.factory.user = username: isAdmin: {
     nixos.${username} = {
-      self,
       lib,
       pkgs,
       ...
@@ -55,7 +54,6 @@ in {
     };
 
     darwin.${username} = {
-      self,
       lib,
       pkgs,
       ...

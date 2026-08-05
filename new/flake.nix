@@ -18,10 +18,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-    nixpkgs-small.url = "github:nixos/nixpkgs/nixos-26.05-small";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-unstable-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-stable-small.url = "github:nixos/nixpkgs/nixos-26.05-small";
     secrets = {
       url = "path:./secrets";
       flake = false;
