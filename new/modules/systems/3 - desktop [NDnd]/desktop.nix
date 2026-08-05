@@ -2,6 +2,8 @@
   flake.modules.nixos.system-desktop = {
     imports = with inputs.self.modules.nixos; [
       system-server
+
+      sway
     ];
   };
 
@@ -14,6 +16,8 @@
   flake.modules.homeManager.system-desktop = {
     imports = with inputs.self.modules.homeManager; [
       system-server
+
+      sway
     ];
   };
 }

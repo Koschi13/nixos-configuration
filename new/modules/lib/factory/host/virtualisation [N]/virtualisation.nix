@@ -17,13 +17,13 @@
   : A list of users which will be added to the `kvm` group
 
   cpu
-  : The CPU vendor (e.g.: intel or AMD)
+  : The CPU vendor. Valid values: ["amd" "intel"]
 
   # Example
 
   ```nix
   {self, pkgs, ...}: {
-    flake.modules = (self.factory.virtualisation "alpha" ["max"] amd);
+    flake.modules = (self.factory.virtualisation "alpha" ["max"] "amd");
   }
   ```
   */
@@ -54,7 +54,11 @@
         then ["kvm-intel"]
         else [];
 
-      users.users = map (username: {${username}.extraGroups = ["kvm"];}) users;
+      users.users = builtins.listToAttrs (map (username: {
+          name = username;
+          value = {extraGroups = ["kvm"];};
+        })
+        users);
     };
   };
 }

@@ -21,7 +21,7 @@
   }
   ```
   */
-  config.flake.factory.pipewire = username: {
+  config.flake.factory.audio = username: {
     nixos.${username} = {
       users.users.${username}.extraGroups = [
         "audio"

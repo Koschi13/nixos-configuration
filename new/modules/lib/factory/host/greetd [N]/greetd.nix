@@ -5,10 +5,13 @@
   # Type
 
   ```
-  greetd :: String -> String -> Module
+  greetd :: String -> String -> String -> Module
   ```
 
   # Arguments
+
+  hostname
+  : The name of the host for which this aspect will be configured for
 
   username
   : The name of the default user for the initial session.
@@ -24,9 +27,8 @@
   }
   ```
   */
-  config.flake.factory.greetd = username: desktopExecutable: {
-    nixos.greetd = {
-      security.pam.services.greetd.enableGnomeKeyring = true;
+  config.flake.factory.greetd = hostname: username: desktopExecutable: {
+    nixos.${hostname} = {
       services.greetd = {
         enable = true;
         settings = {
@@ -36,6 +38,10 @@
           };
         };
       };
+    };
+
+    nixos.gnome-keyring = {
+      security.pam.services.greetd.enableGnomeKeyring = true;
     };
   };
 }

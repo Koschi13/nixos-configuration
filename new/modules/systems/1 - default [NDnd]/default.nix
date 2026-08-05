@@ -33,6 +33,7 @@ in {
       firmware # TODO@comp disable
       logind
       ssh
+      yubikey
 
       # lib/tools
       home-manager # This wires Home-Manager into the system
@@ -85,6 +86,8 @@ in {
       # services
       cachix
       ssh
+      yubikey
+
       # lib/tools
       home-manager # This wires Home-Manager into the system
     ];

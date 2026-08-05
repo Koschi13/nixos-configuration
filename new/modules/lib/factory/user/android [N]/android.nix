@@ -21,8 +21,8 @@
   }
   ```
   */
-  config.flake.factory.android = username: {pkgs}: {
-    nixos.${username} = {
+  config.flake.factory.android = username: {
+    nixos.${username} = {pkgs, ...}: {
       environment.systemPackages = with pkgs; [android-tools];
 
       users.users.${username}.extraGroups = ["adbusers"];
