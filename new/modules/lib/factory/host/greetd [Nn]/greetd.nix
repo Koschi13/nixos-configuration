@@ -23,7 +23,7 @@
 
   ```nix
   {self, pkgs, ...}: {
-    flake.modules = (self.factory.greetd "max" "sway");
+    flake.modules = (self.factory.greetd "alpha" "max" "sway");
   }
   ```
   */

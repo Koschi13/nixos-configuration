@@ -3,7 +3,7 @@
   inputs,
   ...
 }: {
-  flake.modules.nixos.alpha = {config, ...}: let
+  flake.modules.nixos.epsilon = {config, ...}: let
     inherit (self) modules factory;
   in {
     imports = [

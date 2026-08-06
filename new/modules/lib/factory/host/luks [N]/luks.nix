@@ -30,7 +30,7 @@
   ```
   */
   config.flake.factory.luks = host: uuid: ssd: {
-    nixos."${host}" = {
+    nixos.${host} = {
       boot = {
         initrd = {
           luks.devices.luksroot = {

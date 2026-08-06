@@ -17,13 +17,13 @@ in {
   : The name of the user for which this aspect will be enabled
 
   isAdmin
-  : Wether to make the user an admin (wheel group) or not.
+  : Whether to make the user an admin (wheel group) or not.
 
   # Example
 
   ```nix
   {self, pkgs, ...}: {
-    flake.modules = (self.factory.user "max", true);
+    flake.modules = (self.factory.user "max" true);
   }
   ```
   */
@@ -60,14 +60,14 @@ in {
     }: {
       users.users.${username} = {
         home = "/Users/${username}";
-        shell = pkgs."${defaultShell}";
+        shell = pkgs.${defaultShell};
       };
       programs.${defaultShell}.enable = true;
 
       # This wires Home-Manager into the `darwin` class, so that it is no longer
       # a standalone module, but automatically includes in nixos-rebuild.
       # The option `home-manager` is defined in home-manager.nix
-      home-manager.users."${username}" = {
+      home-manager.users.${username} = {
         imports = [
           self.modules.homeManager.${username}
         ];

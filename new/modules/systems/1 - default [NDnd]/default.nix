@@ -43,9 +43,7 @@ in {
     ];
 
     nix = {
-      gc = gc;
-      nixPath = nixPath;
-      registry = registry;
+      inherit gc registry nixPath;
       settings = {
         auto-optimise-store = true;
         experimental-features = experimental-features;
@@ -96,9 +94,7 @@ in {
     ];
 
     nix = {
-      gc = gc;
-      nixPath = nixPath;
-      registry = registry;
+      inherit gc registry nixPath;
       settings = {
         auto-optimise-store = true;
         experimental-features = experimental-features;
