@@ -16,13 +16,13 @@
   users
   : A list of users which will be added to the `kvm` group
 
-  cpu
+  cpuVendor
   : The CPU vendor. Valid values: ["amd" "intel"]
 
   # Example
 
   ```nix
-  {self, pkgs, ...}: {
+  {self, ...}: {
     flake.modules = (self.factory.virtualisation "alpha" ["max"] "amd");
   }
   ```
@@ -56,7 +56,7 @@
 
       users.users = builtins.listToAttrs (map (username: {
           name = username;
-          value = {extraGroups = ["kvm"];};
+          value = {extraGroups = ["kvm" "libvirtd"];};
         })
         users);
     };

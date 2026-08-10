@@ -5,11 +5,6 @@
       pkgs,
       ...
     }: {
-      xdg.portal = {
-        enable = true;
-        wlr.enable = true;
-      };
-
       services.pulseaudio.enable = lib.mkForce false;
 
       services.pipewire = {

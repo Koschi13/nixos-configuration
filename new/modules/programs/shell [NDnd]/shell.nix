@@ -7,6 +7,7 @@
         "/share/zsh"
       ];
     };
+
     darwin.shell = {
       programs.bash.enable = true;
 
@@ -14,6 +15,7 @@
         "/share/zsh"
       ];
     };
+
     homeManager.shell = {
       # TODO
     };

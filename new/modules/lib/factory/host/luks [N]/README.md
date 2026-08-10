@@ -25,10 +25,10 @@ where you have to call:
   ...
 }: {
   flake.modules = lib.mkMerge [
-    (self.factory.luks "<host>" "<device-id>")
+    (self.factory.luks "<host>" "<device-id>" <true/false>)
     {
       nixos.alpha = {
-        imports = with inputs.self.modules.nixos; [
+        imports = with self.modules.nixos; [
           # ...modules
         ];
       };

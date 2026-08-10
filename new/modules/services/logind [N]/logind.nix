@@ -8,7 +8,7 @@
     };
 
     nixos.gnome-keyring = {
-      security.pam.services.logind.enableGnomeKeyring = true;
+      security.pam.services.login.enableGnomeKeyring = true;
     };
   };
 }

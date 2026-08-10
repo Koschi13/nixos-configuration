@@ -22,7 +22,7 @@
   # Example
 
   ```nix
-  {self, pkgs, ...}: {
+  {self, ...}: {
     flake.modules = (self.factory.greetd "alpha" "max" "sway");
   }
   ```
@@ -50,12 +50,6 @@
 
     nixos.gnome-keyring = {
       security.pam.services.greetd.enableGnomeKeyring = true;
-    };
-
-    homeManager.${hostname} = {
-      imports = [
-        self.modules.homeManager.${windowManager}
-      ];
     };
   };
 }

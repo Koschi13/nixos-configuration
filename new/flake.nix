@@ -11,6 +11,10 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    catppuccinI3 = {
+      url = "github:catppuccin/i3";
+      flake = false;
+    };
     flake-file.url = "github:vic/flake-file";
     flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager = {

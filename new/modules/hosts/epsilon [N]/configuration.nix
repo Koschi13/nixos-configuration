@@ -15,16 +15,16 @@ in {
         imports = with self.modules.nixos; [
           system-desktop
 
-          # TODO: import here or through configurations (e.g.: system or other collection types)?
           bluetooth
-          logind
+          docker
+          rgb
         ];
 
         networking = {
           hostName = hostname;
         };
 
-        powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+        powerManagement.cpuFreqGovernor = "powersave";
       };
     }
   ];

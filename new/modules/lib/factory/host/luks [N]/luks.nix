@@ -25,7 +25,7 @@
 
   ```nix
   {self, ...}: {
-    flake.modules = (self.factory.luks "alpha" "8e424358-602c-490d-9a00-ad3d00108f32");
+    flake.modules = (self.factory.luks "alpha" "8e424358-602c-490d-9a00-ad3d00108f32" true);
   }
   ```
   */

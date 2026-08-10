@@ -1,3 +1,3 @@
-{inputs, ...}: {
-  flake.nixosConfigurations = inputs.self.lib.mkNixos "x86_64-linux" "alpha";
+{self, ...}: {
+  flake.nixosConfigurations = self.lib.mkNixos "x86_64-linux" "alpha";
 }
