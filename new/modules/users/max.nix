@@ -7,7 +7,7 @@
 in {
   flake.modules = lib.mkMerge [
     # Create the user in the system
-    (self.factory.user username true)
+    (self.factory.user username 1000 true)
     # Install android-tools and add user to group
     (self.factory.android username)
     # Setup audio

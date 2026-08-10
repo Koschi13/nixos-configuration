@@ -27,7 +27,7 @@ in {
   }
   ```
   */
-  config.flake.factory.user = username: isAdmin: {
+  config.flake.factory.user = username: uid: isAdmin: {
     nixos.${username} = {
       lib,
       pkgs,
@@ -40,6 +40,7 @@ in {
           "wheel"
         ];
         shell = pkgs.${defaultShell};
+        inherit uid;
       };
       programs.${defaultShell}.enable = true;
 
