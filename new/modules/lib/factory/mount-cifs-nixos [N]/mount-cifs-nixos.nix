@@ -5,7 +5,7 @@
   # Type
 
   ```
-  mount-cifs-nixos :: String -> String -> String -> String -> String -> Module
+  mount-cifs-nixos :: {[String] :: String} -> Module
   ```
 
   # Arguments
@@ -39,7 +39,7 @@
       server = "homeserver.lan";
       resource = "home";
       destination = "/home/users/max/homeserver";
-      credentialspath = "homeserver-cred";
+      credentialsName = "homeserver-cred";
       username = "max";
     })];
   }

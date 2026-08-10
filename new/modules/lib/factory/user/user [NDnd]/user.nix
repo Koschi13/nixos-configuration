@@ -8,13 +8,16 @@ in {
   # Type
 
   ```
-  user :: String -> Bool -> Module
+  user :: String -> Int -> Bool -> Module
   ```
 
   # Arguments
 
   username
   : The name of the user for which this aspect will be enabled
+
+  uid
+  : The uid the user will be assigned to
 
   isAdmin
   : Whether to make the user an admin (wheel group) or not.

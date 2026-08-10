@@ -16,7 +16,7 @@
   users
   : A list of users which will be added to the `kvm` group
 
-  cpu
+  cpuVendor
   : The CPU vendor. Valid values: ["amd" "intel"]
 
   # Example
