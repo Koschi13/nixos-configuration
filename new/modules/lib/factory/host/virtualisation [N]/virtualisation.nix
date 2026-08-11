@@ -56,7 +56,7 @@
 
       users.users = builtins.listToAttrs (map (username: {
           name = username;
-          value = {extraGroups = ["kvm"];};
+          value = {extraGroups = ["kvm" "libvirtd"];};
         })
         users);
     };

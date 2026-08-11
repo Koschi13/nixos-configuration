@@ -1,6 +1,6 @@
 {
-  flake.modules = {
-    nixos.gaming = {pkgs, ...}: {
+  config.flake.factory.gaming = username: {
+    nixos.${username} = {pkgs, ...}: {
       programs.gamemode.enable = true;
 
       boot.kernelModules = ["ntsync"];
@@ -25,5 +25,7 @@
         localNetworkGameTransfers.openFirewall = true;
       };
     };
+
+    users.users.${username}.extraGroups = ["gamemode"];
   };
 }

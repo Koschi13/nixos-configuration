@@ -11,9 +11,6 @@
     "flakes"
   ];
 
-  # TODO: These two statements were adapted to nyx way of doing it, since the
-  #       default pattern I found on the internet wasn't working
-
   # This will add each flake input as a registry
   # To make nix3 commands consistent with your flake
   registry = lib.mapAttrs (_: flake: {inherit flake;}) inputs;
@@ -40,6 +37,7 @@ in {
       gpg
       yubikey
       shell
+      neovim
 
       # lib/tools
       home-manager # This wires Home-Manager into the system
@@ -129,6 +127,7 @@ in {
   }: {
     imports = with self.modules.homeManager; [
       shell
+      neovim
     ];
 
     home.homeDirectory =

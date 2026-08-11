@@ -16,6 +16,8 @@ in {
           system-desktop
 
           bluetooth
+          docker
+          rgb
         ];
 
         networking = {

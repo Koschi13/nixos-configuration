@@ -1,5 +1,7 @@
-{
+{self, ...}: {
   flake.modules.homeManager.kanshi = {
+    imports = with self.modules.homeManager; [sway];
+
     services.kanshi = {
       enable = true;
 

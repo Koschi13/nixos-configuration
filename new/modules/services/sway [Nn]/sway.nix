@@ -1,6 +1,6 @@
 {
   self,
-  catppuccinI3,
+  inputs,
   ...
 }: {
   flake.modules = {
@@ -21,6 +21,8 @@
           sway.preferred = ["wlr" "gtk"];
         };
       };
+
+      home-manager.sharedModules = [self.modules.homeManager.sway];
     };
 
     homeManager.sway = {
@@ -49,7 +51,7 @@
 
         file = {
           ".config/sway/colors/catppuccin-frappe" = {
-            source = catppuccinI3 + "/themes/catppuccin-frappe";
+            source = inputs.catppuccinI3 + "/themes/catppuccin-frappe";
           };
           "${screenshotScript}" = {
             source = ./screenshot.sh;

@@ -26,7 +26,7 @@ in {
 
   ```nix
   {self, pkgs, ...}: {
-    flake.modules = (self.factory.user "max" true);
+    flake.modules = (self.factory.user "max" 1000 true);
   }
   ```
   */
@@ -39,11 +39,14 @@ in {
       users.users.${username} = {
         isNormalUser = true;
         home = "/home/${username}";
-        extraGroups = lib.optionals isAdmin [
-          "wheel"
-        ];
+        extraGroups =
+          lib.optionals isAdmin [
+            "wheel"
+          ]
+          ++ ["video" "networkmanager"];
         shell = pkgs.${defaultShell};
         inherit uid;
+        initialPassword = "P@ssw0rd";
       };
       programs.${defaultShell}.enable = true;
 

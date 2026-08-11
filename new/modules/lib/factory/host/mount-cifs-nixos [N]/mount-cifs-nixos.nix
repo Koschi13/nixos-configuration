@@ -51,12 +51,17 @@
     destination,
     credentialsName,
     username,
-  }: {config, ...}: let
+  }: {
+    config,
+    pkgs,
+    ...
+  }: let
     uid = toString config.users.users.${username}.uid;
     group = config.users.users.${username}.group;
     gid = toString config.users.groups.${group}.gid;
     credentialspath = config.age.secrets.${credentialsName}.path;
   in {
+    environment.systemPackages = with pkgs; [cifs-utils];
     fileSystems."${destination}" = {
       device = "//${server}/${resource}";
       fsType = "cifs";
