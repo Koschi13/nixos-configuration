@@ -1,15 +1,13 @@
 {self, ...}: {
   flake.modules = {
-    nixos.wayland = {
+    nixos.xserver = {pkgs, ...}: {
       imports = with self.modules.nixos; [
         graphics
       ];
 
-      xdg = {
-        portal = {
-          enable = true;
-          wlr.enable = true;
-        };
+      xserver = {
+        enable = true;
+        excludePackages = [pkgs.xterm];
       };
     };
   };

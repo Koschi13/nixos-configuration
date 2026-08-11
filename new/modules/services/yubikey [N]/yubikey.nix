@@ -1,6 +1,11 @@
-{
+{self, ...}: {
   flake.modules.nixos.yubikey = {pkgs, ...}: {
-    services.udev.packages = [pkgs.yubikey-personalization];
+    imports = with self.modules.nixos; [
+      gpg
+    ];
+
+    services.udev.packages = with pkgs; [yubikey-personalization];
     services.pcscd.enable = true;
+    environment.systemPackages = with pkgs; [pcsclite];
   };
 }

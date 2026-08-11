@@ -1,5 +1,6 @@
 {
   inputs,
+  self,
   lib,
   ...
 }: {
@@ -34,13 +35,13 @@
     # Example
 
     ```nix
-    flake.nixosConfigurations = inputs.self.lib.mkNixos "x86_64-linux" "alpha";
+    flake.nixosConfigurations = self.lib.mkNixos "x86_64-linux" "alpha";
     ```
     */
     mkNixos = system: name: {
       ${name} = inputs.nixpkgs.lib.nixosSystem {
         modules = [
-          inputs.self.modules.nixos.${name}
+          self.modules.nixos.${name}
           {nixpkgs.hostPlatform = lib.mkDefault system;}
         ];
       };
@@ -70,13 +71,13 @@
     # Example
 
     ```nix
-    flake.nixosConfigurations = inputs.self.lib.mkDarwin "aarch64-darwin" "mac";
+    flake.nixosConfigurations = self.lib.mkDarwin "aarch64-darwin" "mac";
     ```
     */
     mkDarwin = system: name: {
       ${name} = inputs.nix-darwin.lib.darwinSystem {
         modules = [
-          inputs.self.modules.darwin.${name}
+          self.modules.darwin.${name}
           {nixpkgs.hostPlatform = lib.mkDefault system;}
         ];
       };
@@ -107,14 +108,14 @@
     # Example
 
     ```nix
-    flake.homeConfigurations = inputs.self.lib.mkHomeManager "x86_64-linux" "max";
+    flake.homeConfigurations = self.lib.mkHomeManager "x86_64-linux" "max";
     ```
     */
     mkHomeManager = system: name: {
       ${name} = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.${system};
         modules = [
-          inputs.self.modules.homeManager.${name}
+          self.modules.homeManager.${name}
           {nixpkgs.config.allowUnfree = true;} # TODO: do we want this to be the default?
         ];
       };

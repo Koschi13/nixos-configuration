@@ -21,22 +21,17 @@ in {
         users.users.${username}.group = "users";
       };
 
-      darwin.max = {
-        imports = with self.modules.darwin; [
-          # drawingApps
-          # developmentEnvironment
-        ];
-      };
+      # darwin.max = {
+      #   imports = with self.modules.darwin; [
+      #   ];
+      # };
 
       homeManager.max = {pkgs, ...}: {
         imports = with self.modules.homeManager; [
           system-default # default setup of homeManager system
-          # adminTools
-          # vscode
-          # passwordManager
-        ];
-        home.packages = with pkgs; [
-          #_mediainfo
+
+          sway
+          neovim
         ];
       };
     }

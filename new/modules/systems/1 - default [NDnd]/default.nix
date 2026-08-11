@@ -1,5 +1,6 @@
 {
   inputs,
+  self,
   lib,
   ...
 }: let
@@ -30,13 +31,15 @@
   packages = pkgs: with pkgs; [git wget curl];
 in {
   flake.modules.nixos.system-default = {pkgs, ...}: {
-    imports = with inputs.self.modules.nixos; [
+    imports = with self.modules.nixos; [
       # services
       cachix
       firmware # TODO@comp disable
       logind
       ssh
+      gpg
       yubikey
+      shell
 
       # lib/tools
       home-manager # This wires Home-Manager into the system
@@ -65,10 +68,9 @@ in {
       };
     };
 
-    # TODO: Apply usage of `unstable` for all programs
     nixpkgs.overlays = [
       (final: _prev: {
-        stable = import inputs.nixpkgs-unstable {
+        stable = import inputs.nixpkgs-stable {
           inherit (final) config;
           system = pkgs.stdenv.hostPlatform.system;
         };
@@ -80,14 +82,16 @@ in {
     documentation.doc.enable = false;
     boot.tmp.cleanOnBoot = true;
     system.stateVersion = stateVersion.nixOs;
+    programs.nix-ld.enable = true;
   };
 
   flake.modules.darwin.system-default = {pkgs, ...}: {
-    imports = with inputs.self.modules.darwin; [
+    imports = with self.modules.darwin; [
       # services
       cachix
       ssh
       yubikey
+      shell
 
       # lib/tools
       home-manager # This wires Home-Manager into the system
@@ -107,7 +111,7 @@ in {
 
     nixpkgs.overlays = [
       (final: _prev: {
-        stable = import inputs.nixpkgs-unstable {
+        stable = import inputs.nixpkgs-stable {
           inherit (final) config;
           system = pkgs.stdenv.hostPlatform.system;
         };
@@ -123,6 +127,10 @@ in {
     config,
     ...
   }: {
+    imports = with self.modules.homeManager; [
+      shell
+    ];
+
     home.homeDirectory =
       if pkgs.stdenv.isDarwin
       then (lib.mkForce "/Users/${config.home.username}")

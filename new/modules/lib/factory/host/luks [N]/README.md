@@ -28,7 +28,7 @@ where you have to call:
     (self.factory.luks "<host>" "<device-id>")
     {
       nixos.alpha = {
-        imports = with inputs.self.modules.nixos; [
+        imports = with self.modules.nixos; [
           # ...modules
         ];
       };
