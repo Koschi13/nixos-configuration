@@ -17,15 +17,15 @@
 
   ```nix
   {self, ...}: {
-    flake.modules = (self.factory.android "max");
+  flake.modules.nixos.<name> = {
+    imports = [(self.factory.android "max")];
+  }
   }
   ```
   */
-  config.flake.factory.android = username: {
-    nixos.${username} = {pkgs, ...}: {
-      environment.systemPackages = with pkgs; [android-tools];
+  config.flake.factory.android = username: {pkgs, ...}: {
+    environment.systemPackages = with pkgs; [android-tools];
 
-      users.users.${username}.extraGroups = ["adbusers"];
-    };
+    users.users.${username}.extraGroups = ["adbusers"];
   };
 }

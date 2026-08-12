@@ -11,8 +11,8 @@
       modules.nixos.secrets # -> Sets up `age`
       modules.nixos.${username} # -> imports users/max which sets up HomeManager
 
-      factory.audio
-      factory.usb
+      (factory.audio username)
+      (factory.usb username)
       (factory.mount-cifs-nixos {
         server = "homeserver.lan";
         resource = "home";
@@ -24,10 +24,6 @@
 
     age.secrets."homeserver-cred" = {
       file = "${inputs.secrets}/homeserver-cred.age";
-    };
-
-    home-manager.users.max = {
-      imports = with self.modules.homeManager; [max epsilon];
     };
   };
 }

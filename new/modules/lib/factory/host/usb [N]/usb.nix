@@ -17,17 +17,17 @@
 
   ```nix
   {self, ...}: {
-    flake.modules = (self.factory.usb "max");
+    flake.modules.nixos.<name> = {
+      imports = [(self.factory.usb "max")];
+    }
   }
   ```
   */
   config.flake.factory.usb = username: {
-    nixos.${username} = {
-      services.devmon.enable = true;
-      services.gvfs.enable = true;
-      services.udisks2.enable = true;
+    services.devmon.enable = true;
+    services.gvfs.enable = true;
+    services.udisks2.enable = true;
 
-      users.users.${username}.extraGroups = ["storage"];
-    };
+    users.users.${username}.extraGroups = ["storage"];
   };
 }

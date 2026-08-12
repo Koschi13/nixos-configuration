@@ -35,13 +35,14 @@
   ```nix
   {self, ...}: {
     flake.modules.nixos.<name> = {
-    imports = [(self.factory.mount-cifs-nixos {
-      server = "homeserver.lan";
-      resource = "home";
-      destination = "/home/users/max/homeserver";
-      credentialsName = "homeserver-cred";
-      username = "max";
-    })];
+      imports = [(self.factory.mount-cifs-nixos {
+        server = "homeserver.lan";
+        resource = "home";
+        destination = "/home/users/max/homeserver";
+        credentialsName = "homeserver-cred";
+        username = "max";
+      })];
+    }
   }
   ```
   */

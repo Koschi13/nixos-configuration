@@ -17,16 +17,16 @@
 
   ```nix
   {self, ...}: {
-    flake.modules = (self.factory.audio "max");
+    flake.modules.nixos.<name> = {
+      imports = [(self.factory.audio "max")];
+    }
   }
   ```
   */
   config.flake.factory.audio = username: {
-    nixos.${username} = {
-      users.users.${username}.extraGroups = [
-        "audio"
-        "sound"
-      ];
-    };
+    users.users.${username}.extraGroups = [
+      "audio"
+      "sound"
+    ];
   };
 }

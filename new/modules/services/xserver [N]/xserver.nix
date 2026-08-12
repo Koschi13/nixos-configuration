@@ -4,7 +4,7 @@
       graphics
     ];
 
-    xserver = {
+    services.xserver = {
       enable = true;
       excludePackages = [pkgs.xterm];
     };

@@ -1,4 +1,4 @@
-{self, ...}: {
+{
   flake.modules = {
     nixos.neovim = {
       programs.neovim = {
@@ -6,8 +6,6 @@
         vimAlias = true;
         viAlias = true;
       };
-
-      home-manager.sharedModules = [self.modules.homeManager.neovim];
     };
 
     homeManager.neovim = {pkgs, ...}: let

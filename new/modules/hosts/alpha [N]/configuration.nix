@@ -21,7 +21,6 @@ in {
           bluetooth
 
           amdgpu
-          gaming
           rgb
         ];
 

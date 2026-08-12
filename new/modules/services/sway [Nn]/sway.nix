@@ -21,8 +21,6 @@
           sway.preferred = ["wlr" "gtk"];
         };
       };
-
-      home-manager.sharedModules = [self.modules.homeManager.sway];
     };
 
     homeManager.sway = {
@@ -33,8 +31,6 @@
     }: let
       screenshotScript = ".config/sway/screenshot.sh";
     in {
-      imports = with self.modules.homeManager; [kanshi];
-
       home = {
         packages = with pkgs; [
           grim

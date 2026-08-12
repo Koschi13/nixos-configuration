@@ -25,6 +25,22 @@
         "type": "github"
       }
     },
+    "catppuccinI3": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1728869535,
+        "narHash": "sha256-H+ZueiYkCoBfS8JENLKhL/efFK6WFNDsbiMbTpGROUs=",
+        "owner": "catppuccin",
+        "repo": "i3",
+        "rev": "c072ada05271eec960dc893affe9ac55af63a745",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "i3",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -198,6 +214,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "catppuccinI3": "catppuccinI3",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
