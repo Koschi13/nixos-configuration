@@ -10,3 +10,4 @@
 - `hardware.cpu.*.updateMicrocode` changed on purpose, the TODOs mark for later comparison against the original results
 - `nixPath` changes was done on purpose as the original snippet didn't work
 - `networking.useDHCP` is true by default and therfore omitted from now on
+- `docker` was dropped on `alpha` as it was never used

@@ -22,7 +22,7 @@
   # Example
 
   ```nix
-  {self, pkgs, ...}: {
+  {self, ...}: {
     flake.modules = (self.factory.virtualisation "alpha" ["max"] "amd");
   }
   ```

@@ -33,7 +33,7 @@
   # Example
 
   ```nix
-  {self, pkgs, ...}: {
+  {self, ...}: {
     flake.modules.nixos.<name> = {
     imports = [(self.factory.mount-cifs-nixos {
       server = "homeserver.lan";

@@ -16,7 +16,7 @@
   # Example
 
   ```nix
-  {self, pkgs, ...}: {
+  {self, ...}: {
     flake.modules = (self.factory.audio "max");
   }
   ```

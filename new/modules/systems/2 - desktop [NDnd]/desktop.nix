@@ -6,7 +6,6 @@
       sway
       xserver
       printing
-      usb
     ];
   };
 

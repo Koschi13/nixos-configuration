@@ -25,7 +25,7 @@ in {
   # Example
 
   ```nix
-  {self, pkgs, ...}: {
+  {self, ...}: {
     flake.modules = (self.factory.user "max" 1000 true);
   }
   ```

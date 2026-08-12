@@ -9,9 +9,10 @@
   in {
     imports = [
       modules.nixos.secrets # -> Sets up `age`
-      modules.nixos.max # -> imports users/max which sets up HomeManager
+      modules.nixos.${username} # -> imports users/max which sets up HomeManager
+
       factory.audio
-      username
+      factory.usb
       (factory.mount-cifs-nixos {
         server = "homeserver.lan";
         resource = "home";

@@ -1,4 +1,26 @@
 {
+  /**
+  Sets up everything needed for gaming on Linux for the given user(name)
+
+  # Type
+
+  ```
+  usb :: String -> Module
+  ```
+
+  # Arguments
+
+  username
+  : The name of the user for which this aspect will be enabled
+
+  # Example
+
+  ```nix
+  {self, ...}: {
+    flake.modules = (self.factory.gaming "max");
+  }
+  ```
+  */
   config.flake.factory.gaming = username: {
     nixos.${username} = {pkgs, ...}: {
       programs.gamemode.enable = true;
@@ -24,8 +46,8 @@
 
         localNetworkGameTransfers.openFirewall = true;
       };
-    };
 
-    users.users.${username}.extraGroups = ["gamemode"];
+      users.users.${username}.extraGroups = ["gamemode"];
+    };
   };
 }

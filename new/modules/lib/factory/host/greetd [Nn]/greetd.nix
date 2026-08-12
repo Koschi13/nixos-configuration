@@ -22,7 +22,7 @@
   # Example
 
   ```nix
-  {self, pkgs, ...}: {
+  {self, ...}: {
     flake.modules = (self.factory.greetd "alpha" "max" "sway");
   }
   ```
