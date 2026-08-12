@@ -17,7 +17,121 @@
     };
 
     homeManager.shell = {
-      # TODO
+      lib,
+      config,
+      pkgs,
+      ...
+    }: let
+      initExtra = lib.mkOrder 500 (builtins.readFile ./initExtra);
+      initExtraBeforeCompInit = lib.mkOrder 550 (builtins.readFile ./initExtraBeforeCompInit);
+    in {
+      # BASH
+      programs.bash.enable = true;
+
+      # ZSH
+      programs.zsh = {
+        enable = true;
+        autosuggestion.enable = true;
+        enableCompletion = true;
+        defaultKeymap = "viins";
+        syntaxHighlighting = {
+          # replace by fast-syntac-hightlighting
+          enable = false;
+        };
+        autocd = true;
+        dotDir = "${config.xdg.configHome}/zsh";
+        completionInit = builtins.readFile ./comp_init.zsh;
+
+        envExtra = builtins.readFile ./envExtra;
+        initContent = lib.mkMerge [
+          initExtra
+          initExtraBeforeCompInit
+        ];
+
+        history = {
+          append = true;
+          expireDuplicatesFirst = true;
+          ignoreAllDups = true;
+          ignoreDups = true;
+          ignoreSpace = true;
+          save = 100000;
+          share = true;
+          size = 100000;
+
+          # Save timestamp of command
+          extended = true;
+
+          # patterns listed here will not be added to the history
+          ignorePatterns = [
+            "rm *"
+            "pkill *"
+          ];
+        };
+
+        shellAliases = {
+          # bat
+          cat = "bat --plain";
+
+          # eza
+          ls = "eza";
+          l = "eza -lgh";
+          la = "eza -lgah";
+          lr = "eza -lRr";
+          lrr = "eza -lRF";
+          lt = "eza -lgRhs date";
+          ll = "eza -lh";
+
+          # ip
+          ip = "ip --color=auto";
+
+          # kubectl
+          k = "kubectl";
+
+          # nvim
+          vim = "nvim";
+
+          # delta (diff tool)
+          diffd = "delta";
+
+          # dust
+          du = "dust";
+        };
+      };
+
+      # Commandline tools
+      programs = {
+        htop.enable = true;
+        bat = {
+          enable = true;
+          config = {
+            pager = "less -FR";
+          };
+        };
+        jq.enable = true;
+
+        eza = {
+          enable = true;
+          icons = "auto";
+          extraOptions = ["--group-directories-first"];
+        };
+
+        fzf = {
+          enable = true;
+          enableBashIntegration = true;
+          enableZshIntegration = true;
+        };
+
+        z-lua = {
+          enable = true;
+          enableBashIntegration = true;
+          enableZshIntegration = true;
+          enableAliases = true;
+        };
+      };
+
+      home.packages = with pkgs; [
+        dust
+      ];
     };
   };
 }

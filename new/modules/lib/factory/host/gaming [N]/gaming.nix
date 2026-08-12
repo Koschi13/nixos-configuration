@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   /**
   Sets up everything needed for gaming on Linux for the given user(name)
 
@@ -49,5 +49,9 @@
     };
 
     users.users.${username}.extraGroups = ["gamemode"];
+
+    home-manager.users.${username} = {
+      imports = with self.modules.homeManager; [mangohud];
+    };
   };
 }

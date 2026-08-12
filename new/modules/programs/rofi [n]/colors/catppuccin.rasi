@@ -1,0 +1,19 @@
+* {
+    /*general background (Base)*/
+    background:     #303446;
+
+    /*background of unselected (Surface2)*/
+    background-alt: #626880;
+
+    /*text unselected (Text)*/
+    foreground:     #c6d0f5;
+
+    /*text of selection (Blue)*/
+    selected:       #8caaee;
+
+    /*(Yellow)*/
+    active:         #e5c890;
+
+    /*(Red)*/
+    urgent:         #e78284;
+}
