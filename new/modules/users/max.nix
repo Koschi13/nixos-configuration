@@ -10,10 +10,6 @@ in {
     (self.factory.user username 1000 true)
     {
       nixos.max = {
-        imports = with self.modules.nixos; [
-          # developmentEnvironment
-        ];
-
         users.users.${username}.group = "users";
       };
 
@@ -22,10 +18,11 @@ in {
       #   ];
       # };
 
-      homeManager.max = {pkgs, ...}: {
+      homeManager.max = {
         imports = with self.modules.homeManager; [
           system-default # default setup of homeManager system
 
+          shell
           sway
           neovim
         ];

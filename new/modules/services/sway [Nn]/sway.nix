@@ -31,6 +31,8 @@
     }: let
       screenshotScript = ".config/sway/screenshot.sh";
     in {
+      imports = with self.modules.homeManager; [rofi waybar];
+
       home = {
         packages = with pkgs; [
           grim
@@ -88,7 +90,7 @@
 
           terminal = "ghostty";
 
-          menu = "rofiWindow"; # See scripts
+          menu = "rofiWindow"; # See scripts + rofi
 
           bars = [{command = "${pkgs.waybar}/bin/waybar";}];
 

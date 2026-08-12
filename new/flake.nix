@@ -15,6 +15,10 @@
       url = "github:catppuccin/i3";
       flake = false;
     };
+    catppuccinStarship = {
+      url = "github:catppuccin/starship";
+      flake = false;
+    };
     flake-file.url = "github:vic/flake-file";
     flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager = {
@@ -28,6 +32,18 @@
     nixpkgs-stable-small.url = "github:nixos/nixpkgs/nixos-26.05-small";
     secrets = {
       url = "path:./secrets";
+      flake = false;
+    };
+    zsh-alias-finder = {
+      url = "github:akash329d/zsh-alias-finder";
+      flake = false;
+    };
+    zsh-calc = {
+      url = "github:arzzen/calc.plugin.zsh";
+      flake = false;
+    };
+    zsh-enhancd = {
+      url = "github:babarot/enhancd";
       flake = false;
     };
   };

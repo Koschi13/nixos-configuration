@@ -1,4 +1,5 @@
 {
+  # TODO: unify font settings in lua files via font.nix
   flake.modules = {
     nixos.neovim = {
       programs.neovim = {

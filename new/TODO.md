@@ -1,2 +1,3 @@
 - [ ] Add Alejandra
 - [ ] I'm unhappy with the user specific factories. They are supposed to configure aspects on a `host` for the given `user`. However, usually I want to enable it for all users alike. The factories return the module contents instead of configuring the module in the form of `<class>.<aspect>`. This has to be improved
+- [ ] Impermanence

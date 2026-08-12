@@ -41,6 +41,22 @@
         "type": "github"
       }
     },
+    "catppuccinStarship": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1754058577,
+        "narHash": "sha256-FLHjbClpTqaK4n2qmepCPkb8rocaAo3qeV4Zp1hia0g=",
+        "owner": "catppuccin",
+        "repo": "starship",
+        "rev": "5906cc369dd8207e063c0e6e2d27bd0c0b567cb8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "starship",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -215,6 +231,7 @@
       "inputs": {
         "agenix": "agenix",
         "catppuccinI3": "catppuccinI3",
+        "catppuccinStarship": "catppuccinStarship",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
@@ -223,7 +240,10 @@
         "nixpkgs-small": "nixpkgs-small",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-stable-small": "nixpkgs-stable-small",
-        "secrets": "secrets"
+        "secrets": "secrets",
+        "zsh-alias-finder": "zsh-alias-finder",
+        "zsh-calc": "zsh-calc",
+        "zsh-enhancd": "zsh-enhancd"
       }
     },
     "secrets": {
@@ -250,6 +270,54 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "zsh-alias-finder": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1659597643,
+        "narHash": "sha256-aB5kI+Jt7TVQMCeLcvpAmoMaGxRF1xqw1tioQxbJOzE=",
+        "owner": "akash329d",
+        "repo": "zsh-alias-finder",
+        "rev": "ef6451c5b08f833f5c74303928f7b5c7f858ae84",
+        "type": "github"
+      },
+      "original": {
+        "owner": "akash329d",
+        "repo": "zsh-alias-finder",
+        "type": "github"
+      }
+    },
+    "zsh-calc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1616571053,
+        "narHash": "sha256-N4FBN7iyyiEyZX/opj63D5acA1Oh0YpFXdz83oIOWPE=",
+        "owner": "arzzen",
+        "repo": "calc.plugin.zsh",
+        "rev": "5b4c85977b693c15eb052cde6b5cef0d6610f567",
+        "type": "github"
+      },
+      "original": {
+        "owner": "arzzen",
+        "repo": "calc.plugin.zsh",
+        "type": "github"
+      }
+    },
+    "zsh-enhancd": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1737684369,
+        "narHash": "sha256-pKQbwiqE0KdmRDbHQcW18WfxyJSsKfymWt/TboY2iic=",
+        "owner": "babarot",
+        "repo": "enhancd",
+        "rev": "5afb4eb6ba36c15821de6e39c0a7bb9d6b0ba415",
+        "type": "github"
+      },
+      "original": {
+        "owner": "babarot",
+        "repo": "enhancd",
         "type": "github"
       }
     }
