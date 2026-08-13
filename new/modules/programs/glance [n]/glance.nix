@@ -1,6 +1,5 @@
-{rootPath, ...}: let
-  # TODO: secrets
-  private = import "${rootPath}/.secrets/private.nix";
+{inputs, ...}: let
+  private = import "${inputs.git-crypt-secrets}/private.nix";
 in {
   flake.modules.homeManager.glance = {
     services.glance = {

@@ -1,5 +1,10 @@
-{self, ...}: {
-  # TODO: secrets
+{
+  self,
+  inputs,
+  ...
+}: let
+  vars = import "${inputs.git-crypt-secrets}/git_vars.nix";
+in {
   flake.modules.homeManager.git = {pkgs, ...}: {
     imports = with self.modules.homeManager; [delta];
 
@@ -32,6 +37,20 @@
         key = "FCD1C7696CB6672A";
         format = "openpgp";
       };
+
+      includes = [
+        {
+          condition = "gitdir:~/Git/HiQ/**";
+          contents = {
+            user = {
+              name = vars.hiq.name;
+              email = vars.hiq.email;
+            };
+            commit.gpgsign = false;
+            tag.gpgsign = false;
+          };
+        }
+      ];
     };
   };
 }
