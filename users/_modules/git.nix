@@ -22,7 +22,9 @@ in {
         email = "maximilian.konter@protonmail.com";
       };
       core = {
-        fsmonitor = true;
+        # Had to be disable due to incompatibility with direnv:
+        # https://discourse.nixos.org/t/builtins-getflake-breaks-if-git-core-fsmonitor-is-enabled/54916/4
+        fsmonitor = false;
         untrackedCache = true;
       };
       branch.sort = "-committerdate";
