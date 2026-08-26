@@ -57,6 +57,9 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
+
+    # Version pins
+    nixpkgsNixDirenv.url = "github:nixos/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb"; # 3.1.0
   };
 
   outputs = {
@@ -70,6 +73,7 @@
     home-manager,
     mattpocockSkills,
     nixpkgs,
+    nixpkgsNixDirenv,
     zsh-alias-finder,
     zsh-calc,
     zsh-enhancd,
@@ -84,6 +88,7 @@
     # Just an alias
     lib = nixpkgs.lib;
     pkgs = nixpkgs.legacyPackages.${system};
+    pkgsNixDirenv = nixpkgsNixDirenv.legacyPackages.${system};
   in {
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
@@ -124,6 +129,7 @@
             denisidoroCheats
             firefox-addons
             mattpocockSkills
+            pkgsNixDirenv
             zsh-alias-finder
             zsh-calc
             zsh-enhancd
@@ -147,6 +153,7 @@
             denisidoroCheats
             firefox-addons
             mattpocockSkills
+            pkgsNixDirenv
             zsh-alias-finder
             zsh-calc
             zsh-enhancd

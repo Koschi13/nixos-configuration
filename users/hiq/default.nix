@@ -60,7 +60,6 @@
       zip
       unzip
       blueman
-      timewarrior
       bruno # postman alternative
 
       # coding
