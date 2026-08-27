@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  htt,
+  ...
+}: {
   imports = [
     ../_modules/agents/default.nix
     ../_modules/alacritty.nix
@@ -50,53 +54,58 @@
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "23.05";
 
-    packages = with pkgs; [
-      # fonts
-      nerd-fonts.lilex
+    packages = with pkgs;
+      [
+        # fonts
+        nerd-fonts.lilex
 
-      # tools
-      ripgrep
-      fd
-      zip
-      unzip
-      blueman
-      bruno # postman alternative
+        # tools
+        ripgrep
+        fd
+        zip
+        unzip
+        blueman
+        bruno # postman alternative
 
-      # coding
-      opencode
-      opencode-desktop
+        # coding
+        opencode
+        opencode-desktop
 
-      # encryption
-      #bitwarden-desktop  # disabled because of https://github.com/NixOS/nixpkgs/issues/526914
-      bitwarden-cli
-      git-crypt
-      gnupg
-      yubikey-manager
-      openvpn # Workaround for nm-openvpn not working
+        # encryption
+        #bitwarden-desktop  # disabled because of https://github.com/NixOS/nixpkgs/issues/526914
+        bitwarden-cli
+        git-crypt
+        gnupg
+        yubikey-manager
+        openvpn # Workaround for nm-openvpn not working
 
-      # Messengers
-      element-desktop
-      signal-desktop
-      telegram-desktop
+        # Messengers
+        element-desktop
+        signal-desktop
+        telegram-desktop
 
-      # other
-      cifs-utils
-      nfs-utils
-      pavucontrol
-      gimp
-      libreoffice
+        # other
+        cifs-utils
+        nfs-utils
+        pavucontrol
+        gimp
+        libreoffice
 
-      # work
-      slack
-      google-chrome
-      dive
-      obsidian
-      docker-compose
+        # work
+        slack
+        google-chrome
+        dive
+        obsidian
+        docker-compose
 
-      # entertainment
-      spotify
-      easyeffects
-    ];
+        # entertainment
+        spotify
+        easyeffects
+      ]
+      ++ [
+        # company stuff
+        htt.packages.${pkgs.stdenv.hostPlatform.system}.default
+      ];
 
     sessionPath = ["$HOME/.local/bin"];
   };

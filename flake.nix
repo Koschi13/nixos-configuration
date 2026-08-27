@@ -58,6 +58,12 @@
       flake = false;
     };
 
+    # Private Stuff
+    htt = {
+      url = "git+ssh://git@gitea.scandio.com:8000/tkumschier/htt.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Version pins
     nixpkgsNixDirenv.url = "github:nixos/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb"; # 3.1.0
   };
@@ -71,6 +77,7 @@
     denisidoroCheats,
     firefox-addons,
     home-manager,
+    htt,
     mattpocockSkills,
     nixpkgs,
     nixpkgsNixDirenv,
@@ -152,6 +159,7 @@
             catppuccinStarship
             denisidoroCheats
             firefox-addons
+            htt
             mattpocockSkills
             pkgsNixDirenv
             zsh-alias-finder
