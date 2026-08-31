@@ -29,6 +29,7 @@
     ../_modules/tmux.nix
     ../_modules/vscode/default.nix
     ../_modules/waybar/default.nix
+    ../_modules/vw.nix
     ../_modules/zed.nix
     ../_modules/zsh/default.nix
   ];
