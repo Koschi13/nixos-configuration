@@ -115,6 +115,7 @@ in {
         gnupg
         pcsclite
         wget
+        pinentry-tty
       ];
 
       # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enableCompletion
