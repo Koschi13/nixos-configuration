@@ -102,24 +102,6 @@
         "type": "gitlab"
       }
     },
-    "flake-utils": {
-      "inputs": {
-        "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -138,28 +120,6 @@
         "owner": "nix-community",
         "repo": "home-manager",
         "type": "github"
-      }
-    },
-    "htt": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1788173309,
-        "narHash": "sha256-IcdwEfPtRimnDZqFxDCZqx1TKxog5FEOor9I6pI7OVw=",
-        "ref": "refactor-to-go-module",
-        "rev": "52553ea27aa7f57dc673d645b006f9a946d2499f",
-        "revCount": 25,
-        "type": "git",
-        "url": "ssh://git@gitea.scandio.com:8000/tkumschier/htt.git"
-      },
-      "original": {
-        "ref": "refactor-to-go-module",
-        "type": "git",
-        "url": "ssh://git@gitea.scandio.com:8000/tkumschier/htt.git"
       }
     },
     "mattpocockSkills": {
@@ -217,28 +177,12 @@
         "denisidoroCheats": "denisidoroCheats",
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
-        "htt": "htt",
         "mattpocockSkills": "mattpocockSkills",
         "nixpkgs": "nixpkgs",
         "nixpkgsNixDirenv": "nixpkgsNixDirenv",
         "zsh-alias-finder": "zsh-alias-finder",
         "zsh-calc": "zsh-calc",
         "zsh-enhancd": "zsh-enhancd"
-      }
-    },
-    "systems": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
       }
     },
     "zsh-alias-finder": {
