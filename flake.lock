@@ -148,15 +148,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1787819280,
-        "narHash": "sha256-c2XNGiRK+wPuHMquyvyMaf6ug4nZkaSRvemYVqomJL8=",
-        "ref": "refs/heads/main",
-        "rev": "234e1c9da9c8151fce4a92b277df7cfc4dbb5513",
-        "revCount": 13,
+        "lastModified": 1788173309,
+        "narHash": "sha256-IcdwEfPtRimnDZqFxDCZqx1TKxog5FEOor9I6pI7OVw=",
+        "ref": "refactor-to-go-module",
+        "rev": "52553ea27aa7f57dc673d645b006f9a946d2499f",
+        "revCount": 25,
         "type": "git",
         "url": "ssh://git@gitea.scandio.com:8000/tkumschier/htt.git"
       },
       "original": {
+        "ref": "refactor-to-go-module",
         "type": "git",
         "url": "ssh://git@gitea.scandio.com:8000/tkumschier/htt.git"
       }

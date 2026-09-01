@@ -60,7 +60,7 @@
 
     # Private Stuff
     htt = {
-      url = "git+ssh://git@gitea.scandio.com:8000/tkumschier/htt.git";
+      url = "git+ssh://git@gitea.scandio.com:8000/tkumschier/htt.git?ref=refactor-to-go-module";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
