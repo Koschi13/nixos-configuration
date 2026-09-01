@@ -20,6 +20,8 @@ in {
       mouse-hide-while-typing = true;
 
       working-directory = "home";
+      # Prevents new terminals from being opened in the last opened directory
+      gtk-single-instance = false;
     };
   };
 
