@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  htt = builtins.getFlake "git+ssh://git@gitea.scandio.com:8000/tkumschier/htt.git?ref=refactor-to-go-module&rev=e92d4f61dc61b2eb7c1d9b0f433dc6fdad841fb5";
+  htt = builtins.getFlake "git+ssh://git@gitea.scandio.com:8000/tkumschier/htt.git?ref=refactor-to-go-module&rev=791647929580cae65012902c6c1ff2aabdb25a5a";
 in {
   imports = [
     ../_modules/agents/default.nix
