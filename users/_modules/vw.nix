@@ -60,6 +60,10 @@ in {
     packages = with pkgs; [
       awscli2
       ssm-session-manager-plugin # needed for SSM
+
+      kubernetes
+      eksctl
+
       sshuttle
     ];
     sessionVariables = builtins.listToAttrs (builtins.concatLists (map (config:
