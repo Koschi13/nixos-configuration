@@ -199,17 +199,21 @@ in {
         #######################################################################
         aws = {
           style = promptFiveStyle;
+          format = "[ $symbol( $profile on)( \\($region\\))( \\[$duration\\])]($style)";
           symbol = "󰸏";
+          force_display = true;
         };
 
         kubernetes = {
           style = promptFiveStyle;
+          format = "[ $symbol ($user on )($cluster in )$context( \\($namespace\\))]($style)";
           contexts = [
             {
               context_pattern = ".*prod.*";
               style = "bold fg:red bg:sapphire";
             }
           ];
+          detect_env_vars = ["AWS_SECRET_ACCESS_KEY"];
         };
 
         #######################################################################
