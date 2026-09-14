@@ -171,7 +171,7 @@ in {
 
     services.dbus.packages = with pkgs; [
       gnome-keyring
-      gcr
+      gcr_4
     ];
     services.gnome.gnome-keyring.enable = true;
 
