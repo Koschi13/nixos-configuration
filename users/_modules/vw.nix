@@ -9,10 +9,8 @@
   # list[list[{host; service;}]]
   regions = map (config: let
     regionProfile = "--region ${config.region} --profile ${vars.profile}";
-    # startInstanceCommand = "aws ec2 start-instances ${regionProfile} --instance-ids %h";
-    waitForInstanceCommand = "aws ec2 wait instance-status-ok ${regionProfile} --instance-ids %h";
     startSessionCommand = "aws ssm start-session ${regionProfile} --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'";
-    proxyCommand = "sh -c \"${waitForInstanceCommand} && ${startSessionCommand}\"";
+    proxyCommand = "sh -c \"${startSessionCommand}\"";
   in
     map (host: {
       # list
@@ -26,7 +24,7 @@
         };
       };
 
-      # list[list]
+      # list[set]
       services =
         map (service: {
           name = "${host.name}_${service.name}";
@@ -34,12 +32,8 @@
             hostname = host.hostname;
             user = vars.user;
             identityFile = host.identityFile;
-            localForwards = [
-              {
-                bind.port = 8080;
-                host.port = service.port;
-                host.address = service.address;
-              }
+            localForward = [
+              "${service.bind_port} ${service.host_address}:${service.host_port}"
             ];
             proxyCommand = proxyCommand;
           };
