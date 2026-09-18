@@ -15,7 +15,6 @@ in {
     ../_modules/gpg/default.nix
     ../_modules/herdr.nix
     ../_modules/homemanager.nix
-    ../_modules/librewolf.nix
     ../_modules/navi/default.nix
     ../_modules/nh.nix
     ../_modules/nixpkgs.nix
@@ -81,7 +80,6 @@ in {
         # Messengers
         element-desktop
         signal-desktop
-        telegram-desktop
 
         # other
         cifs-utils
