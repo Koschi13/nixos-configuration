@@ -8,11 +8,11 @@
   '';
   catppuccin-filename = "colors/catppuccin.rasi";
 in {
-  home.packages = with pkgs; [rofiWindow];
+  home.packages = [rofiWindow];
 
   programs.rofi = {
     enable = true;
-    terminal = "${pkgs.ghostty}/bin/ghostty";
+    settings.terminal = "${pkgs.ghostty}/bin/ghostty";
     theme = ./theme.rasi;
   };
 
