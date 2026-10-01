@@ -1,3 +1,3 @@
 {...}: {
-  programs.herdr.enable = true;
+  programs.herdr.enable = false; # Doesn't build
 }
