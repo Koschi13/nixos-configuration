@@ -57,6 +57,10 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
+    mistral-vibe = {
+      url = "github:mistralai/mistral-vibe?ref=v2.25.5";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Version pins
     nixpkgsNixDirenv.url = "github:nixos/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb"; # 3.1.0
@@ -72,6 +76,7 @@
     firefox-addons,
     home-manager,
     mattpocockSkills,
+    mistral-vibe,
     nixpkgs,
     nixpkgsNixDirenv,
     zsh-alias-finder,
@@ -130,6 +135,7 @@
             firefox-addons
             mattpocockSkills
             pkgsNixDirenv
+            mistral-vibe
             zsh-alias-finder
             zsh-calc
             zsh-enhancd

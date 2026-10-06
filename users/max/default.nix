@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  mistral-vibe,
+  ...
+}: {
   imports = [
     ../_modules/alacritty.nix
     ../_modules/direnv.nix
@@ -48,50 +52,52 @@
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "23.05";
 
-    packages = with pkgs; [
-      # fonts
-      nerd-fonts.lilex
+    packages = with pkgs;
+      [
+        # fonts
+        nerd-fonts.lilex
 
-      # tools
-      ripgrep
-      fd
-      nvtopPackages.full
-      blueman
-      gimp
-      android-tools
+        # tools
+        ripgrep
+        fd
+        nvtopPackages.full
+        blueman
+        gimp
+        android-tools
 
-      # encryption
-      #bitwarden-desktop  # disabled because of https://github.com/NixOS/nixpkgs/issues/526914
-      bitwarden-cli
-      git-crypt
-      gnupg
-      yubikey-manager
-      proton-vpn
+        # encryption
+        #bitwarden-desktop  # disabled because of https://github.com/NixOS/nixpkgs/issues/526914
+        bitwarden-cli
+        git-crypt
+        gnupg
+        yubikey-manager
+        proton-vpn
 
-      # Messengers
-      discord
-      element-desktop
-      signal-desktop
-      telegram-desktop
+        # Messengers
+        discord
+        element-desktop
+        signal-desktop
+        telegram-desktop
 
-      # other
-      pavucontrol
+        # other
+        pavucontrol
 
-      # office
-      pdfsam-basic
-      libreoffice-qt6-fresh
+        # office
+        pdfsam-basic
+        libreoffice-qt6-fresh
 
-      # entertainment
-      vlc
-      spotify
-      calibre
-      easyeffects
-      mp3cat
-      puddletag
+        # entertainment
+        vlc
+        spotify
+        calibre
+        easyeffects
+        mp3cat
+        puddletag
 
-      # emulaion
-      android-studio
-    ];
+        # emulaion
+        android-studio
+      ]
+      ++ [mistral-vibe.packages.${pkgs.stdenv.hostPlatform.system}.default];
 
     sessionPath = ["$HOME/.local/bin"];
   };
