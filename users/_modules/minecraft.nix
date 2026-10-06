@@ -6,6 +6,8 @@
 
       # Launcher
       prismlauncher
+      libx11
+      libGL
     ];
 
     sessionVariables = {
