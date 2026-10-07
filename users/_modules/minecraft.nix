@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+in {
   home = {
     packages = with pkgs; [
       # Cursor theme to fix crashes
@@ -8,6 +9,7 @@
       prismlauncher
       libx11
       libGL
+      glfw3-minecraft
     ];
 
     sessionVariables = {
