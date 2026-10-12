@@ -21,7 +21,7 @@ in {
     ../_modules/nvim/hiq.nix
     ../_modules/rofi/default.nix
     ../_modules/scripts/default.nix
-    ../_modules/ssh.nix
+    ../_modules/ssh/default.nix
     ../_modules/sway/default.nix
     ../_modules/tmux.nix
     ../_modules/vscode/default.nix
