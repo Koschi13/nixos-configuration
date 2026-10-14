@@ -13,6 +13,8 @@
 
     xdg.mimeApps.enable = true;
     xdg.mimeApps.defaultApplications = {
+      "png" = imageViewer;
+      "jpg" = imageViewer;
       "image/bmp" = imageViewer;
       "image/gif" = imageViewer;
       "image/jpeg" = imageViewer;
