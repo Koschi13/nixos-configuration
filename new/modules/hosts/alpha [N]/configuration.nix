@@ -19,6 +19,7 @@ in {
           system-desktop
 
           bluetooth
+          cachix
 
           amdgpu
           rgb
