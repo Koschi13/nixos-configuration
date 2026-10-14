@@ -47,6 +47,7 @@
     nixpkgs-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-stable-small.url = "github:nixos/nixpkgs/nixos-26.05-small";
+    nixpkgsNixDirenv.url = "github:nixos/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb";
     zsh-alias-finder = {
       url = "github:akash329d/zsh-alias-finder";
       flake = false;
