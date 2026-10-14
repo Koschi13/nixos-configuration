@@ -8,7 +8,6 @@
 
       (factory.audio username)
       (factory.usb username)
-      (factory.mount-homeserver username)
     ];
   };
 }
