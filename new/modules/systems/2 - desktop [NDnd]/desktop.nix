@@ -7,6 +7,7 @@
       xserver
       printing
       audio
+      usb
     ];
   };
 
