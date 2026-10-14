@@ -12,6 +12,7 @@
           # Required as we have a luks encrypted system
           device = "nodev";
           configurationLimit = 10;
+          memtest86.enable = true;
         };
       };
 
