@@ -37,6 +37,10 @@
         self.modules.nixos.${windowManager}
       ];
 
+      # Provides the greeter for the default session. Without it, greetd has
+      # nothing to show and the graphical target never comes up.
+      services.displayManager.regreet.enable = true;
+
       services.greetd = {
         enable = true;
         settings = {
