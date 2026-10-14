@@ -33,7 +33,6 @@ in {
       cachix
       firmware # TODO@comp disable
       logind
-      ssh
       gpg
       yubikey
       shell
@@ -88,7 +87,6 @@ in {
     imports = with self.modules.darwin; [
       # services
       cachix
-      ssh
       yubikey
       shell
 
