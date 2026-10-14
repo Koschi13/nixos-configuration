@@ -6,7 +6,6 @@
     imports = [
       modules.nixos.${username} # -> imports users/max which sets up HomeManager
 
-      (factory.gaming username)
       (factory.mount-homeserver username)
     ];
   };
