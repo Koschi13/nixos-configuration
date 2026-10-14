@@ -17,7 +17,6 @@ in {
 
           bluetooth
           docker
-          rgb
         ];
 
         networking = {
