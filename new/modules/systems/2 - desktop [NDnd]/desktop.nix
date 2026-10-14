@@ -6,6 +6,7 @@
       sway
       xserver
       printing
+      audio
     ];
   };
 

@@ -6,7 +6,6 @@
     imports = [
       modules.nixos.${username} # -> imports users/max which sets up HomeManager
 
-      (factory.audio username)
       (factory.gaming username)
       (factory.usb username)
       (factory.android username)
