@@ -20,6 +20,7 @@ in {
 
           bluetooth
           cachix
+          android
 
           amdgpu
           rgb
