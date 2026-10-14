@@ -11,7 +11,7 @@
   in {
     home.packages =
       [
-        # compute_aspect_ratio is required by random_wallpaper
+        # compute_aspect_ratio is required by wallpaper_random
         pkgs.local.compute_aspect_ratio
       ]
       ++ scriptBins;
