@@ -18,9 +18,23 @@ in {
       #   ];
       # };
 
-      homeManager.max = {
+      homeManager.max = {pkgs, ...}: {
         imports = with self.modules.homeManager; [
           system-desktop
+          mistral-vibe
+        ];
+
+        home.packages = with pkgs; [
+          nvtopPackages.full
+          android-tools
+          android-studio
+          proton-vpn
+          discord
+          pdfsam-basic
+          vlc
+          calibre
+          mp3cat
+          puddletag
         ];
       };
     }
