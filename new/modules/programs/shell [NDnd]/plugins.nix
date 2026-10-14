@@ -135,7 +135,8 @@
     ];
 
     # forgit alias, prefix all with f
-    programs.zsh.initContent = lib.mkOrder 550 ''
+    # Just before initExtraBeforeCompInit (550), matching the old configuration
+    programs.zsh.initContent = lib.mkOrder 549 ''
       # forgit alias, prefix all with f
       forgit_add=fga
       forgit_blame=fgbl
