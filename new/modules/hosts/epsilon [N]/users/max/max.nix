@@ -1,10 +1,7 @@
 {self, ...}: {
-  flake.modules.nixos.epsilon = let
-    inherit (self) modules factory;
-    username = "max";
-  in {
+  flake.modules.nixos.epsilon = {
     imports = [
-      modules.nixos.${username} # -> imports users/max which sets up HomeManager
+      self.modules.nixos.max # -> imports users/max which sets up HomeManager
     ];
   };
 }
