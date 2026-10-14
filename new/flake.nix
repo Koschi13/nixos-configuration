@@ -4,12 +4,13 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
 
   inputs = {
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs = {
-        home-manager.follows = "home-manager";
-        nixpkgs.follows = "nixpkgs";
-      };
+    catppuccinAlacritty = {
+      url = "github:catppuccin/alacritty";
+      flake = false;
+    };
+    catppuccinGhostty = {
+      url = "github:catppuccin/ghostty";
+      flake = false;
     };
     catppuccinI3 = {
       url = "github:catppuccin/i3";
@@ -19,21 +20,33 @@
       url = "github:catppuccin/starship";
       flake = false;
     };
+    denisidoroCheats = {
+      url = "github:denisidoro/cheats";
+      flake = false;
+    };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-file.url = "github:vic/flake-file";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    git-crypt-secrets = {
+      url = "path:../.secrets";
+      flake = false;
+    };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
+    mattpocockSkills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-stable-small.url = "github:nixos/nixpkgs/nixos-26.05-small";
-    secrets = {
-      url = "path:./secrets";
-      flake = false;
-    };
     zsh-alias-finder = {
       url = "github:akash329d/zsh-alias-finder";
       flake = false;
