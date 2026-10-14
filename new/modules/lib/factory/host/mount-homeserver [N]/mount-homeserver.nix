@@ -46,23 +46,17 @@
             automount-opts = [
               "x-systemd.automount"
               "noauto"
-              "nofail"
-              "soft"
               "x-systemd.idle-timeout=60"
               "x-systemd.device-timeout=5s"
               "x-systemd.mount-timeout=5s"
             ];
-            mount-opts = [
-              "rw"
-              "iocharset=utf8"
-            ];
+            credentials = ["credentials=/etc/nixos/smb-secrets"];
             user = [
               "uid=${uid}"
               "gid=${gid}"
             ];
-            credentials = ["credentials=/etc/nixos/smb-secrets"];
           in
-            automount-opts ++ mount-opts ++ user ++ credentials;
+            automount-opts ++ credentials ++ user;
         };
       })
       vars.mounts);
