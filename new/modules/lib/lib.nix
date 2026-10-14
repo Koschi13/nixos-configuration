@@ -116,7 +116,10 @@
         pkgs = inputs.nixpkgs.legacyPackages.${system};
         modules = [
           self.modules.homeManager.${name}
-          {nixpkgs.config.allowUnfree = true;} # TODO: do we want this to be the default?
+          {
+            nixpkgs.config.allowUnfree = true; # TODO: do we want this to be the default?
+            nixpkgs.overlays = [self.overlays.local];
+          }
         ];
       };
     };

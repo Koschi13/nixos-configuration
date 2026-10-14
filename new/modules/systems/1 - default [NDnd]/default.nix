@@ -67,6 +67,7 @@ in {
     };
 
     nixpkgs.overlays = [
+      self.overlays.local
       (final: _prev: {
         stable = import inputs.nixpkgs-stable {
           inherit (final) config;
@@ -108,6 +109,7 @@ in {
     };
 
     nixpkgs.overlays = [
+      self.overlays.local
       (final: _prev: {
         stable = import inputs.nixpkgs-stable {
           inherit (final) config;
