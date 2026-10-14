@@ -30,6 +30,7 @@ in {
           android-studio
           proton-vpn
           discord
+          telegram-desktop
           pdfsam-basic
           vlc
           calibre
