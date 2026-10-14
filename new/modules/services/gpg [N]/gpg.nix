@@ -3,7 +3,8 @@
     nixos.gpg = {pkgs, ...}: {
       programs.ssh.startAgent = lib.mkForce false;
 
-      environment.systemPackages = with pkgs; [gnupg];
+      # pinentry-tty allows unlocking keys without a graphical session
+      environment.systemPackages = with pkgs; [gnupg pinentry-tty];
     };
     homeManager.gpg = {pkgs, ...}: {
       home.packages = with pkgs; [pinentry-gnome3];
