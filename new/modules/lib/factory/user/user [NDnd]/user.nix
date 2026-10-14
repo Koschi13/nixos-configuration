@@ -36,6 +36,10 @@ in {
       pkgs,
       ...
     }: {
+      imports = [self.modules.nixos.dotfiles-users];
+
+      dotfiles.users = [username];
+
       users.users.${username} = {
         isNormalUser = true;
         home = "/home/${username}";
