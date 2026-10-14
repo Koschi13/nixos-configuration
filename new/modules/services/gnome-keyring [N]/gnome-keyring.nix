@@ -6,7 +6,7 @@
       security.pam.services.login.enableGnomeKeyring = true;
       services.dbus.packages = with pkgs; [
         gnome-keyring
-        gcr
+        gcr_4
       ];
     };
   };
