@@ -7,7 +7,6 @@
       modules.nixos.${username} # -> imports users/max which sets up HomeManager
 
       (factory.gaming username)
-      (factory.usb username)
       (factory.android username)
       (factory.mount-homeserver username)
     ];

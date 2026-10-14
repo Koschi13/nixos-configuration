@@ -5,8 +5,6 @@
   in {
     imports = [
       modules.nixos.${username} # -> imports users/max which sets up HomeManager
-
-      (factory.usb username)
     ];
   };
 }
