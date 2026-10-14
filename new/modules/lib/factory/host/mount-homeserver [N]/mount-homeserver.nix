@@ -23,7 +23,7 @@
   }
   ```
   */
-  config.flake.factory.mount-cifs-nixos = username: {
+  config.flake.factory.mount-homeserver = username: {
     config,
     pkgs,
     ...
