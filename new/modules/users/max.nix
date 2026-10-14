@@ -20,9 +20,7 @@ in {
 
       homeManager.max = {
         imports = with self.modules.homeManager; [
-          system-default # default setup of homeManager system
-
-          sway
+          system-desktop
         ];
       };
     }

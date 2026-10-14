@@ -15,11 +15,38 @@
     ];
   };
 
-  flake.modules.homeManager.system-desktop = {
+  flake.modules.homeManager.system-desktop = {pkgs, ...}: {
     imports = with self.modules.homeManager; [
       system-default
 
       sway
+      kanshi
+      awww
+      dunst
+      font
+      terminal
+      alacritty
+      firefox
+      vscode
+      zed
+      glance
+      gnome
+      messengers
+      office
+      entertainment
     ];
+
+    home.packages = with pkgs; [
+      blueman
+      gimp
+      pavucontrol
+
+      bitwarden-cli
+      git-crypt
+      gnupg
+      yubikey-manager
+    ];
+
+    services.mpris-proxy.enable = true;
   };
 }
