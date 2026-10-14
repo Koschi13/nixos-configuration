@@ -11,7 +11,6 @@
       seahorse
     ];
 
-    xdg.mimeApps.enable = true;
     xdg.mimeApps.defaultApplications = {
       "png" = imageViewer;
       "jpg" = imageViewer;
