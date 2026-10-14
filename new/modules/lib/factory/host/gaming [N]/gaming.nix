@@ -51,7 +51,7 @@
     users.users.${username}.extraGroups = ["gamemode"];
 
     home-manager.users.${username} = {
-      imports = with self.modules.homeManager; [mangohud];
+      imports = with self.modules.homeManager; [mangohud minecraft];
     };
   };
 }
