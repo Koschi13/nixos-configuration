@@ -31,7 +31,7 @@ in {
     imports = with self.modules.nixos; [
       # services
       cachix
-      firmware # TODO@comp disable
+      firmware
       logind
       gpg
       yubikey
