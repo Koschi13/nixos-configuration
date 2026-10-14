@@ -1,14 +1,13 @@
-{pkgs, ...}: let
-  fontPackage = pkgs.nerd-fonts.lilex;
+let
   serif = "Lilex Nerd Font Propo";
   sansSerif = "Lilex Nerd Font";
   monospace = "Lilex Nerd Font Mono";
   fontSize = 10;
 in {
   flake.modules.homeManager = {
-    home.packages = [fontPackage];
-    font = {
-      fontconfig = {
+    font = {pkgs, ...}: {
+      home.packages = [pkgs.nerd-fonts.lilex];
+      fonts.fontconfig = {
         enable = true;
         defaultFonts = {
           serif = [serif];
@@ -31,9 +30,9 @@ in {
         size = fontSize;
       };
     };
-  };
 
-  dunst = {
-    services.dunst.settings.global.font = "${monospace} ${fontSize}";
+    dunst = {
+      services.dunst.settings.global.font = "${monospace} ${toString fontSize}";
+    };
   };
 }
