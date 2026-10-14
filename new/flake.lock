@@ -1,27 +1,34 @@
 {
   "nodes": {
-    "agenix": {
-      "inputs": {
-        "darwin": "darwin",
-        "home-manager": [
-          "home-manager"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": "systems"
-      },
+    "catppuccinAlacritty": {
+      "flake": false,
       "locked": {
-        "lastModified": 1770165109,
-        "narHash": "sha256-9VnK6Oqai65puVJ4WYtCTvlJeXxMzAp/69HhQuTdl/I=",
-        "owner": "ryantm",
-        "repo": "agenix",
-        "rev": "b027ee29d959fda4b60b57566d64c98a202e0feb",
+        "lastModified": 1730074245,
+        "narHash": "sha256-H8bouVCS46h0DgQ+oYY8JitahQDj0V9p2cOoD4cQX+Q=",
+        "owner": "catppuccin",
+        "repo": "alacritty",
+        "rev": "f6cb5a5c2b404cdaceaff193b9c52317f62c62f7",
         "type": "github"
       },
       "original": {
-        "owner": "ryantm",
-        "repo": "agenix",
+        "owner": "catppuccin",
+        "repo": "alacritty",
+        "type": "github"
+      }
+    },
+    "catppuccinGhostty": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787934293,
+        "narHash": "sha256-XwUwWdBLyFwfyL9/kUhJaztTj+s3JShyc15YAA2HPaY=",
+        "owner": "catppuccin",
+        "repo": "ghostty",
+        "rev": "b0b03ccee7ae8f16b13bd4fdfe267616defdb2b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "ghostty",
         "type": "github"
       }
     },
@@ -57,26 +64,42 @@
         "type": "github"
       }
     },
-    "darwin": {
+    "denisidoroCheats": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1682557612,
+        "narHash": "sha256-wPsAazAGKPhu0MZfZbZ0POUBEMg95frClAQERTDFXUg=",
+        "owner": "denisidoro",
+        "repo": "cheats",
+        "rev": "1339965e9615ce00174cc308a41279d9c59aa75f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "denisidoro",
+        "repo": "cheats",
+        "type": "github"
+      }
+    },
+    "firefox-addons": {
       "inputs": {
         "nixpkgs": [
-          "agenix",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1744478979,
-        "narHash": "sha256-dyN+teG9G82G+m+PX/aSAagkC+vUv0SgUw3XkPhQodQ=",
-        "owner": "lnl7",
-        "repo": "nix-darwin",
-        "rev": "43975d782b418ebf4969e9ccba82466728c2851b",
-        "type": "github"
+        "dir": "pkgs/firefox-addons",
+        "lastModified": 1791950561,
+        "narHash": "sha256-FIBRdzFXWR5jIqOwTcGu7L126G/Jv2sSj6hCaKhs4s8=",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "rev": "fb4681ee3a3ecd54416fc999fd410e8eb59bbb55",
+        "type": "gitlab"
       },
       "original": {
-        "owner": "lnl7",
-        "ref": "master",
-        "repo": "nix-darwin",
-        "type": "github"
+        "dir": "pkgs/firefox-addons",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "type": "gitlab"
       }
     },
     "flake-file": {
@@ -112,6 +135,18 @@
         "type": "github"
       }
     },
+    "git-crypt-secrets": {
+      "flake": false,
+      "locked": {
+        "path": "../.secrets",
+        "type": "path"
+      },
+      "original": {
+        "path": "../.secrets",
+        "type": "path"
+      },
+      "parent": []
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -145,6 +180,22 @@
       "original": {
         "owner": "vic",
         "repo": "import-tree",
+        "type": "github"
+      }
+    },
+    "mattpocockSkills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791543409,
+        "narHash": "sha256-NljCSZNI3sZ+vbCw7pRdrwR7try4BxOFp4gdjuWYtzs=",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "rev": "49dd158d1076134a641b33efb035946536778336",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mattpocock",
+        "repo": "skills",
         "type": "github"
       }
     },
@@ -229,48 +280,25 @@
     },
     "root": {
       "inputs": {
-        "agenix": "agenix",
+        "catppuccinAlacritty": "catppuccinAlacritty",
+        "catppuccinGhostty": "catppuccinGhostty",
         "catppuccinI3": "catppuccinI3",
         "catppuccinStarship": "catppuccinStarship",
+        "denisidoroCheats": "denisidoroCheats",
+        "firefox-addons": "firefox-addons",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",
+        "git-crypt-secrets": "git-crypt-secrets",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
+        "mattpocockSkills": "mattpocockSkills",
         "nixpkgs": "nixpkgs",
         "nixpkgs-small": "nixpkgs-small",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-stable-small": "nixpkgs-stable-small",
-        "secrets": "secrets",
         "zsh-alias-finder": "zsh-alias-finder",
         "zsh-calc": "zsh-calc",
         "zsh-enhancd": "zsh-enhancd"
-      }
-    },
-    "secrets": {
-      "flake": false,
-      "locked": {
-        "path": "./secrets",
-        "type": "path"
-      },
-      "original": {
-        "path": "./secrets",
-        "type": "path"
-      },
-      "parent": []
-    },
-    "systems": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
       }
     },
     "zsh-alias-finder": {
