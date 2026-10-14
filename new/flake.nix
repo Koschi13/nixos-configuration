@@ -43,6 +43,10 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
+    mistral-vibe = {
+      url = "github:mistralai/mistral-vibe?ref=v2.25.5";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
