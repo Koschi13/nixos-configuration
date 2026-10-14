@@ -131,6 +131,10 @@ in {
                         url = "https://tyrrrz.me/blog.rss";
                         title = "Oleksii Holub (SoftwareEngineering, C#)";
                       }
+                      {
+                        url = "https://felixrieseberg.com/rss";
+                        title = "Felix Rieseberg (Electron, Anthropic, Slack, Microsoft)";
+                      }
                     ];
                   }
                 ];
