@@ -20,30 +20,30 @@
       ##############################################################################
       # Prompt
       ##############################################################################
-      promptPrefix = "[](red)";
+      promptPrefix = "[](red)";
       promptOneStyle = "bg:red fg:crust";
       promptOne = ["os" "username" "sudo"];
-      promptOneSeparator = "[](bg:peach fg:red)";
+      promptOneSeparator = "[](bg:peach fg:red)";
 
       promptTwoStyle = "bg:peach fg:crust";
       promptTwo = ["directory"];
-      promptTwoSeparator = "[](bg:yellow fg:peach)";
+      promptTwoSeparator = "[](bg:yellow fg:peach)";
 
       promptThreeStyle = "fg:crust bg:yellow";
       promptThree = ["git_branch" "git_commit" "git_state" "git_metrics" "git_status"];
-      promptThreeSeparator = "[](fg:yellow bg:green)";
+      promptThreeSeparator = "[](fg:yellow bg:green)";
 
       promptFourStyle = "fg:crust bg:green";
       promptFour = ["python" "rust" "golang" "nodejs" "zig"];
-      promptFourSeparator = "[](fg:green bg:sapphire)";
+      promptFourSeparator = "[](fg:green bg:sapphire)";
 
       promptFiveStyle = "fg:crust bg:sapphire";
       promptFive = ["aws" "kubernetes"];
-      promptFiveSeparator = "[](fg:sapphire bg:lavender)";
+      promptFiveSeparator = "[](fg:sapphire bg:lavender)";
 
       promptSixStyle = "fg:crust bg:lavender";
       promptSix = ["status" "time"];
-      promptSixSeparator = "[](fg:lavender)";
+      promptSixSeparator = "[](fg:lavender)";
 
       promptSeven = ["cmd_duration" "line_break" "nix_shell" "character"];
 
@@ -115,17 +115,17 @@
               format = "[ $path]($style)";
               truncation_length = 9;
               truncation_symbol = "…/";
-              home_symbol = "";
+              home_symbol = "";
               truncate_to_repo = false;
 
               substitutions = {
-                "/Documents" = "󰈙";
-                "/Downloads" = "";
-                "/Music" = "󰝚";
-                "/Pictures" = "";
-                "/Git/GitHub" = "";
-                "/.config" = "";
-                "/.dotfiles" = "";
+                "/Documents" = "󰈙";
+                "/Downloads" = "";
+                "/Music" = "󰝚";
+                "/Pictures" = "";
+                "/Git/GitHub" = "";
+                "/.config" = "";
+                "/.dotfiles" = "";
               };
             };
 
@@ -134,7 +134,7 @@
             #######################################################################
             git_branch = {
               format = "[ $symbol $branch]($style)";
-              symbol = "";
+              symbol = "";
               style = promptThreeStyle;
             };
 
@@ -146,6 +146,7 @@
             };
 
             git_state = {
+              format = "[ \\($state( $progress_current/$progress_total)\\)]($style)";
               style = promptThreeStyle;
             };
 
@@ -164,19 +165,19 @@
             # Prompt Four
             #######################################################################
             python = {
-              symbol = "";
+              symbol = "";
               style = promptFourStyle;
               format = "[ $symbol( $version)( \(#$virtualenv\))]($style)";
             };
 
             rust = {
-              symbol = "";
+              symbol = "";
               style = promptFourStyle;
               format = "[ $symbol( $version)]($style)";
             };
 
             golang = {
-              symbol = "";
+              symbol = "";
               style = promptFourStyle;
               format = "[ $symbol( $version)]($style)";
             };
@@ -188,7 +189,7 @@
             };
 
             zig = {
-              symbol = "";
+              symbol = "";
               format = "[ $symbol( $version)]($style)";
               style = promptFourStyle;
             };
@@ -198,17 +199,21 @@
             #######################################################################
             aws = {
               style = promptFiveStyle;
+              format = "[ $symbol( $profile on)( \\($region\\))( \\[$duration\\])]($style)";
               symbol = "󰸏";
+              force_display = true;
             };
 
             kubernetes = {
               style = promptFiveStyle;
+              format = "[ $symbol ($user on )($cluster in )$context( \\($namespace\\))]($style)";
               contexts = [
                 {
                   context_pattern = ".*prod.*";
                   style = "bold fg:red bg:sapphire";
                 }
               ];
+              detect_env_vars = ["AWS_SECRET_ACCESS_KEY"];
             };
 
             #######################################################################
@@ -225,7 +230,7 @@
             time = {
               time_format = "%R";
               style = promptSixStyle;
-              format = "[  $time]($style)";
+              format = "[  $time]($style)";
             };
 
             #######################################################################
@@ -233,7 +238,7 @@
             #######################################################################
             cmd_duration = {
               show_milliseconds = true;
-              format = "  in $duration";
+              format = "  in $duration";
               min_time_to_notify = 45000;
             };
 
@@ -246,7 +251,7 @@
             character = {
               success_symbol = "[[󰄛](green) ❯](peach)";
               error_symbol = "[[󰄛](red) ❯](peach)";
-              vimcmd_symbol = "[](subtext1)";
+              vimcmd_symbol = "[](subtext1)";
             };
 
             # continuation_prompt = "[▶▶ ](fg:lavender)"; # TODO: doesn't work
