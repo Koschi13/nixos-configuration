@@ -21,6 +21,7 @@ in {
           bluetooth
           cachix
           android
+          gaming
 
           amdgpu
           rgb

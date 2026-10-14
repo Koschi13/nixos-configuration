@@ -1,29 +1,13 @@
 {self, ...}: {
-  /**
-  Sets up everything needed for gaming on Linux for the given user(name)
+  # Everything needed for gaming on Linux, for all users of a host
+  flake.modules.nixos.gaming = {
+    config,
+    lib,
+    pkgs,
+    ...
+  }: {
+    imports = [self.modules.nixos.dotfiles-users];
 
-  # Type
-
-  ```
-  usb :: String -> Module
-  ```
-
-  # Arguments
-
-  username
-  : The name of the user for which this aspect will be enabled
-
-  # Example
-
-  ```nix
-  {self, ...}: {
-    flake.modules.nixos.<name> = {
-      imports = [(self.factory.gaming "max")];
-    }
-  }
-  ```
-  */
-  config.flake.factory.gaming = username: {pkgs, ...}: {
     programs.gamemode.enable = true;
 
     boot.kernelModules = ["ntsync"];
@@ -48,10 +32,10 @@
       localNetworkGameTransfers.openFirewall = true;
     };
 
-    users.users.${username}.extraGroups = ["gamemode"];
+    users.users = lib.genAttrs config.dotfiles.users (_: {
+      extraGroups = ["gamemode"];
+    });
 
-    home-manager.users.${username} = {
-      imports = with self.modules.homeManager; [mangohud minecraft];
-    };
+    home-manager.sharedModules = with self.modules.homeManager; [mangohud minecraft];
   };
 }
