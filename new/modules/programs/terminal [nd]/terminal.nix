@@ -13,7 +13,7 @@ in {
     rofi = {pkgs, ...}: let
       pkg = pkgs.${terminal};
     in {
-      programs.rofi.terminal = "${pkg}/bin/${terminal}";
+      programs.rofi.settings.terminal = "${pkg}/bin/${terminal}";
     };
   };
 }
