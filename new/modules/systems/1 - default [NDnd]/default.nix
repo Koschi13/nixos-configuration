@@ -47,10 +47,6 @@ in {
       settings = {
         auto-optimise-store = true;
         experimental-features = experimental-features;
-        trusted-users = [
-          "root"
-          "@wheel"
-        ];
       };
     };
 
