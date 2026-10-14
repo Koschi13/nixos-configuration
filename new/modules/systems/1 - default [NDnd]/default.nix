@@ -30,7 +30,6 @@ in {
   flake.modules.nixos.system-default = {pkgs, ...}: {
     imports = with self.modules.nixos; [
       # services
-      cachix
       firmware
       logind
       gpg
