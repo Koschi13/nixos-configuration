@@ -7,6 +7,9 @@
 
         # Launcher
         prismlauncher
+        libx11
+        libGL
+        glfw3-minecraft
       ];
 
       sessionVariables = {
