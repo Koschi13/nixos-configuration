@@ -130,7 +130,16 @@ in {
     imports = with self.modules.homeManager; [
       shell
       neovim
+      git
+      direnv
+      navi
+      nh
+      gpg
+      agents
+      herdr
     ];
+
+    home.packages = with pkgs; [ripgrep fd];
 
     home.homeDirectory =
       if pkgs.stdenv.isDarwin
