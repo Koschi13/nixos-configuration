@@ -16,7 +16,7 @@
       imports = with modules.homeManager; [
         ssh
         tmux
-        vw
+        vw-ssm
         neovim-copilot
       ];
 
