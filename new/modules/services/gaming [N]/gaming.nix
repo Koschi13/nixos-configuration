@@ -6,6 +6,10 @@
     pkgs,
     ...
   }: {
+    # Aspects like `minecraft` import gaming as well. The key lets the module
+    # system deduplicate it, as flake-parts wraps every import in a fresh module.
+    key = "gaming";
+
     imports = [self.modules.nixos.dotfiles-users];
 
     programs.gamemode.enable = true;
@@ -36,6 +40,6 @@
       extraGroups = ["gamemode"];
     });
 
-    home-manager.sharedModules = with self.modules.homeManager; [mangohud minecraft];
+    home-manager.sharedModules = [self.modules.homeManager.mangohud];
   };
 }

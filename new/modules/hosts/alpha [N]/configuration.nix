@@ -21,6 +21,7 @@ in {
           cachix
           android
           gaming
+          minecraft
           virtualisation
 
           amdgpu
