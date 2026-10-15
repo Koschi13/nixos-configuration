@@ -82,46 +82,5 @@
         ];
       };
     };
-
-    /**
-    Configures Home-Manager for the given (user)name.
-
-    This will automatically configure `pkgs` and the `modules` available
-    to that user. So all `homeManager.<name>` configurations are imported.
-
-    # Type
-
-    ```
-    mkHomeManager :: String -> String -> Module
-    ```
-
-    # Arguments
-
-    system
-    : The type of system this is configured for. See systems.nix.
-
-    name
-    : The name of the user the configuration is for. This is important to
-      get right, as it is responsible for importing all the user specific
-      configuration via `homeManager.<name>`.
-
-    # Example
-
-    ```nix
-    flake.homeConfigurations = self.lib.mkHomeManager "x86_64-linux" "max";
-    ```
-    */
-    mkHomeManager = system: name: {
-      ${name} = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = inputs.nixpkgs.legacyPackages.${system};
-        modules = [
-          self.modules.homeManager.${name}
-          {
-            nixpkgs.config.allowUnfree = true; # TODO: do we want this to be the default?
-            nixpkgs.overlays = [self.overlays.local];
-          }
-        ];
-      };
-    };
   };
 }

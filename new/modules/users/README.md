@@ -5,8 +5,6 @@ Configuration per user, one directory per user.
 - `<user>/<user>.nix` creates the user via the `user` factory and defines the
   `homeManager.<user>` aspect, which holds everything the user wants on every
   host.
-- `default.nix` exposes a standalone Home-Manager configuration for hosts
-  without NixOS.
 
 Hosts pick their users in `hosts/<host>/users/`. That is also the place for
 host specific user configuration, set via
