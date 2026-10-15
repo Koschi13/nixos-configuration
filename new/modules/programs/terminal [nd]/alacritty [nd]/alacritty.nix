@@ -13,7 +13,7 @@
     };
 
     home.file."${catppuccin-frappe-toml}" = {
-      source = inputs.catppuccinAlacritty + "/catppuccin-frappe.toml";
+      source = inputs.catppuccin-alacritty + "/catppuccin-frappe.toml";
     };
   };
 }

@@ -25,7 +25,7 @@
     };
 
     home.file."${catppuccin-frappe-toml}" = {
-      source = inputs.catppuccinGhostty + "/themes/catppuccin-frappe.conf";
+      source = inputs.catppuccin-ghostty + "/themes/catppuccin-frappe.conf";
     };
   };
 }

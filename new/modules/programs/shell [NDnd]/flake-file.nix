@@ -1,7 +1,7 @@
 {
   flake-file.inputs = {
     # Catppuccin colorscheme for starship
-    catppuccinStarship = {
+    catppuccin-starship = {
       url = "github:catppuccin/starship";
       flake = false;
     };

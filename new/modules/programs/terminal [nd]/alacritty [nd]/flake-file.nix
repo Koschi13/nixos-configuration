@@ -1,6 +1,6 @@
 {
   flake-file.inputs = {
-    catppuccinAlacritty = {
+    catppuccin-alacritty = {
       url = "github:catppuccin/alacritty";
       flake = false;
     };
