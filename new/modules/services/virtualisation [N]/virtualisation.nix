@@ -28,8 +28,6 @@
       lib.optional config.hardware.cpu.amd.updateMicrocode "kvm-amd"
       ++ lib.optional config.hardware.cpu.intel.updateMicrocode "kvm-intel";
 
-    users.users = lib.genAttrs config.dotfiles.users (_: {
-      extraGroups = ["kvm" "libvirtd"];
-    });
+    dotfiles.userGroups = ["kvm" "libvirtd"];
   };
 }

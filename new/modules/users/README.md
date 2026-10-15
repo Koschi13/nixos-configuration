@@ -11,5 +11,5 @@ host specific user configuration, set via
 `home-manager.users.<user>` inside the `nixos.<host>` aspect.
 
 Aspects that have to configure every user of a host, like `audio` or `gaming`,
-read the users from the `dotfiles.users` option instead of being instantiated
-per user.
+add groups through the `dotfiles.userGroups` option instead of being
+instantiated per user.
