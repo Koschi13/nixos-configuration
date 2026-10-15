@@ -22,6 +22,11 @@ supported platforms are visible without opening the files:
 For example `shell [NDnd]` configures every class, while `rofi [n]` only
 exists for Home-Manager on Linux. `[]` marks flake-parts only modules.
 
+Only directories that are aspects get a tag. Nested directories holding
+files for their parent aspect, like `neovim [Nnd]/copilot`, are covered by
+the parent's tag. Nested aspects, like `terminal [nd]/ghostty [nd]`, carry
+their own.
+
 ### Cross-cutting features
 
 A file may contribute to aspects it doesn't own when it describes one
