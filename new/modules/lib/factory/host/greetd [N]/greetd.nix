@@ -61,9 +61,5 @@
         };
       };
     };
-
-    nixos.gnome-keyring = {
-      security.pam.services.greetd.enableGnomeKeyring = true;
-    };
   };
 }
