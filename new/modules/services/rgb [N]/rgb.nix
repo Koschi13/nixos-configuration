@@ -6,9 +6,10 @@
       ...
     }: let
       hostName = config.networking.hostName;
+      openrgb = pkgs.openrgb-with-all-plugins;
     in {
       services.hardware.openrgb.enable = true;
-      environment.systemPackages = with pkgs; [openrgb-with-all-plugins];
+      environment.systemPackages = [openrgb];
 
       # Apply the lighting profile of this host when sway starts. The profile
       # is created in the OpenRGB UI and saved as `<hostname>.orp`.
@@ -16,7 +17,7 @@
         ({config, ...}: {
           wayland.windowManager.sway.config.startup = [
             {
-              command = "openrgb --startminimized --profile ${config.xdg.configHome}/OpenRGB/${hostName}.orp";
+              command = "${openrgb}/bin/openrgb --startminimized --profile ${config.xdg.configHome}/OpenRGB/${hostName}.orp";
             }
           ];
         })
