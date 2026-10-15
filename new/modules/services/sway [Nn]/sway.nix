@@ -49,7 +49,7 @@
 
         file = {
           ".config/sway/colors/catppuccin-frappe" = {
-            source = inputs.catppuccinI3 + "/themes/catppuccin-frappe";
+            source = inputs.catppuccin-i3 + "/themes/catppuccin-frappe";
           };
           "${screenshotScript}" = {
             source = ./screenshot.sh;

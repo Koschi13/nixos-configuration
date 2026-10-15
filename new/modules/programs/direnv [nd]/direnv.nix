@@ -7,7 +7,7 @@
       enableZshIntegration = true;
       nix-direnv = {
         enable = true;
-        package = inputs.nixpkgsNixDirenv.legacyPackages.${pkgs.stdenv.hostPlatform.system}.nix-direnv;
+        package = inputs.nixpkgs-nix-direnv.legacyPackages.${pkgs.stdenv.hostPlatform.system}.nix-direnv;
       };
       silent = true;
     };

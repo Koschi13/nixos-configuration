@@ -1,6 +1,6 @@
 {
   flake-file.inputs = {
-    mattpocockSkills = {
+    mattpocock-skills = {
       url = "github:mattpocock/skills";
       flake = false;
     };

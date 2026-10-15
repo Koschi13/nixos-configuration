@@ -71,7 +71,7 @@
       ##############################################################################
       paletteSet = fromTOML (
         readFile (
-          inputs.catppuccinStarship + "/themes/frappe.toml"
+          inputs.catppuccin-starship + "/themes/frappe.toml"
         )
       );
     in {

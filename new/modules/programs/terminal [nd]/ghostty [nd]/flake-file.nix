@@ -1,6 +1,6 @@
 {
   flake-file.inputs = {
-    catppuccinGhostty = {
+    catppuccin-ghostty = {
       url = "github:catppuccin/ghostty";
       flake = false;
     };

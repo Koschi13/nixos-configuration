@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "catppuccinAlacritty": {
+    "catppuccin-alacritty": {
       "flake": false,
       "locked": {
         "lastModified": 1730074245,
@@ -16,7 +16,7 @@
         "type": "github"
       }
     },
-    "catppuccinGhostty": {
+    "catppuccin-ghostty": {
       "flake": false,
       "locked": {
         "lastModified": 1787934293,
@@ -32,7 +32,7 @@
         "type": "github"
       }
     },
-    "catppuccinI3": {
+    "catppuccin-i3": {
       "flake": false,
       "locked": {
         "lastModified": 1728869535,
@@ -48,7 +48,7 @@
         "type": "github"
       }
     },
-    "catppuccinStarship": {
+    "catppuccin-starship": {
       "flake": false,
       "locked": {
         "lastModified": 1754058577,
@@ -64,7 +64,7 @@
         "type": "github"
       }
     },
-    "denisidoroCheats": {
+    "denisidoro-cheats": {
       "flake": false,
       "locked": {
         "lastModified": 1682557612,
@@ -240,7 +240,7 @@
         "type": "github"
       }
     },
-    "mattpocockSkills": {
+    "mattpocock-skills": {
       "flake": false,
       "locked": {
         "lastModified": 1791543409,
@@ -312,6 +312,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-nix-direnv": {
+      "locked": {
+        "lastModified": 1750111231,
+        "narHash": "sha256-3a7Tha/RwYlzH/v3PJrG7+HjOj4c6YOv2K8sqdGsHVQ=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e6f23dc08d3624daab7094b701aa3954923c6bbb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e6f23dc08d3624daab7094b701aa3954923c6bbb",
+        "type": "github"
+      }
+    },
     "nixpkgs-small": {
       "locked": {
         "lastModified": 1786301960,
@@ -357,22 +373,6 @@
         "owner": "nixos",
         "ref": "nixos-26.05-small",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgsNixDirenv": {
-      "locked": {
-        "lastModified": 1750111231,
-        "narHash": "sha256-3a7Tha/RwYlzH/v3PJrG7+HjOj4c6YOv2K8sqdGsHVQ=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "e6f23dc08d3624daab7094b701aa3954923c6bbb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "e6f23dc08d3624daab7094b701aa3954923c6bbb",
         "type": "github"
       }
     },
@@ -441,11 +441,11 @@
     },
     "root": {
       "inputs": {
-        "catppuccinAlacritty": "catppuccinAlacritty",
-        "catppuccinGhostty": "catppuccinGhostty",
-        "catppuccinI3": "catppuccinI3",
-        "catppuccinStarship": "catppuccinStarship",
-        "denisidoroCheats": "denisidoroCheats",
+        "catppuccin-alacritty": "catppuccin-alacritty",
+        "catppuccin-ghostty": "catppuccin-ghostty",
+        "catppuccin-i3": "catppuccin-i3",
+        "catppuccin-starship": "catppuccin-starship",
+        "denisidoro-cheats": "denisidoro-cheats",
         "firefox-addons": "firefox-addons",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",
@@ -453,13 +453,13 @@
         "home-manager": "home-manager",
         "htt": "htt",
         "import-tree": "import-tree",
-        "mattpocockSkills": "mattpocockSkills",
+        "mattpocock-skills": "mattpocock-skills",
         "mistral-vibe": "mistral-vibe",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs-nix-direnv": "nixpkgs-nix-direnv",
         "nixpkgs-small": "nixpkgs-small",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-stable-small": "nixpkgs-stable-small",
-        "nixpkgsNixDirenv": "nixpkgsNixDirenv",
         "zsh-alias-finder": "zsh-alias-finder",
         "zsh-calc": "zsh-calc",
         "zsh-enhancd": "zsh-enhancd"

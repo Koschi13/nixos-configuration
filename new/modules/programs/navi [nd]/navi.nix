@@ -16,37 +16,37 @@
         recursive = true;
       };
       "${cheatsDir}/cloud/cf.cheat" = {
-        source = inputs.denisidoroCheats + "/cloud/cf.cheat";
+        source = inputs.denisidoro-cheats + "/cloud/cf.cheat";
       };
       "${cheatsDir}/code/git.cheat" = {
-        source = inputs.denisidoroCheats + "/code/git.cheat";
+        source = inputs.denisidoro-cheats + "/code/git.cheat";
       };
       "${cheatsDir}/container/docker.cheat" = {
-        source = inputs.denisidoroCheats + "/container/docker.cheat";
+        source = inputs.denisidoro-cheats + "/container/docker.cheat";
       };
       "${cheatsDir}/container/kubernetes.cheat" = {
-        source = inputs.denisidoroCheats + "/container/kubernetes.cheat";
+        source = inputs.denisidoro-cheats + "/container/kubernetes.cheat";
       };
       "${cheatsDir}/misc/compression.cheat" = {
-        source = inputs.denisidoroCheats + "/misc/compression.cheat";
+        source = inputs.denisidoro-cheats + "/misc/compression.cheat";
       };
       "${cheatsDir}/misc/shell.cheat" = {
-        source = inputs.denisidoroCheats + "/misc/shell.cheat";
+        source = inputs.denisidoro-cheats + "/misc/shell.cheat";
       };
       "${cheatsDir}/misc/systemctl.cheat" = {
-        source = inputs.denisidoroCheats + "/misc/systemctl.cheat";
+        source = inputs.denisidoro-cheats + "/misc/systemctl.cheat";
       };
       "${cheatsDir}/network/curl.cheat" = {
-        source = inputs.denisidoroCheats + "/network/curl.cheat";
+        source = inputs.denisidoro-cheats + "/network/curl.cheat";
       };
       "${cheatsDir}/network/network.cheat" = {
-        source = inputs.denisidoroCheats + "/network/network.cheat";
+        source = inputs.denisidoro-cheats + "/network/network.cheat";
       };
       "${cheatsDir}/security/gpg.cheat" = {
-        source = inputs.denisidoroCheats + "/security/gpg.cheat";
+        source = inputs.denisidoro-cheats + "/security/gpg.cheat";
       };
       "${cheatsDir}/security/openssl.cheat" = {
-        source = inputs.denisidoroCheats + "/security/openssl.cheat";
+        source = inputs.denisidoro-cheats + "/security/openssl.cheat";
       };
     };
   };
