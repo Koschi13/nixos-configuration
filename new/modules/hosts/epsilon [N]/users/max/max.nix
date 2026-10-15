@@ -1,4 +1,8 @@
-{self, ...}: {
+{
+  self,
+  inputs,
+  ...
+}: {
   flake.modules.nixos.epsilon = let
     inherit (self) modules;
     username = "max";
@@ -8,9 +12,7 @@
     ];
 
     # The work setup of max at HiQ
-    home-manager.users.${username} = {pkgs, ...}: let
-      htt = builtins.getFlake "git+ssh://git@gitea.scandio.com:8000/tkumschier/htt.git?ref=smaller-improvements&rev=96659bcf6c0d8ac1b02560eb41639aae95914796";
-    in {
+    home-manager.users.${username} = {pkgs, ...}: {
       imports = with modules.homeManager; [
         ssh
         tmux
@@ -41,8 +43,8 @@
         obsidian
         docker-compose
 
-        # company stuff, evaluated lazily as it is only reachable from the work network
-        htt.packages.${pkgs.stdenv.hostPlatform.system}.default
+        # company stuff
+        inputs.htt.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
     };
   };

@@ -13,7 +13,9 @@
 
   # This will add each flake input as a registry
   # To make nix3 commands consistent with your flake
-  registry = lib.mapAttrs (_: flake: {inherit flake;}) inputs;
+  # `htt` is left out, as it is only reachable from the work network and
+  # would otherwise have to be fetched by every host.
+  registry = lib.mapAttrs (_: flake: {inherit flake;}) (removeAttrs inputs ["htt"]);
 
   # This will additionally add your inputs to the system's legacy channels
   # Making legacy nix commands consistent as well, awesome!

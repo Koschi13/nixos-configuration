@@ -38,6 +38,7 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    htt.url = "git+ssh://git@gitea.scandio.com:8000/tkumschier/htt.git?ref=smaller-improvements&rev=96659bcf6c0d8ac1b02560eb41639aae95914796";
     import-tree.url = "github:vic/import-tree";
     mattpocockSkills = {
       url = "github:mattpocock/skills";
