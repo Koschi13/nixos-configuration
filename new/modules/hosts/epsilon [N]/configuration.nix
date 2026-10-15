@@ -13,7 +13,11 @@ in {
       ssd = true;
     })
     # Make max the "default" user by assigning it as the default login to sway
-    (self.factory.greetd hostname "max" "sway")
+    (self.factory.greetd {
+      inherit hostname;
+      username = "max";
+      windowManager = "sway";
+    })
     {
       nixos.epsilon = {
         imports = with self.modules.nixos; [

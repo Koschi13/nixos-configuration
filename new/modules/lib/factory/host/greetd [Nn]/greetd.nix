@@ -5,10 +5,12 @@
   # Type
 
   ```
-  greetd :: String -> String -> String -> Module
+  greetd :: { hostname :: String; username :: String; windowManager :: String; } -> Module
   ```
 
   # Arguments
+
+  An attribute set with:
 
   hostname
   : The name of the host for which this aspect will be configured for
@@ -23,11 +25,19 @@
 
   ```nix
   {self, ...}: {
-    flake.modules = (self.factory.greetd "alpha" "max" "sway");
+    flake.modules = (self.factory.greetd {
+      hostname = "alpha";
+      username = "max";
+      windowManager = "sway";
+    });
   }
   ```
   */
-  config.flake.factory.greetd = hostname: username: windowManager: {
+  config.flake.factory.greetd = {
+    hostname,
+    username,
+    windowManager,
+  }: {
     nixos.${hostname} = {pkgs, ...}: let
       pkg = pkgs.${windowManager};
       command = "${pkg}/bin/${windowManager}";
