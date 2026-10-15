@@ -3,11 +3,15 @@
 Configuration per user, one directory per user.
 
 - `<user>/<user>.nix` creates the user via the `user` factory and defines the
-  `homeManager.<user>` aspect.
-- Further directories hold variants of the same user, for example
-  `max/hiq` for the work setup.
-- `default.nix` exposes the standalone Home-Manager configurations.
+  `homeManager.<user>` aspect, which holds everything the user wants on every
+  host.
+- `default.nix` exposes a standalone Home-Manager configuration for hosts
+  without NixOS.
 
-Hosts pick their users in `hosts/<host>/users/`. Aspects that have to
-configure every user of a host, like `audio` or `gaming`, read the users from
-the `dotfiles.users` option instead of being instantiated per user.
+Hosts pick their users in `hosts/<host>/users/`. That is also the place for
+host specific user configuration, set via
+`home-manager.users.<user>` inside the `nixos.<host>` aspect.
+
+Aspects that have to configure every user of a host, like `audio` or `gaming`,
+read the users from the `dotfiles.users` option instead of being instantiated
+per user.
