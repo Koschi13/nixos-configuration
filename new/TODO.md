@@ -1,2 +1,1 @@
 - [ ] Impermanence
-- [ ] The `sway` aspect starts OpenRGB with the alpha profile on every host
