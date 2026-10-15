@@ -1,29 +1,34 @@
 {inputs, ...}: {
   /**
-  Sets up the homeserver mounts for the given user(name)
+  Sets up the homeserver mounts, owned by the given user.
+
+  CIFS maps every file of a share to a single uid/gid, so unlike aspects
+  using `dotfiles.users` the mounts can only belong to one user.
 
   # Type
 
   ```
-  mount-homeserver :: String -> Module
+  mount-homeserver :: { username :: String; } -> Module
   ```
 
   # Arguments
 
+  An attribute set with:
+
   username
-  : Name of the user for which the mount is being made
+  : Name of the user owning the mounted files
 
   # Example
 
   ```nix
   {self, ...}: {
     flake.modules.nixos.<name> = {
-      imports = [(self.factory.mount-homeserver "max")];
+      imports = [(self.factory.mount-homeserver {username = "max";})];
     }
   }
   ```
   */
-  config.flake.factory.mount-homeserver = username: {
+  config.flake.factory.mount-homeserver = {username}: {
     config,
     pkgs,
     ...
@@ -46,9 +51,15 @@
             automount-opts = [
               "x-systemd.automount"
               "noauto"
+              "nofail"
+              "soft"
               "x-systemd.idle-timeout=60"
               "x-systemd.device-timeout=5s"
               "x-systemd.mount-timeout=5s"
+            ];
+            mount-opts = [
+              "rw"
+              "iocharset=utf8"
             ];
             credentials = ["credentials=/etc/nixos/smb-secrets"];
             user = [
@@ -56,7 +67,7 @@
               "gid=${gid}"
             ];
           in
-            automount-opts ++ credentials ++ user;
+            automount-opts ++ mount-opts ++ credentials ++ user;
         };
       })
       vars.mounts);
