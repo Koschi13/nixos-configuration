@@ -11,3 +11,7 @@
 - `nixPath` changes was done on purpose as the original snippet didn't work
 - `networking.useDHCP` is true by default and therfore omitted from now on
 - `docker` was dropped on `alpha` as it was never used
+- `mdadm` / `boot.swraid` was only enabled implicitly by the old `stateVersion` and no host uses software RAID
+- `homeConfigurations.hiq` is gone, epsilon configures the work setup of `max` through the embedded Home-Manager instead
+- The standalone `home-manager` CLI is no longer installed on NixOS hosts, as `nh os switch` applies Home-Manager as well
+- `firmware` now enables `hardware.enableAllFirmware` and `services.fwupd` on top of the redistributable firmware the old hosts had, to support more devices and get firmware updates
