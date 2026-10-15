@@ -10,7 +10,7 @@ in {
   flake.modules = lib.mkMerge [
     # Setup luks
     (self.factory.luks {
-      host = hostname;
+      inherit hostname;
       uuid = "8e424358-602c-490d-9a00-ad3d00108f32";
       ssd = true;
     })
