@@ -6,10 +6,12 @@
   # Type
 
   ```
-  luks :: String -> String -> Bool -> Module
+  luks :: { host :: String; uuid :: String; ssd :: Bool; } -> Module
   ```
 
   # Arguments
+
+  An attribute set with:
 
   host
   : The name of the host the module will be generated for.
@@ -25,11 +27,19 @@
 
   ```nix
   {self, ...}: {
-    flake.modules = (self.factory.luks "alpha" "8e424358-602c-490d-9a00-ad3d00108f32" true);
+    flake.modules = (self.factory.luks {
+      host = "alpha";
+      uuid = "8e424358-602c-490d-9a00-ad3d00108f32";
+      ssd = true;
+    });
   }
   ```
   */
-  config.flake.factory.luks = host: uuid: ssd: {
+  config.flake.factory.luks = {
+    host,
+    uuid,
+    ssd,
+  }: {
     nixos.${host} = {
       boot = {
         initrd = {
