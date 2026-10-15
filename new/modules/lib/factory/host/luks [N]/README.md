@@ -26,7 +26,7 @@ where you have to call:
 }: {
   flake.modules = lib.mkMerge [
     (self.factory.luks {
-      host = "<host>";
+      hostname = "<host>";
       uuid = "<device-id>";
       ssd = <true/false>;
     })
