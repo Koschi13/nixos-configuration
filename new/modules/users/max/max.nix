@@ -7,7 +7,11 @@
 in {
   flake.modules = lib.mkMerge [
     # Create the user in the system
-    (self.factory.user username 1000 true)
+    (self.factory.user {
+      inherit username;
+      uid = 1000;
+      isAdmin = true;
+    })
     {
       nixos.max = {
         users.users.${username}.group = "users";

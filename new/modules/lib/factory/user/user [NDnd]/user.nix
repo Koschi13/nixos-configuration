@@ -8,10 +8,12 @@ in {
   # Type
 
   ```
-  user :: String -> Int -> Bool -> Module
+  user :: { username :: String; uid :: Int; isAdmin :: Bool; } -> Module
   ```
 
   # Arguments
+
+  An attribute set with:
 
   username
   : The name of the user for which this aspect will be enabled
@@ -26,11 +28,19 @@ in {
 
   ```nix
   {self, ...}: {
-    flake.modules = (self.factory.user "max" 1000 true);
+    flake.modules = (self.factory.user {
+      username = "max";
+      uid = 1000;
+      isAdmin = true;
+    });
   }
   ```
   */
-  config.flake.factory.user = username: uid: isAdmin: {
+  config.flake.factory.user = {
+    username,
+    uid,
+    isAdmin,
+  }: {
     nixos.${username} = {
       lib,
       pkgs,
