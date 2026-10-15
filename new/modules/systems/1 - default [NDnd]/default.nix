@@ -25,22 +25,8 @@
     options = "--delete-older-than 10d";
   };
 
-  packages = pkgs: with pkgs; [git wget curl];
-in {
-  flake.modules.nixos.system-default = {pkgs, ...}: {
-    imports = with self.modules.nixos; [
-      # services
-      firmware
-      logind
-      gpg
-      yubikey
-      shell
-      neovim
-
-      # lib/tools
-      home-manager # This wires Home-Manager into the system
-    ];
-
+  # Settings shared by the `nixos` and `darwin` classes
+  shared = {pkgs, ...}: {
     nix = {
       inherit gc registry nixPath;
       settings = {
@@ -49,10 +35,39 @@ in {
       };
     };
 
-    time = {
-      timeZone = "Europe/Berlin";
-      hardwareClockInLocalTime = true;
-    };
+    time.timeZone = "Europe/Berlin";
+
+    nixpkgs.overlays = [
+      self.overlays.local
+      (final: _prev: {
+        stable = import inputs.nixpkgs-stable {
+          inherit (final) config;
+          system = pkgs.stdenv.hostPlatform.system;
+        };
+      })
+    ];
+
+    environment.systemPackages = with pkgs; [git wget curl];
+    documentation.doc.enable = false;
+  };
+in {
+  flake.modules.nixos.system-default = {
+    imports =
+      [shared]
+      ++ (with self.modules.nixos; [
+        # services
+        firmware
+        logind
+        gpg
+        yubikey
+        shell
+        neovim
+
+        # lib/tools
+        home-manager # This wires Home-Manager into the system
+      ]);
+
+    time.hardwareClockInLocalTime = true;
 
     networking = {
       networkmanager = {
@@ -60,58 +75,26 @@ in {
       };
     };
 
-    nixpkgs.overlays = [
-      self.overlays.local
-      (final: _prev: {
-        stable = import inputs.nixpkgs-stable {
-          inherit (final) config;
-          system = pkgs.stdenv.hostPlatform.system;
-        };
-      })
-    ];
     nixpkgs.config.allowUnfree = true;
 
-    environment.systemPackages = packages pkgs;
-    documentation.doc.enable = false;
     boot.tmp.cleanOnBoot = true;
     system.stateVersion = stateVersion.nixOs;
     programs.nix-ld.enable = true;
   };
 
-  flake.modules.darwin.system-default = {pkgs, ...}: {
-    imports = with self.modules.darwin; [
-      # services
-      cachix
-      yubikey
-      shell
+  flake.modules.darwin.system-default = {
+    imports =
+      [shared]
+      ++ (with self.modules.darwin; [
+        # services
+        cachix
+        yubikey
+        shell
 
-      # lib/tools
-      home-manager # This wires Home-Manager into the system
-    ];
+        # lib/tools
+        home-manager # This wires Home-Manager into the system
+      ]);
 
-    nix = {
-      inherit gc registry nixPath;
-      settings = {
-        auto-optimise-store = true;
-        experimental-features = experimental-features;
-      };
-    };
-
-    time = {
-      timeZone = "Europe/Berlin";
-    };
-
-    nixpkgs.overlays = [
-      self.overlays.local
-      (final: _prev: {
-        stable = import inputs.nixpkgs-stable {
-          inherit (final) config;
-          system = pkgs.stdenv.hostPlatform.system;
-        };
-      })
-    ];
-    environment.systemPackages = packages pkgs;
-    documentation.doc.enable = false;
     system.stateVersion = stateVersion.darwin;
   };
 
