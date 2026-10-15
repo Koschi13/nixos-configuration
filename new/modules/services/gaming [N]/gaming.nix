@@ -1,13 +1,8 @@
 {self, ...}: {
   # Everything needed for gaming on Linux, for all users of a host
-  flake.modules.nixos.gaming = {
-    config,
-    lib,
-    pkgs,
-    ...
-  }: {
-    # Aspects like `minecraft` import gaming as well. The key lets the module
-    # system deduplicate it, as flake-parts wraps every import in a fresh module.
+  flake.modules.nixos.gaming = {pkgs, ...}: {
+    # Aspects like `minecraft` import gaming as well, see `dotfiles-users` for
+    # why the key is needed.
     key = "gaming";
 
     imports = [self.modules.nixos.dotfiles-users];
@@ -36,9 +31,7 @@
       localNetworkGameTransfers.openFirewall = true;
     };
 
-    users.users = lib.genAttrs config.dotfiles.users (_: {
-      extraGroups = ["gamemode"];
-    });
+    dotfiles.userGroups = ["gamemode"];
 
     home-manager.sharedModules = [self.modules.homeManager.mangohud];
   };
