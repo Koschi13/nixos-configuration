@@ -6,7 +6,7 @@
     imports = [
       modules.nixos.${username} # -> imports users/max which sets up HomeManager
 
-      (factory.mount-homeserver username)
+      (factory.mount-homeserver {inherit username;})
     ];
 
     # The private setup of max
