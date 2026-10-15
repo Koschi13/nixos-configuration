@@ -3,8 +3,6 @@
   lib,
   ...
 }: let
-  # TODO: use this
-  # desktop = "sway";
   hostname = "alpha";
 in {
   flake.modules = lib.mkMerge [
