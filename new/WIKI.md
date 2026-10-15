@@ -8,20 +8,19 @@ This is a **flake-parts** flake, which is the key to the answer.
 
 In this file, `inputs` and `self.inputs` point to **the same thing** — they're two paths to the flake's inputs. The difference is _scope_ and _why each exists_:
 
-- **`inputs`** — the module argument that flake-parts injects directly into every module. It's the top-level flake inputs (`agenix`, `nixpkgs`, `home-manager`, `secrets`, etc.).
+- **`inputs`** — the module argument that flake-parts injects directly into every module. It's the top-level flake inputs (`nixpkgs`, `home-manager`, `git-crypt-secrets`, etc.).
 - **`self`** — flake-parts' reference to your own flake's final output attrset. `self.inputs` is the standard attribute Nix attaches to a flake's `self`, containing that same set of inputs.
 
-So `self.inputs.secrets` ≡ `inputs.secrets`. Both resolve to the `secrets` input (the non-flake `path:./secrets`) defined in `flake.nix:25`.
+So `self.inputs.git-crypt-secrets` ≡ `inputs.git-crypt-secrets`. Both resolve to the `git-crypt-secrets` input (`path:../.secrets`), declared in `modules/programs/git-crypt [ND]/flake-file.nix`.
 
-## Why both appear here
+## How they are used here
 
-Look at the two usages in `max.nix`:
+Two typical usages, from `hosts/alpha [N]/users/max.nix` and `programs/git [nd]/git.nix`:
 
 ```nix
-imports = with inputs.self.modules.nixos;     # (a)
-          with inputs.self.factory; [ ... ];
+inherit (self) modules factory;                         # (a)
 ...
-file = "${self.inputs.secrets}/homeserver-cred.age";  # (b)
+vars = import "${inputs.git-crypt-secrets}/git_vars.nix"; # (b)
 ```
 
 There are actually **three** forms in play, and they chain like this:
@@ -35,7 +34,7 @@ There are actually **three** forms in play, and they chain like this:
 
 So:
 
-- `inputs.self.modules.nixos` — reach _your own flake's_ `modules.nixos` output, going `inputs → self → modules`.
-- `self.inputs.secrets` — reach the `secrets` _input_, going `self → inputs → secrets`.
+- `self.modules` — reach _your own flake's_ `modules` output. `inputs.self.modules` is the same, going `inputs → self → modules`.
+- `inputs.git-crypt-secrets` — reach the input directly. `self.inputs.git-crypt-secrets` is the same, going `self → inputs → git-crypt-secrets`.
 
-Both are valid because Nix makes the graph circular: `self.inputs.self.inputs.self...` all resolve. You could equally have written `inputs.secrets` and `self.modules.nixos` and gotten identical results.
+Both are valid because Nix makes the graph circular: `self.inputs.self.inputs.self...` all resolve. This repository uses the short forms: `self` for its own outputs and `inputs` for inputs.
