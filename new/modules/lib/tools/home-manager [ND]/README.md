@@ -23,3 +23,21 @@ flake.modules.homeManager."<username>"
 
 The first is specific to `nixos` or `darwin` while the latter is generic for
 both.
+
+## Configuring every user of a host
+
+The Home-Manager NixOS/Darwin module also provides
+`home-manager.sharedModules`, a list of Home-Manager modules that get added to
+the configuration of every user in `home-manager.users`.
+
+It lets a system aspect configure the Home-Manager side without knowing the
+usernames of the host:
+
+```nix
+flake.modules.nixos.gaming = {
+  home-manager.sharedModules = [self.modules.homeManager.mangohud];
+};
+```
+
+Every user of a host importing `gaming` now gets `mangohud`. Use
+`home-manager.users.<username>` instead when only one user should get it.
