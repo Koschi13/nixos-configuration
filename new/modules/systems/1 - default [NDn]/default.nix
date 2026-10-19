@@ -25,6 +25,8 @@
   shared = {pkgs, ...}: {
     nix = {
       inherit registry nixPath;
+      # Everything comes from the flake, `nixPath` points into the registry
+      channel.enable = false;
       settings = {
         auto-optimise-store = true;
         experimental-features = experimental-features;
