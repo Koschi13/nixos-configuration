@@ -1,6 +1,6 @@
 {self, ...}: {
   flake.modules = {
-    nixos.sway = {
+    nixos.sway = {pkgs, ...}: {
       imports = with self.modules.nixos; [
         pipewire
         gnome-keyring
@@ -14,6 +14,10 @@
         enable = true;
         package = null;
       };
+
+      # Lets the `video` group write the backlight, so swayosd can change the
+      # brightness without root
+      services.udev.packages = [pkgs.swayosd];
     };
 
     homeManager.sway = {
@@ -32,6 +36,19 @@
       services.swayidle = {
         enable = true;
         events.before-sleep = "${swaylock} --daemonize";
+      };
+
+      # Clipboard history, picked with rofi through a keybind
+      services.cliphist.enable = true;
+
+      # On-screen display for the volume and brightness keys
+      services.swayosd.enable = true;
+
+      # Warmer colors at night, around Berlin
+      services.wlsunset = {
+        enable = true;
+        latitude = 52.5;
+        longitude = 13.4;
       };
       imports = with self.modules.homeManager; [rofi waybar];
 
@@ -147,13 +164,16 @@
               "${m}+p" = ''exec grim -g "$(slurp -d)" - | wl-copy'';
               "${m}+Shift+p" = ''exec ~/${screenshotScript}'';
 
-              # Audio
-              "XF86AudioRaiseVolume" = "exec pamixer -i 5";
-              "XF86AudioLowerVolume" = "exec pamixer -d 5";
-              "XF86AudioMute" = "exec pamixer -t";
-              "XF86AudioMicMute" = "exec pamixer --default-source -t";
-              "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
-              "XF86MonBrightnessUp" = "exec brightnessctl set 5%+";
+              # Clipboard history
+              "${m}+Shift+v" = "exec cliphist list | rofi -dmenu -p clipboard | cliphist decode | wl-copy";
+
+              # Audio and brightness, with an on-screen display
+              "XF86AudioRaiseVolume" = "exec swayosd-client --output-volume +5";
+              "XF86AudioLowerVolume" = "exec swayosd-client --output-volume -5";
+              "XF86AudioMute" = "exec swayosd-client --output-volume mute-toggle";
+              "XF86AudioMicMute" = "exec swayosd-client --input-volume mute-toggle";
+              "XF86MonBrightnessDown" = "exec swayosd-client --brightness -5";
+              "XF86MonBrightnessUp" = "exec swayosd-client --brightness +5";
               "XF86AudioPlay" = "exec playerctl play-pause";
               "XF86AudioPause" = "exec playerctl play-pause";
               "XF86AudioNext" = "exec playerctl next";
