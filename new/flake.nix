@@ -48,6 +48,10 @@
       url = "github:mistralai/mistral-vibe?ref=v2.25.5";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     nixpkgs-nix-direnv.url = "github:nixos/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
