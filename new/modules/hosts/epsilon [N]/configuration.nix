@@ -29,6 +29,9 @@ in {
           hostName = hostname;
         };
 
+        # Notifications about the battery and the power supply
+        home-manager.sharedModules = [{services.poweralertd.enable = true;}];
+
         powerManagement.cpuFreqGovernor = "powersave";
       };
     }
