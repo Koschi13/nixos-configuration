@@ -27,8 +27,9 @@
       inherit registry nixPath;
       # Everything comes from the flake, `nixPath` points into the registry
       channel.enable = false;
+      # Deduplicate the store on a timer instead of slowing down every build
+      optimise.automatic = true;
       settings = {
-        auto-optimise-store = true;
         experimental-features = experimental-features;
         # Admins may use extra substituters and import unsigned paths
         trusted-users = ["@wheel" "@admin"];
