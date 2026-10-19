@@ -30,7 +30,16 @@
       ...
     }: let
       screenshotScript = ".config/sway/screenshot.sh";
+
+      swaylock = "${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --ignore-empty-password";
     in {
+      # Lock only before suspending, never on idle. swayidle waits for the
+      # command (`-w`), so swaylock has to daemonize or suspend would block
+      # until unlocked. No grace period, as the lock must hold on resume.
+      services.swayidle = {
+        enable = true;
+        events.before-sleep = "${swaylock} --daemonize";
+      };
       imports = with self.modules.homeManager; [rofi waybar];
 
       home = {
@@ -165,8 +174,7 @@
               "XF86AudioPrev" = "exec playerctl previous";
 
               # Lock screen
-              # TODO move to script and place in swaylock.nix
-              "${m}+Backspace" = "exec ${pkgs.swaylock-effects}/bin/swaylock --screenshots --clock --indicator --indicator-radius 100 --indicator-thickness 7 --effect-blur 7x5 --effect-vignette 0.5:0.5 --ring-color bb00cc --key-hl-color 880033 --line-color 00000000 --inside-color 00000088 --separator-color 00000000 --grace 2 --fade-in 0.2 --ignore-empty-password";
+              "${m}+Backspace" = "exec ${swaylock} --grace 2 --fade-in 0.2";
 
               # Exit sway (logs you out of your Wayland session)
               # TODO move to script in this file
