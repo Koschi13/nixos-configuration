@@ -60,7 +60,8 @@ in {
           ++ ["video" "networkmanager"];
         shell = pkgs.${defaultShell};
         inherit uid;
-        initialPassword = "P@ssw0rd";
+        # No password is committed. Set it with `passwd` (or `nixos-enter` on a
+        # fresh install); `users.mutableUsers` keeps it across rebuilds.
       };
       programs.${defaultShell}.enable = true;
 
