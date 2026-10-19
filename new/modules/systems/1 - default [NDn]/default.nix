@@ -21,16 +21,10 @@
   # Making legacy nix commands consistent as well, awesome!
   nixPath = lib.mapAttrsToList (key: _: "${key}=flake:${key}") registry;
 
-  gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 10d";
-  };
-
   # Settings shared by the `nixos` and `darwin` classes
   shared = {pkgs, ...}: {
     nix = {
-      inherit gc registry nixPath;
+      inherit registry nixPath;
       settings = {
         auto-optimise-store = true;
         experimental-features = experimental-features;
@@ -75,6 +69,17 @@ in {
         home-manager # This wires Home-Manager into the system
       ]);
 
+    # The single garbage collection policy of NixOS hosts. It cleans the system
+    # and all user profiles, so neither `nix.gc` nor Home-Manager's `nh` clean.
+    programs.nh = {
+      enable = true;
+      clean = {
+        enable = true;
+        dates = "daily";
+        extraArgs = "--keep-since 10d --keep 3";
+      };
+    };
+
     networking = {
       networkmanager = {
         enable = true;
@@ -100,6 +105,12 @@ in {
         # lib/tools
         home-manager # This wires Home-Manager into the system
       ]);
+
+    # nix-darwin has no `programs.nh`, so macOS keeps the plain nix GC
+    nix.gc = {
+      automatic = true;
+      options = "--delete-older-than 10d";
+    };
 
     system.stateVersion = stateVersion.darwin;
   };
