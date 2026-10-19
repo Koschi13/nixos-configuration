@@ -22,6 +22,10 @@
       url = "path:../.secrets";
       flake = false;
     };
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,6 +47,10 @@
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     nixpkgs-nix-direnv.url = "github:nixos/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     zsh-alias-finder = {
       url = "github:akash329d/zsh-alias-finder";
       flake = false;

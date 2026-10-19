@@ -2,3 +2,4 @@ result
 .idea
 **/.direnv
 **/target
+.pre-commit-config.yaml
