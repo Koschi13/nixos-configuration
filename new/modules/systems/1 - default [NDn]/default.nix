@@ -93,6 +93,11 @@ in {
     nixpkgs.config.allowUnfree = true;
 
     boot.tmp.cleanOnBoot = true;
+
+    # Kill the biggest memory hog of a user under pressure, before the whole
+    # desktop freezes
+    systemd.oomd.enableUserSlices = true;
+
     system.stateVersion = stateVersion.nixOs;
     programs.nix-ld.enable = true;
   };
