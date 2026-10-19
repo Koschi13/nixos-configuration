@@ -12,10 +12,9 @@ in {
       uuid = "8e424358-602c-490d-9a00-ad3d00108f32";
       ssd = true;
     })
-    # Make max the "default" user by assigning it as the default login to sway
+    # Log in to sway through the greeter
     (self.factory.greetd {
       inherit hostname;
-      username = "max";
       windowManager = "sway";
     })
     {
