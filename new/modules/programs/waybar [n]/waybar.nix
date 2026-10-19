@@ -31,8 +31,7 @@
           ];
           "custom/launcher" = {
             "format" = " ";
-            "on-click" = "pkill rofi || rofi2";
-            "on-click-middle" = "exec default_wall";
+
             "on-click-right" = "exec wallpaper_random";
             "tooltip" = false;
           };

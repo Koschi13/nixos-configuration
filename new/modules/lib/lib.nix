@@ -19,7 +19,7 @@
     # Type
 
     ```
-    mkNixos :: String -> String -> Module
+    mkNixos :: String -> String -> { <name> :: NixosConfiguration; }
     ```
 
     # Arguments
@@ -42,7 +42,8 @@
       ${name} = inputs.nixpkgs.lib.nixosSystem {
         modules = [
           self.modules.nixos.${name}
-          {nixpkgs.hostPlatform = lib.mkDefault system;}
+          # The only place setting the platform, hosts must not set it
+          {nixpkgs.hostPlatform = system;}
         ];
       };
     };
@@ -55,7 +56,7 @@
     # Type
 
     ```
-    mkDarwin :: String -> String -> Module
+    mkDarwin :: String -> String -> { <name> :: DarwinConfiguration; }
     ```
 
     # Arguments
@@ -71,14 +72,15 @@
     # Example
 
     ```nix
-    flake.nixosConfigurations = self.lib.mkDarwin "aarch64-darwin" "mac";
+    flake.darwinConfigurations = self.lib.mkDarwin "aarch64-darwin" "mac";
     ```
     */
     mkDarwin = system: name: {
       ${name} = inputs.nix-darwin.lib.darwinSystem {
         modules = [
           self.modules.darwin.${name}
-          {nixpkgs.hostPlatform = lib.mkDefault system;}
+          # The only place setting the platform, hosts must not set it
+          {nixpkgs.hostPlatform = system;}
         ];
       };
     };

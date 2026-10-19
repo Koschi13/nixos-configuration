@@ -37,6 +37,7 @@
         packages = with pkgs; [
           grim
           libnotify
+          brightnessctl
           pamixer
           playerctl
           slurp
@@ -88,7 +89,7 @@
           up = "k";
           right = "l";
 
-          terminal = "ghostty";
+          # terminal is configured by the terminal aspect
 
           menu = "rofiWindow"; # See scripts + rofi
 
@@ -156,8 +157,8 @@
               "XF86AudioLowerVolume" = "exec pamixer -d 5";
               "XF86AudioMute" = "exec pamixer -t";
               "XF86AudioMicMute" = "exec pamixer --default-source -t";
-              "XF86MonBrightnessDown" = "exec light -U 5"; # Installed via system
-              "XF86MonBrightnessUp" = "exec light -A 5"; # Installed via system
+              "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
+              "XF86MonBrightnessUp" = "exec brightnessctl set 5%+";
               "XF86AudioPlay" = "exec playerctl play-pause";
               "XF86AudioPause" = "exec playerctl play-pause";
               "XF86AudioNext" = "exec playerctl next";

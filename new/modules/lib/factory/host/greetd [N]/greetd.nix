@@ -5,7 +5,7 @@
   # Type
 
   ```
-  greetd :: { hostname :: String; username :: String; windowManager :: String; } -> Module
+  greetd :: { hostname :: String; username :: String; windowManager :: String; } -> { nixos.<hostname> :: Module; }
   ```
 
   # Arguments

@@ -3,13 +3,15 @@
 Wires `Home-Manager` into the `nixos` and `darwin` classes, so that you can
 build your system and Home-Manager together.
 
-It defines:
-- `flake.modules.nixos.home-manager` and `flake.modules.darwin.home-manager`
-  aspects that bring the Home-Manager NixOS/Darwin module (and shared config)
-  into a system. Hosts must import these to use them.
-  *They are made available, not auto-enabled.*
-- `flake.modules.homeManager.<aspect>`, the Home-Manager *module class*, holding
-  system generic configurations for `Home-Manager`.
+It defines `flake.modules.nixos.home-manager` and
+`flake.modules.darwin.home-manager`, aspects that bring the Home-Manager
+NixOS/Darwin module (and shared config) into a system. `system-default`
+imports them, so every host gets them.
+
+`flake-file.nix` additionally imports the flake-parts module of Home-Manager
+(`inputs.home-manager.flakeModules.home-manager`). It provides the
+`homeManager` class of `flake.modules.homeManager.<aspect>`, which holds
+system generic Home-Manager configuration.
 
 To summarize, there is:
 ```nix
@@ -38,7 +40,7 @@ Home-Manager configuration of every user in one go. No separate
 3. The `user` factory sets `home-manager.users.<username>` to import
    `homeManager.<username>`.
 4. Hosts add host specific configuration through
-   `home-manager.users.<username>`, e.g. `hosts/epsilon/users/max.nix`.
+   `home-manager.users.<username>`, e.g. `hosts/epsilon [N]/users/max.nix`.
 
 ```mermaid
 graph TD

@@ -20,18 +20,19 @@ where you have to call:
 ```nix
 {
   self,
-  inputs,
   lib,
   ...
-}: {
+}: let
+  hostname = "<host>";
+in {
   flake.modules = lib.mkMerge [
     (self.factory.luks {
-      hostname = "<host>";
+      inherit hostname;
       uuid = "<device-id>";
-      ssd = <true/false>;
+      ssd = true; # or false
     })
     {
-      nixos.alpha = {
+      nixos.${hostname} = {
         imports = with self.modules.nixos; [
           # ...modules
         ];

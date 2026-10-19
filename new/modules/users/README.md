@@ -2,7 +2,7 @@
 
 Configuration per user, one directory per user.
 
-- `<user>/<user>.nix` creates the user via the `user` factory and defines the
+- `<user> [<tag>]/<user>.nix` creates the user via the `user` factory and defines the
   `homeManager.<user>` aspect, which holds everything the user wants on every
   host.
 

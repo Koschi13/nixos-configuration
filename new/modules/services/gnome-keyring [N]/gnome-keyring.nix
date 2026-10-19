@@ -6,6 +6,9 @@
       pkgs,
       ...
     }: {
+      # Deduplicates the module, see `dotfiles-users` in `lib/users [N]/users.nix`
+      key = "gnome-keyring";
+
       services.gnome.gnome-keyring.enable = true;
 
       security.pam.services.login.enableGnomeKeyring = true;

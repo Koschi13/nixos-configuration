@@ -6,7 +6,7 @@
   # Type
 
   ```
-  luks :: { hostname :: String; uuid :: String; ssd :: Bool; } -> Module
+  luks :: { hostname :: String; uuid :: String; ssd :: Bool; } -> { nixos.<hostname> :: Module; }
   ```
 
   # Arguments

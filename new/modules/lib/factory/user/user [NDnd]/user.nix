@@ -8,7 +8,7 @@ in {
   # Type
 
   ```
-  user :: { username :: String; uid :: Int; isAdmin :: Bool; } -> Module
+  user :: { username :: String; uid :: Int; isAdmin :: Bool; } -> { nixos.<username> :: Module; darwin.<username> :: Module; homeManager.<username> :: Module; }
   ```
 
   # Arguments

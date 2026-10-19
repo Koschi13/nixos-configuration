@@ -11,7 +11,7 @@ In this file, `inputs` and `self.inputs` point to **the same thing** — they're
 - **`inputs`** — the module argument that flake-parts injects directly into every module. It's the top-level flake inputs (`nixpkgs`, `home-manager`, `git-crypt-secrets`, etc.).
 - **`self`** — flake-parts' reference to your own flake's final output attrset. `self.inputs` is the standard attribute Nix attaches to a flake's `self`, containing that same set of inputs.
 
-So `self.inputs.git-crypt-secrets` ≡ `inputs.git-crypt-secrets`. Both resolve to the `git-crypt-secrets` input (`path:../.secrets`), declared in `modules/programs/git-crypt [ND]/flake-file.nix`.
+So `self.inputs.git-crypt-secrets` ≡ `inputs.git-crypt-secrets`. Both resolve to the `git-crypt-secrets` input (`path:../.secrets`), declared in `modules/systems/1 - default [NDn]/flake-file.nix`.
 
 ## How they are used here
 

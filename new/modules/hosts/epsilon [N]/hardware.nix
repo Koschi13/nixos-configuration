@@ -1,6 +1,6 @@
 {
   flake.modules.nixos.epsilon = {
-    nixpkgs.hostPlatform = "x86_64-linux";
+    dotfiles.cpuVendor = "intel";
 
     hardware = {
       # TODO@comp: This was false

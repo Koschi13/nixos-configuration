@@ -20,6 +20,14 @@
         neovim-copilot
       ];
 
+      programs.ssh.settings = {
+        "alpha.lan" = {
+          hostname = "alpha.lan";
+          user = "max";
+          identityFile = "~/.ssh/yubikey.pub";
+        };
+      };
+
       home.packages = with pkgs; [
         # tools
         zip

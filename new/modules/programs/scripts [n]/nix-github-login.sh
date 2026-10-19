@@ -10,10 +10,11 @@
 # It's important to `source` the script, as otherwise the exports are not
 # exposed to your shell. This is because each binScript is executed in it's
 # own process instead of the current one
+#
+# No `set -euxo pipefail`, as sourcing leaks the options into the calling
+# shell and `-x` would print the token.
 
-set -euxo pipefail
-
-if [ -z "$GITHUB_TOKEN" ]; then
+if [ -z "${GITHUB_TOKEN:-}" ]; then
   nix run nixpkgs#gh auth status || nix run nixpkgs#gh auth login
   GITHUB_TOKEN="$(nix run nixpkgs#gh auth token)"
   export GITHUB_TOKEN

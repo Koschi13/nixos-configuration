@@ -44,7 +44,6 @@
       pavucontrol
 
       bitwarden-cli
-      git-crypt
       gnupg
       yubikey-manager
     ];

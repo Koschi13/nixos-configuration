@@ -6,9 +6,5 @@
         RuntimeDirectorySize = "6G";
       };
     };
-
-    nixos.gnome-keyring = {
-      security.pam.services.login.enableGnomeKeyring = true;
-    };
   };
 }

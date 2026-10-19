@@ -49,7 +49,9 @@
       })
     ];
 
-    environment.systemPackages = with pkgs; [git wget curl];
+    # git-crypt decrypts the secrets this flake imports, so it has to be
+    # available before the first switch to this configuration.
+    environment.systemPackages = with pkgs; [git git-crypt wget curl];
     documentation.doc.enable = false;
   };
 in {
@@ -57,6 +59,9 @@ in {
     imports =
       [shared]
       ++ (with self.modules.nixos; [
+        # lib
+        dotfiles-cpu
+
         # services
         firmware
         logind
