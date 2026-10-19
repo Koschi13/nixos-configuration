@@ -7,6 +7,7 @@
 
     imports = [self.modules.nixos.dotfiles-users];
 
+    # Enable it per game with the Steam launch option `gamemoderun %command%`
     programs.gamemode.enable = true;
 
     boot.kernelModules = ["ntsync"];
@@ -18,15 +19,8 @@
       gamescopeSession = {
         enable = true;
       };
-      package = pkgs.steam.override {
-        extraLibraries = pkgs:
-          with pkgs; [
-            gamemode
-          ];
-        extraEnv = {
-          LD_PRELOAD = "${pkgs.gamemode.lib}/lib/libgamemode.so";
-        };
-      };
+      # Makes `gamemoderun` usable inside the Steam runtime
+      extraPackages = with pkgs; [gamemode];
 
       localNetworkGameTransfers.openFirewall = true;
     };
