@@ -4,7 +4,6 @@
       system-default
 
       sway
-      xserver
       printing
       audio
       usb
