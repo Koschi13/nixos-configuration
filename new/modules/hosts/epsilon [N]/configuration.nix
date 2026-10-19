@@ -24,7 +24,6 @@ in {
           system-desktop
 
           bluetooth
-          docker
         ];
 
         networking = {

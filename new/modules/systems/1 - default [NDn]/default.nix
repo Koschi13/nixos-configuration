@@ -63,6 +63,7 @@ in {
         dotfiles-cpu
 
         # services
+        docker
         firmware
         logind
         gpg
