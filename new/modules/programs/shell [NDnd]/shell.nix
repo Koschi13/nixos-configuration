@@ -115,6 +115,8 @@
           enable = true;
           enableBashIntegration = true;
           enableZshIntegration = true;
+          # `^R` belongs to atuin
+          historyWidget.command = "";
         };
 
         # `z <dir>` jumps by frecency, `zi` picks interactively with fzf
@@ -122,6 +124,15 @@
           enable = true;
           enableBashIntegration = true;
           enableZshIntegration = true;
+        };
+
+        # Searchable shell history on `^R`. The up arrow stays with
+        # zsh-history-substring-search.
+        atuin = {
+          enable = true;
+          enableBashIntegration = true;
+          enableZshIntegration = true;
+          flags = ["--disable-up-arrow"];
         };
       };
 
