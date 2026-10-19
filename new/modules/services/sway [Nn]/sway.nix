@@ -11,15 +11,12 @@
         wayland
       ];
 
-      # See https://github.com/hyprwm/Hyprland/issues/2727
-      # Need for Swaylock to accept password
-      security.pam.services.swaylock = {};
-      security.polkit.enable = true;
-
-      xdg.portal = {
-        config = {
-          sway.preferred = ["wlr" "gtk"];
-        };
+      # Sets up polkit, the swaylock PAM service, the portals, XWayland and
+      # the sway-session target. Sway itself is installed and configured by
+      # Home-Manager, so the package is left out.
+      programs.sway = {
+        enable = true;
+        package = null;
       };
     };
 
