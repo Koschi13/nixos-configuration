@@ -28,6 +28,8 @@
       settings = {
         auto-optimise-store = true;
         experimental-features = experimental-features;
+        # Admins may use extra substituters and import unsigned paths
+        trusted-users = ["@wheel" "@admin"];
       };
     };
 
