@@ -101,6 +101,8 @@ in {
 
     system.stateVersion = stateVersion.nixOs;
     programs.nix-ld.enable = true;
+    # Replaced by nix-index of Home-Manager, both define the same shell hook
+    programs.command-not-found.enable = false;
   };
 
   flake.modules.darwin.system-default = {
@@ -141,6 +143,7 @@ in {
       agents
       herdr
       catppuccin
+      nix-index
     ];
 
     home.packages = with pkgs; [ripgrep fd];
