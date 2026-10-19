@@ -2,10 +2,6 @@
   flake.modules = {
     nixos.shell = {
       programs.bash.enable = true;
-
-      environment.pathsToLink = [
-        "/share/zsh"
-      ];
     };
 
     darwin.shell = {

@@ -1,8 +1,6 @@
-{lib, ...}: {
+{
   flake.modules = {
     nixos.gpg = {pkgs, ...}: {
-      programs.ssh.startAgent = lib.mkForce false;
-
       # pinentry-tty allows unlocking keys without a graphical session
       environment.systemPackages = with pkgs; [gnupg pinentry-tty];
     };
