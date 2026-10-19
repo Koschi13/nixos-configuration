@@ -75,8 +75,6 @@ in {
         home-manager # This wires Home-Manager into the system
       ]);
 
-    time.hardwareClockInLocalTime = true;
-
     networking = {
       networkmanager = {
         enable = true;
