@@ -63,9 +63,5 @@
       url = "github:arzzen/calc.plugin.zsh";
       flake = false;
     };
-    zsh-enhancd = {
-      url = "github:babarot/enhancd";
-      flake = false;
-    };
   };
 }

@@ -117,11 +117,11 @@
           enableZshIntegration = true;
         };
 
-        z-lua = {
+        # `z <dir>` jumps by frecency, `zi` picks interactively with fzf
+        zoxide = {
           enable = true;
           enableBashIntegration = true;
           enableZshIntegration = true;
-          enableAliases = true;
         };
       };
 

@@ -461,8 +461,7 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "treefmt-nix": "treefmt-nix",
         "zsh-alias-finder": "zsh-alias-finder",
-        "zsh-calc": "zsh-calc",
-        "zsh-enhancd": "zsh-enhancd"
+        "zsh-calc": "zsh-calc"
       }
     },
     "systems": {
@@ -569,22 +568,6 @@
       "original": {
         "owner": "arzzen",
         "repo": "calc.plugin.zsh",
-        "type": "github"
-      }
-    },
-    "zsh-enhancd": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1791586632,
-        "narHash": "sha256-FRWbi3BLsSSubwRV9NnSPo6P2AR/RWZUC5YxGhiCo1Q=",
-        "owner": "babarot",
-        "repo": "enhancd",
-        "rev": "190d739d597a486a9922363f3c1c4daa792f6cf1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "babarot",
-        "repo": "enhancd",
         "type": "github"
       }
     }

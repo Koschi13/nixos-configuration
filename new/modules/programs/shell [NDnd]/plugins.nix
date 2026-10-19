@@ -75,16 +75,6 @@
       }
 
       #
-      # enhancd
-      #
-      # TODO: it is not fully working, probably due to zsh-fzf-tab
-      {
-        name = "zsh-enhancd";
-        file = "enhancd.plugin.zsh";
-        src = "${inputs.zsh-enhancd}";
-      }
-
-      #
       # From nixpkgs
       #
       {
@@ -158,10 +148,5 @@
       forgit_stash_push=fgsp
       forgit_stash_show=fgss
     '';
-
-    # enhancd
-    home.sessionVariables = {
-      ENHANCD_FILTER = "fzf --height 40%";
-    };
   };
 }
