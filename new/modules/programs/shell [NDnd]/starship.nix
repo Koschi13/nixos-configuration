@@ -1,4 +1,4 @@
-{inputs, ...}: {
+{
   flake.modules.homeManager.shell = {
     lib,
     pkgs,
@@ -65,15 +65,7 @@
         (subtractLists promptModulesFlat) # <== do not disable modules used in the prompt…
         (disableModules true) # <== and finally build the configuration
       ];
-
-      ##############################################################################
-      # Theme
-      ##############################################################################
-      paletteSet = fromTOML (
-        readFile (
-          inputs.catppuccin-starship + "/themes/frappe.toml"
-        )
-      );
+      # The palette comes from the catppuccin aspect
     in {
       programs.starship = {
         package = starshipPackage;
@@ -86,7 +78,6 @@
           {
             "$schema" = "https://starship.rs/config-schema.json";
             format = promptFormat;
-            palette = "catppuccin_frappe";
 
             #######################################################################
             # Prompt One
@@ -256,7 +247,6 @@
 
             # continuation_prompt = "[▶▶ ](fg:lavender)"; # TODO: doesn't work
           }
-          paletteSet
         ];
       };
     };

@@ -1,7 +1,6 @@
-{inputs, ...}: {
-  flake.modules.homeManager.ghostty = let
-    catppuccin-frappe-toml = ".config/ghostty/themes/catppuccin-frappe.conf";
-  in {
+{
+  # The theme comes from the catppuccin aspect
+  flake.modules.homeManager.ghostty = {
     programs.ghostty = {
       enable = true;
 
@@ -9,8 +8,6 @@
       enableZshIntegration = true;
 
       settings = {
-        theme = "catppuccin-frappe.conf";
-
         copy-on-select = "clipboard";
         background-opacity = 0.85;
         background-blur = 16;
@@ -22,10 +19,6 @@
         gtk-single-instance = false;
         shell-integration-features = "ssh-env,ssh-terminfo";
       };
-    };
-
-    home.file."${catppuccin-frappe-toml}" = {
-      source = inputs.catppuccin-ghostty + "/themes/catppuccin-frappe.conf";
     };
   };
 }

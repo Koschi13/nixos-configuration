@@ -1,11 +1,5 @@
 {
   flake-file.inputs = {
-    # Catppuccin colorscheme for starship
-    catppuccin-starship = {
-      url = "github:catppuccin/starship";
-      flake = false;
-    };
-
     # ZSH plugins which are not in nixpkgs
     zsh-calc = {
       url = "github:arzzen/calc.plugin.zsh";

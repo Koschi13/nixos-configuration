@@ -4,21 +4,9 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
 
   inputs = {
-    catppuccin-alacritty = {
-      url = "github:catppuccin/alacritty";
-      flake = false;
-    };
-    catppuccin-ghostty = {
-      url = "github:catppuccin/ghostty";
-      flake = false;
-    };
-    catppuccin-i3 = {
-      url = "github:catppuccin/i3";
-      flake = false;
-    };
-    catppuccin-starship = {
-      url = "github:catppuccin/starship";
-      flake = false;
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     denisidoro-cheats = {
       url = "github:denisidoro/cheats";

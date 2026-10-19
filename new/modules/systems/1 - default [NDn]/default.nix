@@ -140,6 +140,7 @@ in {
       gpg
       agents
       herdr
+      catppuccin
     ];
 
     home.packages = with pkgs; [ripgrep fd];

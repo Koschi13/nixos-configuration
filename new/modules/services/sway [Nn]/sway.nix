@@ -1,8 +1,4 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{self, ...}: {
   flake.modules = {
     nixos.sway = {
       imports = with self.modules.nixos; [
@@ -55,9 +51,6 @@
         ];
 
         file = {
-          ".config/sway/colors/catppuccin-frappe" = {
-            source = inputs.catppuccin-i3 + "/themes/catppuccin-frappe";
-          };
           "${screenshotScript}" = {
             source = ./screenshot.sh;
             executable = true;
@@ -82,11 +75,6 @@
         systemd.enable = true;
         checkConfig = false;
 
-        # Colors
-        extraConfigEarly = ''
-          include $HOME/.config/sway/colors/catppuccin-frappe
-        '';
-
         config = {
           modifier = "Mod4"; # Logo key
 
@@ -101,7 +89,8 @@
 
           bars = [{command = "${pkgs.waybar}/bin/waybar";}];
 
-          # Set colors according to https://github.com/catppuccin/i3
+          # The color variables are defined by the catppuccin aspect, see
+          # https://github.com/catppuccin/i3
           colors = rec {
             focused = {
               border = "$lavender";
