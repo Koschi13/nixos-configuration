@@ -146,7 +146,14 @@ in {
       nix-index
     ];
 
-    home.packages = with pkgs; [ripgrep fd];
+    home.packages = with pkgs; [
+      ripgrep
+      fd
+      # Browse the dependency graph of a derivation
+      nix-tree
+      # Explain why two derivations differ
+      nix-diff
+    ];
 
     home.homeDirectory =
       if pkgs.stdenv.hostPlatform.isDarwin
