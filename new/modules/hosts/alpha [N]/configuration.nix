@@ -1,5 +1,6 @@
 {
   self,
+  inputs,
   lib,
   ...
 }: let
@@ -16,6 +17,10 @@ in {
     (self.factory.greetd {
       inherit hostname;
       windowManager = "sway";
+      # Same criteria as the kanshi profile in displays.nix
+      primaryOutput = "AOC U34G2G4R3 0x00002347";
+      # Kept in the git-crypt secrets for copyright reasons
+      wallpaper = "${inputs.git-crypt-secrets}/greeter-wallpaper.jpg";
     })
     {
       nixos.alpha = {
