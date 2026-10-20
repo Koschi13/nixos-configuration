@@ -33,6 +33,10 @@
         };
       };
 
+      # The rootless daemon is a global user unit, so it would also start for
+      # system users like the greeter, which have no subuid ranges and fail
+      systemd.user.services.docker.unitConfig.ConditionUser = lib.mkIf rootless (lib.mkForce "!@system");
+
       # Access to the rootful socket equals root, so only grant it when needed
       dotfiles.userGroups = lib.optionals (!rootless) ["docker"];
     };
