@@ -1,8 +1,9 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{self, ...}: let
+  # Work tooling of HiQ, only reachable from the work network. Fetched with
+  # `getFlake` instead of a flake input, so that `nix flake update` does not
+  # need access to it on every host. The pinned `rev` keeps it pure.
+  htt = builtins.getFlake "git+ssh://git@gitea.scandio.com:8000/tkumschier/htt.git?ref=smaller-improvements&rev=96659bcf6c0d8ac1b02560eb41639aae95914796";
+in {
   flake.modules.nixos.epsilon = let
     inherit (self) modules;
     username = "max";
@@ -52,7 +53,7 @@
         docker-compose
 
         # company stuff
-        inputs.htt.packages.${pkgs.stdenv.hostPlatform.system}.default
+        htt.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
     };
   };
