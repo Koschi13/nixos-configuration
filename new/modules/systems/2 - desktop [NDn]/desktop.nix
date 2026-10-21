@@ -4,6 +4,7 @@
       system-default
 
       sway
+      sddm
       printing
       audio
       usb

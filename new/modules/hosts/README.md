@@ -12,8 +12,7 @@ Each host directory contains:
 
 - `default.nix`: creates the configuration via `self.lib.mkNixos`, which is
   the only place setting `nixpkgs.hostPlatform`.
-- `configuration.nix`: the imported aspects and the host factories (`luks`,
-  `greetd`).
+- `configuration.nix`: the imported aspects and the host factory (`luks`).
 - `hardware.nix`, `boot.nix`, `filesystem.nix`, `displays.nix`: the hardware
   of the host, including `dotfiles.cpuVendor`.
 - `users/<user>.nix`: the users of the host and their host specific

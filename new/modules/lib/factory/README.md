@@ -7,7 +7,6 @@ setup can be instantiated per host or per user. They are stored in
 | Factory            | Arguments                                 | Returns                     |
 | ------------------ | ----------------------------------------- | --------------------------- |
 | `luks`             | `hostname`, `uuid`, `ssd`                 | `flake.modules` fragment    |
-| `greetd`           | `hostname`, `windowManager`, `primaryOutput`?, `wallpaper`? | `flake.modules` fragment    |
 | `user`             | `username`, `uid`, `isAdmin`              | `flake.modules` fragment    |
 | `mount-homeserver` | `username`                                | NixOS module                |
 
