@@ -1,4 +1,3 @@
-- [ ] Agenix
 - [ ] Impermanence
 - [ ] Add dnd shortcut to Waybar (and maybe include into rofi menu)
 - [ ] Dunstctl window in the middle of the screen, E-Mails and Messages should

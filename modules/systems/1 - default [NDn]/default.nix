@@ -36,8 +36,9 @@
 
     time.timeZone = "Europe/Berlin";
 
-    # git-crypt decrypts the secrets this flake imports, so it has to be
-    # available before the first switch to this configuration.
+    # git-crypt decrypts the eval-time secrets this flake imports (.secrets/),
+    # so it has to be available before the first switch to this
+    # configuration. Runtime secrets use agenix instead (secrets/).
     environment.systemPackages = with pkgs; [git git-crypt wget curl];
     documentation.doc.enable = false;
   };
@@ -59,6 +60,7 @@ in {
         neovim
 
         # lib/tools
+        agenix # Decrypts the age secrets of secrets/
         home-manager # This wires Home-Manager into the system
       ]);
 
@@ -103,6 +105,7 @@ in {
         shell
 
         # lib/tools
+        agenix # Decrypts the age secrets of secrets/
         home-manager # This wires Home-Manager into the system
       ]);
 

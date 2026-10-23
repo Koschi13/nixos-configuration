@@ -8,11 +8,41 @@
 LUKS. **Handle with care, this wipes the disk!** It hasn't been validated
 against the current configuration yet and exits early until it is.
 
-After that run:
+After that, add the host to the configuration and install it, see
+[Adding a host](#adding-a-host).
 
-```sh
-sudo nixos-install --flake .#<hostname>
-```
+### Adding a host
+
+1. Create `modules/hosts/<host> [N]/`, e.g. by copying `epsilon [N]`, and
+   adapt it, see `modules/hosts/README.md`. Take the hardware of
+   `nixos-generate-config --show-hardware-config` into `hardware.nix`,
+   `boot.nix` and `filesystem.nix`.
+2. `git add` the new files. Flakes only see files tracked by git.
+3. If the host imports `factory.mount-homeserver` or `vw-ssm`, run
+   `git-crypt unlock` (needs the YubiKey). They read `.secrets/` while
+   evaluating.
+4. Create the SSH host key that agenix decrypts the secrets with. openssh
+   isn't enabled, so nothing else creates it. On a fresh install, before
+   `nixos-install`:
+
+   ```sh
+   sudo mkdir -p /mnt/etc/ssh
+   sudo ssh-keygen -q -t ed25519 -N "" -C root@<host> \
+     -f /mnt/etc/ssh/ssh_host_ed25519_key
+   ```
+
+   On an installed host, use `/etc/ssh/ssh_host_ed25519_key` (create it the
+   same way if it's missing).
+5. Add the public key (`cat …/ssh_host_ed25519_key.pub`, without the comment)
+   to `secrets/agenix-rules.nix` and run `scripts/secret-edit.sh -r`. This
+   needs the YubiKey, so it's easiest on an existing host. Commit, push and
+   pull on the new host.
+6. Install (`sudo nixos-install --flake .#<host>`) or switch
+   (`./scripts/apply.sh`). `sudo ls /run/agenix` lists the secrets.
+
+The host key is the host's access to the secrets. Never commit it, and don't
+back it up: a lost host gets a new key and steps 4 and 5 again. See the
+Secrets section of `WIKI.md`.
 
 ### Applying the configuration
 
@@ -40,8 +70,8 @@ sudo nixos-rebuild switch --flake .#<hostname>
 nix fmt
 ```
 
-`nix develop` (or direnv) installs the git hooks, which run `treefmt` and
-`gitleaks` before each commit.
+`nix develop` (or direnv) installs the git hooks, which run `treefmt`,
+`gitleaks` and `secrets-guard` before each commit.
 
 ### Cheats
 

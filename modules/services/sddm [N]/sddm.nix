@@ -2,19 +2,29 @@
   # SDDM with a password login into sway. There is no autologin on purpose:
   # the password typed into the greeter is what unlocks the GNOME keyring
   # through PAM.
-  flake.modules.nixos.sddm = {pkgs, ...}: let
+  flake.modules.nixos.sddm = {
+    config,
+    pkgs,
+    ...
+  }: let
     # SDDM opens one greeter window per output, so the login shows on all of
     # them
     theme = pkgs.where-is-my-sddm-theme.override {
       themeConfig.General = {
         showSessionsByDefault = true;
-        # Kept in the git-crypt secrets for copyright reasons. It ends up in
-        # the Nix store, as the sddm user can't read the home directories.
-        background = "${inputs.git-crypt-secrets}/greeter-wallpaper.jpg";
+        # Encrypted with agenix for copyright reasons, only the sddm user can
+        # read the decrypted file
+        background = config.age.secrets.greeter-wallpaper.path;
         backgroundMode = "aspect";
       };
     };
   in {
+    age.secrets.greeter-wallpaper = {
+      file = "${inputs.self}/secrets/greeter-wallpaper.jpg.age";
+      owner = "sddm";
+      mode = "0400";
+    };
+
     services.displayManager = {
       sddm = {
         enable = true;

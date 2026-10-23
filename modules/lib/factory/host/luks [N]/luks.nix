@@ -51,6 +51,10 @@
           };
         };
       };
+
+      # The root device only appears after the LUKS password has been entered,
+      # so never time out waiting for it.
+      fileSystems."/".options = ["x-systemd.device-timeout=0"];
     };
   };
 }
