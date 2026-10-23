@@ -1,0 +1,59 @@
+% dotfiles, nix
+
+# Apply the configuration of the current host (scripts/apply.sh)
+./scripts/apply.sh
+
+# Apply the configuration of the current host
+nh os switch .#
+
+# Apply the configuration of a host, without nh
+sudo nixos-rebuild switch --flake .#<host>
+
+# Apply the configuration of a host on the next boot
+sudo nixos-rebuild boot --flake .#<host>
+
+# Build the configuration of a host without applying it
+nixos-rebuild build --flake .#<host>
+
+# Update all flake inputs (scripts/update.sh)
+./scripts/update.sh
+
+# Update all flake inputs
+nix flake update
+
+# Update a single flake input
+nix flake update <input>
+
+# Regenerate flake.nix from the flake-file.nix modules (scripts/flake-file.sh)
+./scripts/flake-file.sh
+
+# Regenerate flake.nix from the flake-file.nix modules
+nix run .#write-flake
+
+# Format the repository
+nix fmt
+
+# Enter the dev shell, installs the git hooks (treefmt, gitleaks)
+nix develop
+
+# Evaluate the flake and run its checks
+nix flake check
+
+# Show an option value of a host
+nix eval .#nixosConfigurations.<host>.config.<option>
+
+# Unlock the git-crypt secrets in .secrets/
+git-crypt unlock
+
+# Show which files are encrypted by git-crypt
+git-crypt status -e
+
+# Partition and encrypt a disk for a new system, WIPES THE DISK (scripts/init-new-system-old.sh)
+sudo ./scripts/init-new-system-old.sh <disk_id>
+
+# Install a host after partitioning
+sudo nixos-install --flake .#<host>
+
+$ host: find ~/.dotfiles/modules/hosts -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sed 's/ \[.*\]$//'
+$ input: nix flake metadata --json | jq -r '.locks.nodes.root.inputs | keys[]'
+$ disk_id: ls /dev/disk/by-id

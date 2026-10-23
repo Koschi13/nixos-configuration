@@ -1,59 +1,37 @@
+# DO-NOT-EDIT. This file was auto-generated using github:denful/flake-file.
+# Use `nix run .#write-flake` to regenerate it.
 {
-  description = "Maximilian Konter's system configuration";
+  outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
+    catppuccin = {
+      url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
+    denisidoro-cheats = {
+      url = "github:denisidoro/cheats";
+      flake = false;
+    };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # ZSH plugins which are not in nixpkgs
-    zsh-calc = {
-      url = "github:arzzen/calc.plugin.zsh";
+    flake-file.url = "github:vic/flake-file";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    git-crypt-secrets = {
+      url = "path:./.secrets";
       flake = false;
     };
-    zsh-enhancd = {
-      url = "github:babarot/enhancd";
-      flake = false;
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-    zsh-alias-finder = {
-      url = "github:akash329d/zsh-alias-finder";
-      flake = false;
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Catppuccin colorschemes
-    catppuccinI3 = {
-      url = "github:catppuccin/i3";
-      flake = false;
-    };
-    catppuccinStarship = {
-      url = "github:catppuccin/starship";
-      flake = false;
-    };
-    catppuccinAlacritty = {
-      url = "github:catppuccin/alacritty";
-      flake = false;
-    };
-    catppuccinGhostty = {
-      url = "github:catppuccin/ghostty";
-      flake = false;
-    };
-
-    # Navi cheats
-    denisidoroCheats = {
-      url = "github:denisidoro/cheats";
-      flake = false;
-    };
-
-    # Agents
-    mattpocockSkills = {
+    import-tree.url = "github:vic/import-tree";
+    mattpocock-skills = {
       url = "github:mattpocock/skills";
       flake = false;
     };
@@ -61,115 +39,28 @@
       url = "github:mistralai/mistral-vibe?ref=v2.25.5";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Version pins
-    nixpkgsNixDirenv.url = "github:nixos/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb"; # 3.1.0
-  };
-
-  outputs = {
-    self,
-    catppuccinAlacritty,
-    catppuccinGhostty,
-    catppuccinI3,
-    catppuccinStarship,
-    denisidoroCheats,
-    firefox-addons,
-    home-manager,
-    mattpocockSkills,
-    mistral-vibe,
-    nixpkgs,
-    nixpkgsNixDirenv,
-    zsh-alias-finder,
-    zsh-calc,
-    zsh-enhancd,
-    ...
-  } @ inputs: let
-    # don't know what this is for, but without we do not have outputs available
-    inherit (self) outputs;
-
-    # Define what system we are, so we can re-use it
-    system = "x86_64-linux";
-
-    # Just an alias
-    lib = nixpkgs.lib;
-    pkgs = nixpkgs.legacyPackages.${system};
-    pkgsNixDirenv = nixpkgsNixDirenv.legacyPackages.${system};
-  in {
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
-    nixosConfigurations = {
-      alpha = lib.nixosSystem {
-        specialArgs = {
-          inherit inputs outputs;
-          rootPath = ./.;
-        };
-
-        modules = [./systems/alpha/default.nix];
-      };
-      epsilon = lib.nixosSystem {
-        specialArgs = {
-          inherit inputs outputs;
-        };
-
-        modules = [
-          ./systems/default.nix
-          ./systems/epsilon/default.nix
-        ];
-      };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Standalone home-manager configuration entrypoint
-    # Available through 'home-manager --flake .#your-username@your-hostname'
-    homeConfigurations = {
-      "max" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit
-            inputs
-            outputs
-            catppuccinAlacritty
-            catppuccinGhostty
-            catppuccinI3
-            catppuccinStarship
-            denisidoroCheats
-            firefox-addons
-            mattpocockSkills
-            pkgsNixDirenv
-            mistral-vibe
-            zsh-alias-finder
-            zsh-calc
-            zsh-enhancd
-            ;
-          rootPath = ./.;
-        };
-        modules = [./users/max/default.nix];
-      };
-
-      # This user will also be called "max"
-      "hiq" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit
-            inputs
-            outputs
-            catppuccinAlacritty
-            catppuccinGhostty
-            catppuccinI3
-            catppuccinStarship
-            denisidoroCheats
-            firefox-addons
-            mattpocockSkills
-            pkgsNixDirenv
-            zsh-alias-finder
-            zsh-calc
-            zsh-enhancd
-            ;
-          rootPath = ./.;
-        };
-        modules = [./users/hiq/default.nix];
-      };
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    formatter."${system}" = pkgs.alejandra;
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+    nixpkgs-nix-direnv.url = "github:nixos/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    zsh-alias-finder = {
+      url = "github:akash329d/zsh-alias-finder";
+      flake = false;
+    };
+    zsh-calc = {
+      url = "github:arzzen/calc.plugin.zsh";
+      flake = false;
+    };
   };
 }

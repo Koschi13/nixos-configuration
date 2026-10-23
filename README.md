@@ -1,56 +1,174 @@
-# My NixOS configuration
+# My Nix(OS) Configuration
 
-## Development
-
-### Formatting
-
-```shell
-nixfmt .
-```
-
-## Using this repository
+## Usage
 
 ### Initial install
 
-For the initial install you can use `./scripts/init-new-system.sh` which will
-set up your disks. **Handle with care, this will automatically overwrite your
-disk!**
+`./scripts/init-new-system-old.sh <disk-id>` partitions the disk and sets up
+LUKS. **Handle with care, this wipes the disk!** It hasn't been validated
+against the current configuration yet and exits early until it is.
 
 After that run:
 
-```
+```sh
 sudo nixos-install --flake .#<hostname>
 ```
 
-### Setting up your system
+### Applying the configuration
 
-Use the `apply-system` scripts to apply the configuration. E.g.:
-
-```
-./scripts/apply-system
+```sh
+./scripts/apply.sh # runs `nh os switch .#`
 ```
 
-This should use your hostname to generate the right config. If you don't have
-the hostname set yet, you can use:
+This picks the configuration matching your hostname. Home-Manager runs as a
+NixOS module, so the users are applied together with the system. Without `nh`,
+or if the hostname isn't set yet, use:
 
-```
+```sh
 sudo nixos-rebuild switch --flake .#<hostname>
 ```
 
-### Setting up your user
+### Updating
 
-Use the `apply-user-<username>` scripts to apply the configuration. E.g.:
-
-```
-./scripts/apply-user-max.sh
+```sh
+./scripts/update.sh # runs `nix flake update`
 ```
 
-## TODO
+### Formatting
 
-- [ ] Add dnd shortcut
-- [ ] See if it is possible to save JetBrains settings in this repo, while still being able to change something via the UI
-- [ ] Dunstctl window in the middle of the screen, E-Mails and Messages should appear longer (maybe with sound even?)
-- [ ] Configure https://github.com/denisidoro/navi
-- [ ] Create a windows like desktop as alternative (and maybe for gaming and office stuff)
-- [ ] Define `~/.config/rofi/powermenu/type-3/powermenu.sh` (waybar)
-- [ ] Define `rofi2` (waybar)
+```sh
+nix fmt
+```
+
+`nix develop` (or direnv) installs the git hooks, which run `treefmt` and
+`gitleaks` before each commit.
+
+### Cheats
+
+`.cheats/` holds [navi](https://github.com/denisidoro/navi) cheats for the
+commands of this repository, including the scripts above. Open navi with
+`<C-g>` or `navi`.
+
+navi doesn't pick up cheats from the current directory. It reads the paths in
+`NAVI_PATH`, which `programs/navi` sets to the global cheats. With direnv,
+`.envrc` appends `.cheats/` to it, so the repository cheats are only available
+inside the repository. Without direnv, extend it yourself:
+
+```sh
+export NAVI_PATH="$NAVI_PATH:$HOME/.dotfiles/.cheats"
+```
+
+Or pass the path for a single run:
+
+```sh
+navi --path "$HOME/.dotfiles/.cheats"
+```
+
+## Dendritic
+
+Every `.nix` file below `modules/` is a [flake-parts](https://flake.parts/)
+module, imported automatically by
+[import-tree](https://github.com/vic/import-tree). Files and directories
+prefixed with `_` are ignored by import-tree.
+
+- `hosts/<host>`: the entrypoint of each host, see `modules/hosts/README.md`
+- `systems/`: layered base configurations (`system-default`, `system-desktop`)
+- `users/<user>`: configuration per user, see `modules/users/README.md`
+- `services/`, `programs/`: the aspects hosts and users pick from
+- `lib/`: helpers (`mkNixos`, `mkDarwin`), factories and shared options
+
+Hosts import systems and services, users import programs.
+
+### Directory tags
+
+Aspect directories carry a tag listing the classes they configure, so the
+supported platforms are visible without opening the files:
+
+| Tag | Class                            |
+| --- | -------------------------------- |
+| `N` | `nixos`                          |
+| `D` | `darwin`                         |
+| `n` | `homeManager` on Linux           |
+| `d` | `homeManager` on macOS           |
+
+For example `shell [NDnd]` configures every class, while `rofi [n]` only
+exists for Home-Manager on Linux. `[]` marks flake-parts only modules.
+
+A tag lists the classes that work, not just the ones that are written. A
+`homeManager` aspect installing Linux-only packages, like `ghostty`, is
+tagged `[n]` only. A system importing such an aspect loses the tag as well.
+
+Only directories that are aspects get a tag. Nested directories holding
+files for their parent aspect, like `neovim [Nn]/astronvim`, are covered by
+the parent's tag. Nested aspects, like `neovim [Nn]/copilot [nd]`, carry
+their own.
+
+### Cross-cutting features
+
+A file may contribute to aspects it doesn't own when it describes one
+decision that touches several programs. `font.nix` sets the font of
+`alacritty`, `ghostty` and `dunst`, and `terminal.nix` tells `rofi` and
+`sway` which terminal to open. Changing the font or terminal then stays a one
+file change, and the program aspects stay free of that choice.
+
+### Shared options
+
+Aspects must not know the host they are imported by. When they need host
+facts, the host declares them through a `dotfiles.*` option:
+
+- `dotfiles.users` / `dotfiles.userGroups` (`lib/users [N]`): the human users
+  of a host, so aspects can add groups to all of them.
+- `dotfiles.cpuVendor` (`lib/cpu [N]`): `"amd"` or `"intel"`, e.g. to select
+  the kvm kernel module.
+
+These modules are imported by several aspects. As flake-parts wraps every
+`self.modules.<class>.<name>` reference in a fresh anonymous module, the module
+system can't deduplicate them by path. Aspects that must only be evaluated once
+set a `key`, e.g. `key = "dotfiles-users";`, which the module system uses
+instead. The same applies to aspects whose list options would otherwise be
+duplicated, like `graphics` and `gnome-keyring`.
+
+## Packages
+
+- `pkgs.local.<name>`: packages maintained in `packages/`, see
+  `modules/packages.nix`.
+- `pkgs.stable.<name>`: the stable release, as escape hatch for packages broken
+  on unstable. Its input follows `stateVersion.nixOs` in
+  `systems/1 - default [NDn]/_stateVersion.nix`, so bumping the state version
+  also bumps the stable release.
+
+Both are overlays defined in `modules/packages.nix`. `mkNixos` and `mkDarwin`
+apply them to every host, and `perSystem` gets them as well, so every module
+can use them without importing anything.
+
+## Flake inputs
+
+`flake.nix` is generated by [flake-file](https://github.com/vic/flake-file)
+and must not be edited by hand. Each aspect declares the inputs it needs in a
+`flake-file.nix` next to it:
+
+```nix
+{
+  flake-file.inputs.catppuccin-i3 = {
+    url = "github:catppuccin/i3";
+    flake = false;
+  };
+}
+```
+
+Regenerate `flake.nix` afterwards:
+
+```sh
+./scripts/flake-file.sh # runs `nix run .#write-flake`
+```
+
+## Docs
+
+Functions are documented using the
+[nixdoc](https://github.com/nix-community/nixdoc) syntax.
+
+## Inspiration
+
+- https://github.com/NotAShelf/nyx
+- https://github.com/Doc-Steve/dendritic-design-with-flake-parts
+- https://flake.parts/
