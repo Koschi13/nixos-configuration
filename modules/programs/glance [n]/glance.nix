@@ -1,7 +1,8 @@
-{inputs, ...}: let
-  private = import "${inputs.git-crypt-secrets}/private.nix";
-in {
-  flake.modules.homeManager.glance = {
+{
+  flake.modules.homeManager.glance = {osConfig, ...}: {
+    # Provides GLANCE_LOCATION, decrypted by agenix (see `nixos.max`)
+    systemd.user.services.glance.Service.EnvironmentFile = osConfig.age.secrets.glance-env.path;
+
     services.glance = {
       enable = true;
       settings = {
@@ -61,7 +62,8 @@ in {
                   {
                     type = "weather";
                     hour-format = "24h";
-                    location = "${private.location.name}, ${private.location.country}";
+                    # Substituted by glance at runtime
+                    location = "\${GLANCE_LOCATION}";
                     units = "metric";
                   }
                 ];

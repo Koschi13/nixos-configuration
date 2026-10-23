@@ -42,11 +42,20 @@ nix flake check
 # Show an option value of a host
 nix eval .#nixosConfigurations.<host>.config.<option>
 
-# Unlock the git-crypt secrets in .secrets/
+# Unlock the git-crypt secrets in .secrets/ (eval-time Nix values)
 git-crypt unlock
 
 # Show which files are encrypted by git-crypt
 git-crypt status -e
+
+# Edit or create an agenix secret in secrets/ (add it to agenix-rules.nix first)
+./scripts/secret-edit.sh -e <name>.age
+
+# Re-encrypt all agenix secrets, e.g. after adding a host key to agenix-rules.nix
+./scripts/secret-edit.sh -r
+
+# Create the SSH host key agenix decrypts with, before nixos-install of a new host
+sudo mkdir -p /mnt/etc/ssh && sudo ssh-keygen -q -t ed25519 -N "" -C root@<host> -f /mnt/etc/ssh/ssh_host_ed25519_key
 
 # Partition and encrypt a disk for a new system, WIPES THE DISK (scripts/init-new-system-old.sh)
 sudo ./scripts/init-new-system-old.sh <disk_id>

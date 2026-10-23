@@ -37,6 +37,7 @@
     group = config.users.users.${username}.group;
     gid = toString config.users.groups.${group}.gid;
 
+    # The shares stay in git-crypt, as `fileSystems` needs them at evaluation
     vars = import "${inputs.git-crypt-secrets}/mounts_vars.nix";
   in {
     environment.systemPackages = with pkgs; [cifs-utils];
@@ -61,7 +62,7 @@
               "rw"
               "iocharset=utf8"
             ];
-            credentials = ["credentials=/etc/nixos/smb-secrets"];
+            credentials = ["credentials=${config.age.secrets.smb-credentials.path}"];
             user = [
               "uid=${uid}"
               "gid=${gid}"
@@ -72,12 +73,10 @@
       })
       vars.mounts);
 
-    environment.etc."nixos/smb-secrets" = {
-      text = ''
-        username=${vars.secrets.username}
-        password=${vars.secrets.password}
-      '';
-      mode = "0600";
+    # `username=…` and `password=…` of the shares, decrypted by agenix
+    age.secrets.smb-credentials = {
+      file = "${inputs.self}/secrets/smb-credentials.age";
+      mode = "0400";
     };
   };
 }

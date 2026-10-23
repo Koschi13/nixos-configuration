@@ -1,11 +1,9 @@
-{
-  self,
-  inputs,
-  ...
-}: let
-  vars = import "${inputs.git-crypt-secrets}/git_vars.nix";
-in {
-  flake.modules.homeManager.git = {pkgs, ...}: {
+{self, ...}: {
+  flake.modules.homeManager.git = {
+    pkgs,
+    osConfig,
+    ...
+  }: {
     imports = with self.modules.homeManager; [delta];
 
     home.packages = with pkgs; [
@@ -41,13 +39,14 @@ in {
       };
 
       includes = [
+        # The `[user]` of HiQ, decrypted by agenix (see `nixos.max`)
+        {
+          condition = "gitdir:~/Git/HiQ/**";
+          path = osConfig.age.secrets.git-hiq.path;
+        }
         {
           condition = "gitdir:~/Git/HiQ/**";
           contents = {
-            user = {
-              name = vars.hiq.name;
-              email = vars.hiq.email;
-            };
             commit.gpgsign = false;
             tag.gpgsign = false;
           };

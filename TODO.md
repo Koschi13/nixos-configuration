@@ -1,4 +1,5 @@
-- [ ] Agenix
+- [x] Agenix
+  - [ ] Add the SSH host key of epsilon to `secrets/agenix-rules.nix` and re-encrypt
 - [ ] Impermanence
 - [ ] Add dnd shortcut to Waybar (and maybe include into rofi menu)
 - [ ] Dunstctl window in the middle of the screen, E-Mails and Messages should
