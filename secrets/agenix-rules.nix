@@ -9,9 +9,9 @@ let
 
   # SSH host keys, used to decrypt the secrets at activation
   alpha = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBqI79RLKudDEM66IiZe6GtUA4oh2mYZDQPeLShv3aBf";
-  # TODO: add epsilon (`cat /etc/ssh/ssh_host_ed25519_key.pub` on epsilon)
+  epsilon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID0VjsO3RogO7FHlyg/zyT1qJJnPDRGOvRA3DLkgbm0U";
 
-  all = [admin alpha];
+  all = [admin alpha epsilon];
 in {
   "smb-credentials.age".publicKeys = all;
   "git-hiq.age".publicKeys = all;
