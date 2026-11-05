@@ -4,8 +4,11 @@
       # pinentry-tty allows unlocking keys without a graphical session
       environment.systemPackages = with pkgs; [gnupg pinentry-tty];
     };
-    homeManager.gpg = {pkgs, ...}: {
-      home.packages = with pkgs; [pinentry-gnome3];
+    homeManager.gpg = {
+      lib,
+      pkgs,
+      ...
+    }: {
       programs = {
         gpg = {
           enable = true;
@@ -21,7 +24,8 @@
       services = {
         gpg-agent = {
           enable = true;
-          pinentry.package = pkgs.pinentry-gnome3;
+          # Works without a graphical session, `system-desktop` overrides it
+          pinentry.package = lib.mkDefault pkgs.pinentry-tty;
           enableSshSupport = true;
         };
       };

@@ -19,8 +19,8 @@ After that, add the host to the configuration and install it, see
    `boot.nix` and `filesystem.nix`.
 2. `git add` the new files. Flakes only see files tracked by git.
 3. Create the SSH host key that agenix decrypts the secrets with. openssh
-   isn't enabled, so nothing else creates it. On a fresh install, before
-   `nixos-install`:
+   is only enabled by `system-cli` and starts after the secrets are decrypted,
+   so nothing creates it in time. On a fresh install, before `nixos-install`:
 
    ```sh
    sudo mkdir -p /mnt/etc/ssh
@@ -99,7 +99,8 @@ module, imported automatically by
 prefixed with `_` are ignored by import-tree.
 
 - `hosts/<host>`: the entrypoint of each host, see `modules/hosts/README.md`
-- `systems/`: layered base configurations (`system-default`, `system-desktop`)
+- `systems/`: layered base configurations (`system-default`, and on top of it
+  either `system-desktop` or the headless `system-cli`)
 - `users/<user>`: configuration per user, see `modules/users/README.md`
 - `services/`, `programs/`: the aspects hosts and users pick from
 - `lib/`: helpers (`mkNixos`, `mkDarwin`), factories and shared options

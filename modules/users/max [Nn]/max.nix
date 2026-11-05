@@ -32,9 +32,11 @@ in {
       #   ];
       # };
 
+      # Whatever comes on top, like the desktop, is added by the system layer
+      # of the host, see `system-desktop` and `system-cli`.
       homeManager.max = {
         imports = with self.modules.homeManager; [
-          system-desktop
+          system-default
         ];
       };
     }

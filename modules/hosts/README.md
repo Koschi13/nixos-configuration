@@ -22,6 +22,10 @@ Each host directory contains:
 > You have to import at least `system-default` or any higher level system
 > configuration. Otherwise, the fundamentals of the flake setup will be
 > missing.
+>
+> `system-desktop` and `system-cli` also decide what the users of the host get
+> on top of `homeManager.system-default`. Pick one of them, `system-cli` for
+> headless hosts.
 
 > [!IMPORTANT]
 > Set `dotfiles.cpuVendor` on every host. It has no default, so aspects
