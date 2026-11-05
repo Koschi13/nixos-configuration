@@ -17,4 +17,6 @@ in {
   "git-hiq.age".publicKeys = all;
   "glance-env.age".publicKeys = all;
   "greeter-wallpaper.jpg.age".publicKeys = all;
+  "homeserver-map.age".publicKeys = [admin alpha];
+  "vw-ssh-config.age".publicKeys = [admin epsilon];
 }

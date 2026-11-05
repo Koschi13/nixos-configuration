@@ -30,6 +30,7 @@
   */
   config.flake.factory.mount-homeserver = {username}: {
     config,
+    lib,
     pkgs,
     ...
   }: let
@@ -37,46 +38,46 @@
     group = config.users.users.${username}.group;
     gid = toString config.users.groups.${group}.gid;
 
-    # The shares stay in git-crypt, as `fileSystems` needs them at evaluation
-    vars = import "${inputs.git-crypt-secrets}/mounts_vars.nix";
+    # Without the credentials, as the parser of the master map rejects the `/`
+    # of their path. The map entries add them, see `homeserver-map` below.
+    mountOptions = lib.concatStringsSep "," [
+      "-fstype=cifs"
+      "rw"
+      "soft" # prevent hanging on network split
+      "iocharset=utf8"
+      "uid=${uid}"
+      "gid=${gid}"
+    ];
   in {
     environment.systemPackages = with pkgs; [cifs-utils];
 
-    fileSystems = builtins.listToAttrs (map (mount: {
-        name = mount.path;
-        value = {
-          device = mount.device;
-          fsType = "cifs";
-          options = let
-            # prevent hanging on network split
-            automount-opts = [
-              "x-systemd.automount"
-              "noauto"
-              "nofail"
-              "soft"
-              "x-systemd.idle-timeout=60"
-              "x-systemd.device-timeout=5s"
-              "x-systemd.mount-timeout=5s"
-            ];
-            mount-opts = [
-              "rw"
-              "iocharset=utf8"
-            ];
-            credentials = ["credentials=${config.age.secrets.smb-credentials.path}"];
-            user = [
-              "uid=${uid}"
-              "gid=${gid}"
-            ];
-          in
-            automount-opts ++ mount-opts ++ credentials ++ user;
-        };
-      })
-      vars.mounts);
+    # The shares are mounted on access and unmounted when idle. autofs instead
+    # of `fileSystems`, as that needs the shares at evaluation and they would
+    # end up in this public repository and the Nix store.
+    services.autofs = {
+      enable = true;
+      timeout = 60;
+      autoMaster = "/- file:${config.age.secrets.homeserver-map.path} ${mountOptions}";
+    };
 
-    # `username=…` and `password=…` of the shares, decrypted by agenix
-    age.secrets.smb-credentials = {
-      file = "${inputs.self}/secrets/smb-credentials.age";
-      mode = "0400";
+    # The path of the map stays the same when its content changes
+    systemd.services.autofs.restartTriggers = [config.age.secrets.homeserver-map.file];
+
+    age.secrets = {
+      # The shares as autofs direct map, one line each:
+      # `<path> -credentials=/run/agenix/smb-credentials ://<server>/<share>`
+      # autofs appends the options of the master map to these.
+      homeserver-map = {
+        file = "${inputs.self}/secrets/homeserver-map.age";
+        mode = "0400";
+      };
+      # `username=…` and `password=…` of the shares. The path is fixed, as the
+      # map refers to it.
+      smb-credentials = {
+        file = "${inputs.self}/secrets/smb-credentials.age";
+        path = "/run/agenix/smb-credentials";
+        mode = "0400";
+      };
     };
   };
 }

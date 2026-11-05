@@ -12,6 +12,12 @@ in {
       modules.nixos.${username} # -> imports users/max which sets up HomeManager
     ];
 
+    # `Host` blocks of the `vw-ssm` aspect
+    age.secrets.vw-ssh-config = {
+      file = "${self}/secrets/vw-ssh-config.age";
+      owner = username;
+    };
+
     # The work setup of max at HiQ
     home-manager.users.${username} = {pkgs, ...}: {
       imports = with modules.homeManager; [
