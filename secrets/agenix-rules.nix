@@ -14,7 +14,7 @@ let
   all = [admin alpha epsilon];
 in {
   "smb-credentials.age".publicKeys = all;
-  "git-hiq.age".publicKeys = all;
+  "git-hiq.age".publicKeys = [admin epsilon];
   "glance-env.age".publicKeys = all;
   "greeter-wallpaper.jpg.age".publicKeys = all;
   "homeserver-map.age".publicKeys = [admin alpha];

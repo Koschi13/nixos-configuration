@@ -12,19 +12,44 @@ in {
       modules.nixos.${username} # -> imports users/max which sets up HomeManager
     ];
 
-    # `Host` blocks of the `vw-ssm` aspect
-    age.secrets.vw-ssh-config = {
-      file = "${self}/secrets/vw-ssh-config.age";
-      owner = username;
+    age.secrets = {
+      # `Host` blocks of the `vw-ssm` aspect
+      vw-ssh-config = {
+        file = "${self}/secrets/vw-ssh-config.age";
+        owner = username;
+      };
+      # `[user]` of the `gitdir:~/Git/HiQ/**` include of `git`
+      git-hiq = {
+        file = "${self}/secrets/git-hiq.age";
+        owner = username;
+      };
     };
 
     # The work setup of max at HiQ
-    home-manager.users.${username} = {pkgs, ...}: {
+    home-manager.users.${username} = {
+      pkgs,
+      osConfig,
+      ...
+    }: {
       imports = with modules.homeManager; [
         ssh
         tmux
         vw-ssm
         neovim-copilot
+      ];
+
+      programs.git.includes = [
+        {
+          condition = "gitdir:~/Git/HiQ/**";
+          path = osConfig.age.secrets.git-hiq.path;
+        }
+        {
+          condition = "gitdir:~/Git/HiQ/**";
+          contents = {
+            commit.gpgsign = false;
+            tag.gpgsign = false;
+          };
+        }
       ];
 
       programs.ssh.settings = {
