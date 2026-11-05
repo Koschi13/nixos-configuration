@@ -18,10 +18,7 @@ After that, add the host to the configuration and install it, see
    `nixos-generate-config --show-hardware-config` into `hardware.nix`,
    `boot.nix` and `filesystem.nix`.
 2. `git add` the new files. Flakes only see files tracked by git.
-3. If the host imports `factory.mount-homeserver` or `vw-ssm`, run
-   `git-crypt unlock` (needs the YubiKey). They read `.secrets/` while
-   evaluating.
-4. Create the SSH host key that agenix decrypts the secrets with. openssh
+3. Create the SSH host key that agenix decrypts the secrets with. openssh
    isn't enabled, so nothing else creates it. On a fresh install, before
    `nixos-install`:
 
@@ -33,15 +30,15 @@ After that, add the host to the configuration and install it, see
 
    On an installed host, use `/etc/ssh/ssh_host_ed25519_key` (create it the
    same way if it's missing).
-5. Add the public key (`cat …/ssh_host_ed25519_key.pub`, without the comment)
+4. Add the public key (`cat …/ssh_host_ed25519_key.pub`, without the comment)
    to `secrets/agenix-rules.nix` and run `scripts/secret-edit.sh -r`. This
    needs the YubiKey, so it's easiest on an existing host. Commit, push and
    pull on the new host.
-6. Install (`sudo nixos-install --flake .#<host>`) or switch
+5. Install (`sudo nixos-install --flake .#<host>`) or switch
    (`./scripts/apply.sh`). `sudo ls /run/agenix` lists the secrets.
 
 The host key is the host's access to the secrets. Never commit it, and don't
-back it up: a lost host gets a new key and steps 4 and 5 again. See the
+back it up: a lost host gets a new key and steps 3 and 4 again. See the
 Secrets section of `WIKI.md`.
 
 ### Applying the configuration

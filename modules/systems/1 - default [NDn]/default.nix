@@ -36,10 +36,7 @@
 
     time.timeZone = "Europe/Berlin";
 
-    # git-crypt decrypts the eval-time secrets this flake imports (.secrets/),
-    # so it has to be available before the first switch to this
-    # configuration. Runtime secrets use agenix instead (secrets/).
-    environment.systemPackages = with pkgs; [git git-crypt wget curl];
+    environment.systemPackages = with pkgs; [git wget curl];
     documentation.doc.enable = false;
   };
 in {

@@ -9,10 +9,8 @@
     pkgs,
     ...
   }: let
-    # Refuses to commit plaintext secrets: everything staged in .secrets/ has
-    # to be encrypted by git-crypt, everything in secrets/ (but the rules) by
-    # age and everything in keys/ by gpg. It checks the staged blobs, so after
-    # the git-crypt clean filter.
+    # Refuses to commit plaintext secrets: everything staged in secrets/ (but
+    # the rules) has to be encrypted by age and everything in keys/ by gpg.
     secrets-guard = pkgs.writers.writePython3Bin "secrets-guard" {} ''
       import fnmatch
       import os
@@ -28,9 +26,6 @@
       # The first matching pattern wins. A file passes if the check accepts
       # its staged content, `None` refuses it unseen.
       RULES = [
-          (".secrets/*",
-           lambda blob: blob.startswith(b"\0GITCRYPT\0"),
-           "not encrypted by git-crypt"),
           ("secrets/agenix-rules.nix", lambda blob: True, None),
           ("secrets/*.age",
            lambda blob: blob.startswith(b"age-encryption.org/v1"),

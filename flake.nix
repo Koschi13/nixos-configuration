@@ -18,10 +18,6 @@
     };
     flake-file.url = "github:vic/flake-file";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    git-crypt-secrets = {
-      url = "path:./.secrets";
-      flake = false;
-    };
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";

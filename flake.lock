@@ -225,18 +225,6 @@
         "type": "github"
       }
     },
-    "git-crypt-secrets": {
-      "flake": false,
-      "locked": {
-        "path": "./.secrets",
-        "type": "path"
-      },
-      "original": {
-        "path": "./.secrets",
-        "type": "path"
-      },
-      "parent": []
-    },
     "git-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -536,7 +524,6 @@
         "firefox-addons": "firefox-addons",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",
-        "git-crypt-secrets": "git-crypt-secrets",
         "git-hooks": "git-hooks",
         "home-manager": "home-manager",
         "import-tree": "import-tree",

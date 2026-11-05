@@ -51,12 +51,6 @@ theme status
 # List the theme variants
 theme list
 
-# Unlock the git-crypt secrets in .secrets/ (eval-time Nix values)
-git-crypt unlock
-
-# Show which files are encrypted by git-crypt
-git-crypt status -e
-
 # Edit or create an agenix secret in secrets/ (add it to agenix-rules.nix first)
 ./scripts/secret-edit.sh -e <name>.age
 

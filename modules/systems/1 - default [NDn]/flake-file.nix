@@ -10,11 +10,5 @@ in {
     # metadata, like the programs.sqlite database of command-not-found.
     # See https://discourse.nixos.org/t/use-channels-as-flake-inputs/75261
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-
-    # The decrypted git-crypt secrets of the repository root
-    git-crypt-secrets = {
-      url = "path:./.secrets";
-      flake = false;
-    };
   };
 }
