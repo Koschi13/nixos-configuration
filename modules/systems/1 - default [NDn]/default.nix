@@ -132,7 +132,6 @@ in {
       nh
       gpg
       agents
-      herdr
       nix-index
     ];
 

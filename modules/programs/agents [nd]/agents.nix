@@ -5,6 +5,9 @@
       mattpocockSkills = inputs.mattpocock-skills;
     };
   in {
+    programs.herdr.enable = true;
+    programs.claude-code.enable = true;
+
     home.file.".agents/skills" = {
       source = "${skills}";
       recursive = true;
