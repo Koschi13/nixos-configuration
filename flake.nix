@@ -31,10 +31,6 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
-    mistral-vibe = {
-      url = "github:mistralai/mistral-vibe?ref=v2.25.5";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";

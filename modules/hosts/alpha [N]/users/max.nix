@@ -11,10 +11,6 @@
 
     # The private setup of max
     home-manager.users.${username} = {pkgs, ...}: {
-      imports = with modules.homeManager; [
-        mistral-vibe
-      ];
-
       home.packages = with pkgs; [
         nvtopPackages.full
         android-tools
