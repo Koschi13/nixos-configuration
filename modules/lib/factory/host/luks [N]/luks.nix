@@ -46,7 +46,6 @@
           luks.devices.luksroot = {
             name = "luksroot";
             device = "/dev/disk/by-uuid/${uuid}";
-            preLVM = true;
             allowDiscards = ssd;
           };
         };
