@@ -1,13 +1,30 @@
-{
+{self, ...}: {
   # TODO: unify font settings in css files via font.nix
   flake.modules.homeManager.waybar = {
+    config,
+    lib,
+    ...
+  }: let
+    colors = config.lib.stylix.colors.withHashtag;
+  in {
+    imports = [self.modules.homeManager.stylix];
+
+    # Only defines the colors `style.css` uses, e.g. `@base0D`
+    stylix.targets.waybar = {
+      enable = true;
+      addCss = false;
+      # The font comes from `style.css`
+      fonts.enable = false;
+    };
+
     programs.waybar = {
       enable = true;
       systemd = {
         enable = false;
         targets = ["graphical-session.target"];
       };
-      style = builtins.readFile ./style.css;
+      # After the colors of the stylix target, which it uses
+      style = lib.mkAfter (builtins.readFile ./style.css);
 
       settings = [
         {
@@ -61,11 +78,11 @@
               "on-scroll" = 1;
               "on-click-right" = "mode";
               "format" = {
-                "months" = "<span color='#ffead3'><b>{}</b></span>";
-                "days" = "<span color='#ecc6d9'><b>{}</b></span>";
-                "weeks" = "<span color='#99ffdd'><b>W{}</b></span>";
-                "weekdays" = "<span color='#ffcc66'><b>{}</b></span>";
-                "today" = "<span color='#ff6699'><b><u>{}</u></b></span>";
+                "months" = "<span color='${colors.base06}'><b>{}</b></span>";
+                "days" = "<span color='${colors.base0F}'><b>{}</b></span>";
+                "weeks" = "<span color='${colors.base0C}'><b>W{}</b></span>";
+                "weekdays" = "<span color='${colors.base0A}'><b>{}</b></span>";
+                "today" = "<span color='${colors.base08}'><b><u>{}</u></b></span>";
               };
             };
           };

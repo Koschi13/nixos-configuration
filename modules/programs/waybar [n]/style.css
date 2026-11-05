@@ -1,3 +1,4 @@
+/* The @base00 to @base0F colors are defined by the stylix target, see waybar.nix */
 * {
   font-family: "Lilex Nerd Font Mono";
   font-size: 12pt;
@@ -10,8 +11,8 @@
 }
 @keyframes blink_red {
   to {
-    background-color: rgb(242, 143, 173);
-    color: rgb(26, 24, 38);
+    background-color: @base08;
+    color: @base00;
   }
 }
 .warning,
@@ -32,11 +33,11 @@ window > box {
     margin-right: 5px;
     margin-top: 5px;
     */
-  background-color: #1e1e2a;
+  background-color: @base01;
   padding: 3px;
   padding-left: 8px;
   /* Disabled for sway
-    border: 2px none #33ccff;
+    border: 2px none @base0C;
     */
 }
 #workspaces {
@@ -50,76 +51,76 @@ window > box {
   padding-right: 6px;
 }
 #workspaces button.active {
-  background-color: rgb(181, 232, 224);
-  color: rgb(26, 24, 38);
+  background-color: @base0C;
+  color: @base00;
 }
 #workspaces button.urgent {
-  color: rgb(26, 24, 38);
+  color: @base00;
 }
 #workspaces button:hover {
-  background-color: rgb(248, 189, 150);
-  color: rgb(26, 24, 38);
+  background-color: @base09;
+  color: @base00;
 }
 tooltip {
-  background: rgb(48, 45, 65);
+  background: @base00;
 }
 tooltip label {
-  color: rgb(217, 224, 238);
+  color: @base05;
 }
 #custom-launcher {
   font-size: 20px;
   padding-left: 10px;
   padding-right: 10px;
-  color: #7ebae4;
+  color: @base0D;
 }
 #memory {
-  color: rgb(181, 232, 224);
+  color: @base0C;
   padding-right: 10px;
 }
 #cpu {
-  color: rgb(245, 194, 231);
+  color: @base0E;
   padding-right: 10px;
 }
 #clock {
-  color: rgb(217, 224, 238);
+  color: @base05;
 }
 #custom-wall {
-  color: #33ccff;
+  color: @base0C;
 }
 #temperature {
-  color: rgb(150, 205, 251);
+  color: @base0D;
   padding-right: 10px;
 }
 #backlight {
-  color: rgb(248, 189, 150);
+  color: @base09;
   padding-right: 10px;
 }
 #pulseaudio {
-  color: rgb(245, 224, 220);
+  color: @base06;
   padding-right: 10px;
 }
 #battery {
-  color: #00cc00;
+  color: @base0B;
   padding-right: 10px;
 }
 #battery.warning {
-  color: #ff9900;
+  color: @base0A;
   padding-right: 10px;
 }
 #battery.critical {
-  color: #ff3300;
+  color: @base08;
   padding-right: 10px;
 }
 #network {
-  color: #abe9b3;
+  color: @base0B;
   padding-right: 10px;
 }
 #network.disconnected {
-  color: rgb(255, 255, 255);
+  color: @base04;
   padding-right: 10px;
 }
 #custom-powermenu {
-  color: rgb(242, 143, 173);
+  color: @base08;
   padding-right: 10px;
 }
 #tray {

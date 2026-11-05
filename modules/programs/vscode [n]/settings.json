@@ -22,17 +22,18 @@
   //
   // window
   //
-  "window.autoDetectColorScheme": false,
+  "window.autoDetectColorScheme": true,
   "window.zoomLevel": 0,
   "window.titleBarStyle": "custom",
 
   //
   // workbench
   //
-  "workbench.colorTheme": "Catppuccin Frappé",
-  "workbench.iconTheme": "catppuccin-frappe",
-  "workbench.preferredDarkColorTheme": "Catppuccin Frappé",
-  "workbench.preferredLightColorTheme": "Catppuccin Latte",
+  // The @placeholders@ are filled from `dotfiles.theme` by vscode.nix
+  "workbench.colorTheme": "@colorTheme@",
+  "workbench.iconTheme": "@iconTheme@",
+  "workbench.preferredDarkColorTheme": "@colorTheme@",
+  "workbench.preferredLightColorTheme": "@colorTheme@",
   "workbench.tree.indent": 20,
 
   //

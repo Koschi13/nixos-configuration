@@ -8,7 +8,7 @@ return {
   priority = 10000, -- load AstroUI first
   ---@type AstroUIOpts
   opts = {
-    -- change colorscheme
-    colorscheme = "catppuccin-frappe",
+    -- Generated from `dotfiles.theme` by neovim.nix
+    colorscheme = require("dotfiles_theme").load().colorscheme,
   }
 }

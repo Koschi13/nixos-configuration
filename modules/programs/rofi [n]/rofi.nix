@@ -1,9 +1,23 @@
 {self, ...}: {
-  flake.modules.homeManager.rofi = let
-    catppuccin-filename = "colors/catppuccin.rasi";
+  flake.modules.homeManager.rofi = {config, ...}: let
+    # The stylix target replaces the whole theme, so only the
+    # colors are taken from stylix and `theme.rasi` keeps the layout
+    colors = with config.lib.stylix.colors; ''
+      * {
+          background:     #${base00};
+          background-alt: #${base04};
+          foreground:     #${base05};
+          selected:       #${base0D};
+          active:         #${base0A};
+          urgent:         #${base08};
+      }
+    '';
   in {
-    # provides rofiWindow
-    imports = with self.modules.homeManager; [scripts];
+    imports = with self.modules.homeManager; [
+      # provides rofiWindow
+      scripts
+      stylix
+    ];
 
     programs.rofi = {
       enable = true;
@@ -14,10 +28,10 @@
     home.file = {
       ".config/rofi/theme.rasi".text =
         ''
-          @import "./${catppuccin-filename}"
+          @import "./colors.rasi"
         ''
         + (builtins.readFile ./theme.rasi);
-      ".config/rofi/${catppuccin-filename}".text = builtins.readFile ./${catppuccin-filename};
+      ".config/rofi/colors.rasi".text = colors;
     };
   };
 }

@@ -15,6 +15,10 @@
         package = null;
       };
 
+      # Stores the color scheme preference (`dconf.settings` of Home-Manager),
+      # which the portal publishes to the applications, see `theme-switch`
+      programs.dconf.enable = true;
+
       # Lets the `video` group write the backlight, so swayosd can change the
       # brightness without root
       services.udev.packages = [pkgs.swayosd];
@@ -50,7 +54,14 @@
         latitude = 52.5;
         longitude = 13.4;
       };
-      imports = with self.modules.homeManager; [rofi waybar];
+      imports = with self.modules.homeManager; [rofi waybar stylix];
+
+      # The window colors
+      stylix.targets.sway = {
+        enable = true;
+        # The wallpaper comes from awww
+        useWallpaper = false;
+      };
 
       home = {
         packages = with pkgs; [
@@ -106,40 +117,9 @@
 
           bars = [{command = "${pkgs.waybar}/bin/waybar";}];
 
-          # The color variables are defined by the catppuccin aspect, see
-          # https://github.com/catppuccin/i3
-          colors = rec {
-            focused = {
-              border = "$lavender";
-              background = "$base";
-              text = "$text";
-              indicator = "$rosewater";
-              childBorder = "$lavender";
-            };
-            unfocused = {
-              border = "$overlay0";
-              background = "$base";
-              text = "$text";
-              indicator = "$rosewater";
-              childBorder = "$overlay0";
-            };
-            focusedInactive = unfocused;
-            urgent = {
-              border = "$peach";
-              background = "$base";
-              text = "$peach";
-              indicator = "$overlay0";
-              childBorder = "$peach";
-            };
-            placeholder = {
-              border = "$overlay0";
-              background = "$base";
-              text = "$text";
-              indicator = "$overlay0";
-              childBorder = "$overlay0";
-            };
-            background = "$base";
-          };
+          # The target sets the fonts as well, which come from sway's
+          # defaults until fonts move to stylix (TODO.md)
+          fonts = lib.mkForce {};
 
           # It is super important that the left side of the binding does not include any spaces!
           keybindings = let
@@ -262,6 +242,9 @@
               # Misc
               #
               "${m}+g" = "input * xkb_switch_layout next";
+
+              # Switch between the dark and light theme, see `theme-switch`
+              "${m}+Shift+t" = "exec theme toggle";
             };
 
           modes = let

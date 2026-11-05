@@ -42,6 +42,15 @@ nix flake check
 # Show an option value of a host
 nix eval .#nixosConfigurations.<host>.config.<option>
 
+# Switch the theme variant without a rebuild (toggle: next one, also $mod+Shift+t)
+theme <variant>
+
+# Show the active theme variant
+theme status
+
+# List the theme variants
+theme list
+
 # Unlock the git-crypt secrets in .secrets/ (eval-time Nix values)
 git-crypt unlock
 
@@ -65,4 +74,5 @@ sudo nixos-install --flake .#<host>
 
 $ host: find ~/.dotfiles/modules/hosts -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sed 's/ \[.*\]$//'
 $ input: nix flake metadata --json | jq -r '.locks.nodes.root.inputs | keys[]'
+$ variant: echo toggle; theme list
 $ disk_id: ls /dev/disk/by-id

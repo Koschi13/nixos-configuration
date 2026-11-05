@@ -144,12 +144,15 @@ file change, and the program aspects stay free of that choice.
 ### Shared options
 
 Aspects must not know the host they are imported by. When they need host
-facts, the host declares them through a `dotfiles.*` option:
+facts, or a value shared by several programs, it is declared through a
+`dotfiles.*` option:
 
 - `dotfiles.users` / `dotfiles.userGroups` (`lib/users [N]`): the human users
   of a host, so aspects can add groups to all of them.
 - `dotfiles.cpuVendor` (`lib/cpu [N]`): `"amd"` or `"intel"`, e.g. to select
   the kvm kernel module.
+- `dotfiles.theme` (`lib/theme [nd]`): the active color theme, see
+  [Themes](#themes).
 
 These modules are imported by several aspects. As flake-parts wraps every
 `self.modules.<class>.<name>` reference in a fresh anonymous module, the module
@@ -157,6 +160,77 @@ system can't deduplicate them by path. Aspects that must only be evaluated once
 set a `key`, e.g. `key = "dotfiles-users";`, which the module system uses
 instead. The same applies to aspects whose list options would otherwise be
 duplicated, like `graphics` and `gnome-keyring`.
+
+### Themes
+
+`lib/theme [nd]` declares which theme is active (`dotfiles.theme`). The
+theming itself is left to external projects that work with any theme family:
+
+| Layer | Source | Used for |
+| --- | --- | --- |
+| Palette | [tinted-theming/schemes](https://github.com/tinted-theming/schemes) (`tinted-schemes` input) | every theme is a base24 (or base16) scheme |
+| Theming | [stylix](https://github.com/nix-community/stylix), `stylix` aspect | every program with a stylix target |
+| Own code | this repository | the selection, switching and what stylix doesn't cover (rofi's layout, neovim, VSCode) |
+
+The `stylix` aspect enables no target by default. Each program imports it and
+enables its target in its own file:
+
+```nix
+flake.modules.homeManager.dunst = {
+  imports = [self.modules.homeManager.stylix];
+  stylix.targets.dunst = {
+    enable = true;
+    fonts.enable = false; # fonts come from `font.nix`
+  };
+};
+```
+
+Programs referencing colors in their own configuration, like `waybar`'s
+`style.css` or the `starship` prompt, only use the neutral names of the scheme
+(`@base0D`, `base11`, `orange`), so they keep working with any theme. base24
+schemes add `base10` to `base17` (e.g. darker backgrounds and bright colors);
+for base16 schemes stylix falls back to the closest base16 color.
+
+A theme is a scheme, its polarity and its name in programs shipping it
+themselves (`integrations`, e.g. `nvim`). To add one, add a file to
+`lib/theme [nd]`, like `catppuccin.nix`, and pick it in a variant:
+
+```nix
+{inputs, ...}: {
+  flake.themes.gruvbox-dark = {
+    scheme = "${inputs.tinted-schemes}/base24/gruvbox-dark.yaml";
+    polarity = "dark";
+  };
+}
+```
+
+#### Variants
+
+A variant is a named theme to switch to, `dotfiles.theme.variants` lists them:
+
+```nix
+dotfiles.theme = {
+  variants = {
+    dark = "catppuccin-frappe";
+    light = "catppuccin-latte";
+    dim = "gruvbox-dark"; # adding a variant is one line
+  };
+  default = "dark";
+};
+```
+
+`theme toggle` (or `$mod+Shift+t` in sway) switches to the next variant
+without a rebuild, `theme <variant>|status|list` sets, shows or lists them.
+Every rebuild builds all variants, each one but the default as Home-Manager
+specialisation, so switching only runs the already built activation and
+reloads the running programs. `theme` reads the variants from the built
+generation, so it knows none by name. The chosen variant is kept in
+`~/.local/state/dotfiles/theme` and restored after rebuilds and logins.
+
+Programs only care for the polarity of the active theme (dark or light
+background), never for the name of the variant. Programs following the system
+color scheme (Firefox, GTK apps, VSCode) switch through the `color-scheme`
+that is published by the portal.
 
 ## Packages
 

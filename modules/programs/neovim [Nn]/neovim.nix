@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   # TODO: unify font settings in lua files via font.nix
   flake.modules = {
     nixos.neovim = {
@@ -9,9 +9,21 @@
       };
     };
 
-    homeManager.neovim = {pkgs, ...}: let
+    homeManager.neovim = {
+      config,
+      pkgs,
+      ...
+    }: let
       userDictionary = builtins.readFile ./user-dictionary.txt;
+      theme = config.dotfiles.theme.active;
+      # Themes without a neovim colorscheme fall back to the builtin one
+      colorscheme =
+        if theme.integrations.nvim != null
+        then theme.integrations.nvim
+        else "default";
     in {
+      imports = [self.modules.homeManager.dotfiles-theme];
+
       home = {
         sessionVariables = {
           VISUAL = "nvim";
@@ -75,6 +87,13 @@
             recursive = true;
           };
           ".config/harper-ls/user-dictionary.txt".text = userDictionary;
+          # Loaded by `lua/dotfiles_theme.lua`
+          ".config/nvim/theme.lua".text = ''
+            return {
+              colorscheme = "${colorscheme}",
+              background = "${theme.polarity}",
+            }
+          '';
         };
       };
     };

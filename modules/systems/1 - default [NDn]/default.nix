@@ -133,7 +133,6 @@ in {
       gpg
       agents
       herdr
-      catppuccin
       nix-index
     ];
 

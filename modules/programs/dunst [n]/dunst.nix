@@ -1,10 +1,27 @@
-{
-  flake.modules.homeManager.dunst = {pkgs, ...}: {
+{self, ...}: {
+  flake.modules.homeManager.dunst = {
+    config,
+    pkgs,
+    ...
+  }: let
+    theme = config.dotfiles.theme.active;
+  in {
+    imports = with self.modules.homeManager; [dotfiles-theme stylix];
+
+    stylix.targets.dunst = {
+      enable = true;
+      # The font comes from `font.nix`
+      fonts.enable = false;
+    };
+
     services.dunst = {
       enable = true;
 
       iconTheme = {
-        name = "Papirus-Dark";
+        name =
+          if theme.polarity == "dark"
+          then "Papirus-Dark"
+          else "Papirus-Light";
         package = pkgs.papirus-icon-theme;
       };
 
@@ -18,7 +35,6 @@
           enable_posix_regex = true;
           follow = "mouse";
           format = "<b>%s</b>\\n%b"; # format = "<span foreground='#f3f4f5'><b>%s %p</b></span>\n%b"
-          frame_color = "#232323";
           frame_width = 1;
           fullscreen = "delay";
           gap_size = 0;
@@ -43,7 +59,6 @@
           plain_text = "no";
           progress_bar = true;
           rounded = "yes";
-          separator_color = "frame";
           separator_height = 2;
           show_age_threshold = 60;
           show_indicators = "yes";
@@ -72,20 +87,11 @@
         };
 
         urgency_critical = {
-          background = "#e78284"; # Red
-          foreground = "#c6d0f5"; # Text
           timeout = 0; # Require user interaction to dismiss
         };
 
         urgency_low = {
-          background = "#414559"; # Surface 0
-          foreground = "#c6d0f5"; # Text
           timeout = 5;
-        };
-
-        urgency_normal = {
-          background = "#626880"; # Surface 2
-          foreground = "#c6d0f5"; # Text
         };
       };
     };

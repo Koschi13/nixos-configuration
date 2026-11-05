@@ -8,10 +8,6 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    catppuccin = {
-      url = "github:catppuccin/nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     denisidoro-cheats = {
       url = "github:denisidoro/cheats";
       flake = false;
@@ -54,6 +50,18 @@
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     nixpkgs-nix-direnv.url = "github:nixos/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+        tinted-schemes.follows = "tinted-schemes";
+      };
+    };
+    tinted-schemes = {
+      url = "github:tinted-theming/schemes";
+      flake = false;
+    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";

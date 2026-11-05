@@ -1,0 +1,7 @@
+{
+  "languages": {
+    "Python": {
+      "preferred_line_length": 79
+    }
+  }
+}

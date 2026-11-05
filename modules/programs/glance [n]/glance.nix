@@ -1,43 +1,15 @@
-{
+{self, ...}: {
   flake.modules.homeManager.glance = {osConfig, ...}: {
+    imports = [self.modules.homeManager.stylix];
+
+    stylix.targets.glance.enable = true;
+
     # Provides GLANCE_LOCATION, decrypted by agenix (see `nixos.max`)
     systemd.user.services.glance.Service.EnvironmentFile = osConfig.age.secrets.glance-env.path;
 
     services.glance = {
       enable = true;
       settings = {
-        theme = {
-          # Unfortunately you have to specify the default + default-dark/light
-          light = false;
-          background-color = "229 19 23";
-          primary-color = "222 74 74";
-          positive-color = "96 44 68";
-          negative-color = "359 68 71";
-
-          disable-picker = false;
-
-          presets = {
-            default-dark = {
-              # catppuccin-frappe
-              light = false;
-              background-color = "229 19 23";
-              primary-color = "222 74 74";
-              positive-color = "96 44 68";
-              negative-color = "359 68 71";
-            };
-
-            default-light = {
-              # catppuccin-latte
-              light = true;
-              background-color = "220 23 95";
-              contrast-multiplier = 1.0;
-              primary-color = "220 91 54";
-              positive-color = "109 58 40";
-              negative-color = "347 87 44";
-            };
-          };
-        };
-
         pages = [
           {
             name = "Home";

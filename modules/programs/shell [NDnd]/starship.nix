@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   flake.modules.homeManager.shell = {
     lib,
     pkgs,
@@ -20,30 +20,30 @@
       ##############################################################################
       # Prompt
       ##############################################################################
-      promptPrefix = "[](red)";
-      promptOneStyle = "bg:red fg:crust";
+      promptPrefix = "[](base08)";
+      promptOneStyle = "bg:base08 fg:base11";
       promptOne = ["os" "username" "sudo"];
-      promptOneSeparator = "[](bg:peach fg:red)";
+      promptOneSeparator = "[](bg:base09 fg:base08)";
 
-      promptTwoStyle = "bg:peach fg:crust";
+      promptTwoStyle = "bg:base09 fg:base11";
       promptTwo = ["directory"];
-      promptTwoSeparator = "[](bg:yellow fg:peach)";
+      promptTwoSeparator = "[](bg:base0a fg:base09)";
 
-      promptThreeStyle = "fg:crust bg:yellow";
+      promptThreeStyle = "fg:base11 bg:base0a";
       promptThree = ["git_branch" "git_commit" "git_state" "git_metrics" "git_status"];
-      promptThreeSeparator = "[](fg:yellow bg:green)";
+      promptThreeSeparator = "[](fg:base0a bg:base0b)";
 
-      promptFourStyle = "fg:crust bg:green";
+      promptFourStyle = "fg:base11 bg:base0b";
       promptFour = ["python" "rust" "golang" "nodejs" "zig"];
-      promptFourSeparator = "[](fg:green bg:sapphire)";
+      promptFourSeparator = "[](fg:base0b bg:base16)";
 
-      promptFiveStyle = "fg:crust bg:sapphire";
+      promptFiveStyle = "fg:base11 bg:base16";
       promptFive = ["aws" "kubernetes"];
-      promptFiveSeparator = "[](fg:sapphire bg:lavender)";
+      promptFiveSeparator = "[](fg:base16 bg:base07)";
 
-      promptSixStyle = "fg:crust bg:lavender";
+      promptSixStyle = "fg:base11 bg:base07";
       promptSix = ["status" "time"];
-      promptSixSeparator = "[](fg:lavender)";
+      promptSixSeparator = "[](fg:base07)";
 
       promptSeven = ["cmd_duration" "line_break" "nix_shell" "character"];
 
@@ -65,8 +65,12 @@
         (subtractLists promptModulesFlat) # <== do not disable modules used in the prompt…
         (disableModules true) # <== and finally build the configuration
       ];
-      # The palette comes from the catppuccin aspect
     in {
+      # Defines the palette the prompt uses (`base00`…`base17`). Starship ignores uppercase
+      # color names, so `base0A`…`base0F` are written `base0a`…`base0f`
+      imports = [self.modules.homeManager.stylix];
+      stylix.targets.starship.enable = true;
+
       programs.starship = {
         package = starshipPackage;
         enable = true;
@@ -201,7 +205,7 @@
               contexts = [
                 {
                   context_pattern = ".*prod.*";
-                  style = "bold fg:red bg:sapphire";
+                  style = "bold fg:base08 bg:base16";
                 }
               ];
               detect_env_vars = ["AWS_SECRET_ACCESS_KEY"];
@@ -234,18 +238,18 @@
             };
 
             nix_shell = {
-              style = "teal";
+              style = "base0c";
               format = "[in $symbol]($style) ";
               symbol = "❄️";
             };
 
             character = {
-              success_symbol = "[[󰄛](green) ❯](peach)";
-              error_symbol = "[[󰄛](red) ❯](peach)";
-              vimcmd_symbol = "[](subtext1)";
+              success_symbol = "[[󰄛](base0b) ❯](base09)";
+              error_symbol = "[[󰄛](base08) ❯](base09)";
+              vimcmd_symbol = "[](base05)";
             };
 
-            # continuation_prompt = "[▶▶ ](fg:lavender)"; # TODO: doesn't work
+            # continuation_prompt = "[▶▶ ](fg:base07)"; # TODO: doesn't work
           }
         ];
       };

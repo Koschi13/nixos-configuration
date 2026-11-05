@@ -33,6 +33,7 @@
       zed
       glance
       gnome
+      theme-switch
       messengers
       office
       entertainment

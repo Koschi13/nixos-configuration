@@ -1,6 +1,14 @@
-{
-  # The theme comes from the catppuccin aspect
+{self, ...}: {
   flake.modules.homeManager.ghostty = {
+    imports = [self.modules.homeManager.stylix];
+
+    stylix.targets.ghostty = {
+      enable = true;
+      # The font comes from `font.nix`, the opacity is set below
+      fonts.enable = false;
+      opacity.enable = false;
+    };
+
     programs.ghostty = {
       enable = true;
 
