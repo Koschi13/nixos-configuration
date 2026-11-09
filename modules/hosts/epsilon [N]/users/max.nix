@@ -35,10 +35,6 @@ in {
         unzip
         bruno # postman alternative
 
-        # coding
-        opencode
-        opencode-desktop
-
         openvpn # Workaround for nm-openvpn not working
 
         # other
