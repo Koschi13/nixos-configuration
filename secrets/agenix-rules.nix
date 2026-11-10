@@ -10,6 +10,7 @@ let
   # SSH host keys, used to decrypt the secrets at activation
   alpha = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBqI79RLKudDEM66IiZe6GtUA4oh2mYZDQPeLShv3aBf";
   epsilon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID0VjsO3RogO7FHlyg/zyT1qJJnPDRGOvRA3DLkgbm0U";
+  fabricator = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHDVZJEOQsUk7aw6/tSCz9ezBbJL71KrzGAeB20vDFF4";
 
   all = [admin alpha epsilon];
 in {
