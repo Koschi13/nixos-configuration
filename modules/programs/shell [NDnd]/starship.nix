@@ -22,7 +22,7 @@
       ##############################################################################
       promptPrefix = "[](base08)";
       promptOneStyle = "bg:base08 fg:base11";
-      promptOne = ["os" "username" "sudo"];
+      promptOne = ["os" "username" "hostname" "sudo"];
       promptOneSeparator = "[](bg:base09 fg:base08)";
 
       promptTwoStyle = "bg:base09 fg:base11";
@@ -95,6 +95,13 @@
               style_user = promptOneStyle;
               style_root = "bold ${promptOneStyle}";
               format = "[ $user]($style)";
+            };
+
+            # Directly after the username: `max@fabricator`
+            hostname = {
+              ssh_only = false;
+              style = promptOneStyle;
+              format = "[@$hostname]($style)";
             };
 
             sudo = {
