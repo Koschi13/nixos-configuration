@@ -84,6 +84,7 @@ the gateway pointing at the IP of the server:
 | Name | Service |
 |---|---|
 | `glance.lan` | Glance |
+| `firefly.lan` | Firefly III |
 
 A new service adds its virtual host to `services.nginx.virtualHosts`, see
 `modules/services/reverse-proxy [N]/reverse-proxy.nix`.

@@ -9,6 +9,20 @@ Edit a secret with `scripts/secret-edit.sh -e <name>.age`, a binary one with
 `scripts/secret-edit.sh -e <name>.age < <file>`. A new secret goes into
 `agenix-rules.nix` first and gets a section here.
 
+## Firefly III
+
+### `firefly-iii-app-key`
+
+The key Firefly III encrypts its sessions and some database fields with.
+Changing it logs everyone out and makes encrypted fields unreadable, so it
+stays the same for the lifetime of the installation.
+
+```
+base64:<32 random bytes in base64>
+```
+
+Generate it with `echo "base64:$(head -c 32 /dev/urandom | base64)"`.
+
 ## PostgreSQL
 
 ### `postgresql-admin-password`

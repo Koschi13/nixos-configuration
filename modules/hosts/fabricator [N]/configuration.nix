@@ -8,6 +8,7 @@ in {
       glance
 
       backup
+      firefly-iii
     ];
 
     networking.hostName = hostname;
