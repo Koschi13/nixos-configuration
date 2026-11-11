@@ -74,6 +74,20 @@ making the generation the boot default, so a reboot reverts it:
 nh os test . --hostname <host> --target-host "root@<host>.lan" --elevation-strategy none
 ```
 
+### Web services on a server
+
+Each web service is reachable by name on port 80, e.g. `http://glance.lan`.
+nginx (the `reverse-proxy` aspect) picks the service by name, and the services
+themselves only listen on localhost. Every name needs a local DNS record on
+the gateway pointing at the IP of the server:
+
+| Name | Service |
+|---|---|
+| `glance.lan` | Glance |
+
+A new service adds its virtual host to `services.nginx.virtualHosts`, see
+`modules/services/reverse-proxy [N]/reverse-proxy.nix`.
+
 ### Using the YubiKey on a remote host
 
 `ssh fabricator` (or `fabricator.lan`) from `alpha` logs in as `max` and

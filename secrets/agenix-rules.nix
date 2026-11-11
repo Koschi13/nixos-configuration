@@ -17,7 +17,7 @@ let
 in {
   "smb-credentials.age".publicKeys = all;
   "git-hiq.age".publicKeys = [admin epsilon];
-  "glance-env.age".publicKeys = all;
+  "glance-env.age".publicKeys = [admin fabricator];
   "greeter-wallpaper.jpg.age".publicKeys = all;
   "homeserver-map.age".publicKeys = [admin alpha];
   "vw-ssh-config.age".publicKeys = [admin epsilon];

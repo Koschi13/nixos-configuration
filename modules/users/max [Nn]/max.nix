@@ -1,6 +1,5 @@
 {
   self,
-  inputs,
   lib,
   ...
 }: let
@@ -16,15 +15,6 @@ in {
     {
       nixos.max = {
         users.users.${username}.group = "users";
-
-        # Secrets of the Home-Manager aspects, read through `osConfig`
-        age.secrets = {
-          # GLANCE_LOCATION of the weather widget of `glance`
-          glance-env = {
-            file = "${inputs.self}/secrets/glance-env.age";
-            owner = username;
-          };
-        };
       };
 
       # darwin.max = {

@@ -37,7 +37,6 @@
       firefox
       vscode
       zed
-      glance
       gnome
       theme-switch
       messengers
