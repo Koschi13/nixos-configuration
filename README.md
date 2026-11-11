@@ -74,6 +74,17 @@ making the generation the boot default, so a reboot reverts it:
 nh os test . --hostname <host> --target-host "root@<host>.lan" --elevation-strategy none
 ```
 
+### Using the YubiKey on a remote host
+
+`ssh fabricator` (or `fabricator.lan`) from `alpha` logs in as `max` and
+forwards both gpg-agent sockets, so the YubiKey plugged into `alpha` works on
+the server: SSH to git remotes, signed commits and `scripts/secret-edit.sh`.
+The PIN prompt appears on `alpha`.
+
+The newest forwarding session owns the sockets. Closing it breaks GPG and SSH
+in older sessions until they reconnect. `ssh root@fabricator.lan` connects
+without the forwards, which is what deploys use.
+
 ### Updating
 
 ```sh
