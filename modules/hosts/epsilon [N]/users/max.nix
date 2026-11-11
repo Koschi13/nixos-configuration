@@ -12,13 +12,12 @@ in {
       modules.nixos.${username} # -> imports users/max which sets up HomeManager
     ];
 
+    # Their content is documented in `secrets/README.md`
     age.secrets = {
-      # `Host` blocks of the `vw-ssm` aspect
       vw-ssh-config = {
         file = "${self}/secrets/vw-ssh-config.age";
         owner = username;
       };
-      # `[user]` of the `gitdir:~/Git/HiQ/**` include of `git`
       git-hiq = {
         file = "${self}/secrets/git-hiq.age";
         owner = username;

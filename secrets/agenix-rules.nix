@@ -1,7 +1,8 @@
 # The rules of the `agenix` CLI: which public keys every secret is encrypted
 # to. Only the CLI reads this file, the system configuration does not import
 # it. Edit secrets with `scripts/secret-edit.sh -e <name>.age` and re-encrypt
-# all of them after changing the keys with `scripts/secret-edit.sh -r`.
+# all of them after changing the keys with `scripts/secret-edit.sh -r`. What
+# each secret contains is documented in `README.md` next to this file.
 let
   # Age key for editing, wrapped with the GPG key of the YubiKey in
   # keys/admin.key.gpg
