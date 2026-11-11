@@ -6,6 +6,8 @@ in {
       system-cli
 
       glance
+
+      backup
     ];
 
     networking.hostName = hostname;

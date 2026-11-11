@@ -9,6 +9,54 @@ Edit a secret with `scripts/secret-edit.sh -e <name>.age`, a binary one with
 `scripts/secret-edit.sh -e <name>.age < <file>`. A new secret goes into
 `agenix-rules.nix` first and gets a section here.
 
+## Backup
+
+The restic backups to the Hetzner Storage Box. Each host backs up to its own
+sub-account, so it has its own three secrets, `<host>` is its hostname.
+
+### `restic-<host>-password`
+
+The password the restic repository is encrypted with. Without it the backups
+can't be restored, so keep a copy in the password manager.
+
+```
+<password>
+```
+
+### `restic-<host>-ssh-key`
+
+The private SSH key of the Storage Box sub-account, without a passphrase, as
+the backup runs unattended. Create it and register the public key:
+
+```sh
+ssh-keygen -t ed25519 -N "" -C "restic@<host>.lan" -f restic-<host>
+ssh-copy-id -p 23 -s -i restic-<host> <sub-account>@<account>.your-storagebox.de
+```
+
+Then paste `restic-<host>` into the secret and delete both key files.
+
+```
+-----BEGIN OPENSSH PRIVATE KEY-----
+…
+-----END OPENSSH PRIVATE KEY-----
+```
+
+### `restic-<host>-ssh-config`
+
+The SSH config of the `storagebox` host, which restic connects to. A secret, so
+the account names stay out of the repository. The host key of the Storage Box
+is pinned on the first connect.
+
+```
+Host storagebox
+  HostName <account>.your-storagebox.de
+  User <sub-account>
+  Port 23
+  IdentityFile /run/agenix/restic-<host>-ssh-key
+  UserKnownHostsFile /var/lib/restic-storagebox/known_hosts
+  StrictHostKeyChecking accept-new
+```
+
 ## Homeserver shares
 
 ### `homeserver-map`
