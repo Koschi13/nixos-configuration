@@ -20,6 +20,7 @@ in {
   "glance-env.age".publicKeys = [admin fabricator];
   "greeter-wallpaper.jpg.age".publicKeys = all;
   "homeserver-map.age".publicKeys = [admin alpha];
+  "postgresql-admin-password.age".publicKeys = [admin fabricator];
   "restic-fabricator-password.age".publicKeys = [admin fabricator];
   "restic-fabricator-ssh-config.age".publicKeys = [admin fabricator];
   "restic-fabricator-ssh-key.age".publicKeys = [admin fabricator];

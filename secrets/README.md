@@ -9,6 +9,19 @@ Edit a secret with `scripts/secret-edit.sh -e <name>.age`, a binary one with
 `scripts/secret-edit.sh -e <name>.age < <file>`. A new secret goes into
 `agenix-rules.nix` first and gets a section here.
 
+## PostgreSQL
+
+### `postgresql-admin-password`
+
+The password of the `admin` superuser, which tools like pgAdmin use to connect
+over TCP on localhost. Services connect over the unix socket and need none.
+Applied on every start of `postgresql-setup`, so changing it only needs a
+deploy.
+
+```
+<password>
+```
+
 ## Backup
 
 The restic backups to the Hetzner Storage Box. Each host backs up to its own
