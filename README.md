@@ -55,6 +55,25 @@ or if the hostname isn't set yet, use:
 sudo nixos-rebuild switch --flake .#<hostname>
 ```
 
+### Deploying to a remote host
+
+```sh
+./scripts/deploy.sh <host> # runs `nh os switch` with `--target-host`
+```
+
+This host evaluates and builds the configuration, copies it over SSH and
+activates it on `<host>.lan` as root. The `ssh` aspect only lets root log in
+with the key of the YubiKey and from the trusted networks (`trustedNetworks`
+in `modules/programs/ssh [Nnd]/ssh.nix`), so each deploy needs a touch. `sudo`
+as `max` keeps asking for the password.
+
+For changes that could lock you out (network, sshd, firewall), activate without
+making the generation the boot default, so a reboot reverts it:
+
+```sh
+nh os test . --hostname <host> --target-host "root@<host>.lan" --elevation-strategy none
+```
+
 ### Updating
 
 ```sh

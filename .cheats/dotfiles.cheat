@@ -15,6 +15,12 @@ sudo nixos-rebuild boot --flake .#<host>
 # Build the configuration of a host without applying it
 nixos-rebuild build --flake .#<host>
 
+# Deploy the configuration to a remote host, built locally (scripts/deploy.sh)
+./scripts/deploy.sh <host>
+
+# Activate a risky change on a remote host, a reboot reverts it
+nh os test . --hostname <host> --target-host "root@<host>.lan" --elevation-strategy none
+
 # Update all flake inputs (scripts/update.sh)
 ./scripts/update.sh
 
