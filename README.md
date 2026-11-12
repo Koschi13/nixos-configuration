@@ -85,6 +85,7 @@ the gateway pointing at the IP of the server:
 |---|---|
 | `glance.lan` | Glance |
 | `firefly.lan` | Firefly III |
+| `firefly-import.lan` | Firefly III Data Importer |
 | `pgadmin.lan` | pgAdmin |
 
 A new service adds its virtual host to `services.nginx.virtualHosts`, see

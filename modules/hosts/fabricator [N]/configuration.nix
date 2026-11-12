@@ -9,6 +9,7 @@ in {
 
       backup
       firefly-iii
+      firefly-iii-data-importer
       pgadmin
     ];
 
