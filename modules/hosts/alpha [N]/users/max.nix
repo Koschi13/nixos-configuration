@@ -28,6 +28,7 @@
         stable.calibre
         mp3cat
         puddletag
+        teamspeak6-client
       ];
     };
   };
