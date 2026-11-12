@@ -36,6 +36,15 @@ deploy.
 <password>
 ```
 
+### `pgadmin-password`
+
+The initial password of the pgAdmin login, at least 6 characters. Only read when pgAdmin creates its database: changing it
+afterwards has no effect, change it in the UI instead.
+
+```
+<password>
+```
+
 ## Backup
 
 The restic backups to the Hetzner Storage Box. Each host backs up to its own

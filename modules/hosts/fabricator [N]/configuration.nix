@@ -9,6 +9,7 @@ in {
 
       backup
       firefly-iii
+      pgadmin
     ];
 
     networking.hostName = hostname;
