@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ING-Import{% endblock %} · Firefly III</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%234f46e5'/><path d='M9 21l5-5 4 4 6-8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+</head>
+<body class="min-h-screen">
+  <header class="border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
+      <a href="{{ url_for('index') }}" class="flex items-center gap-2.5 text-slate-900 hover:text-slate-900 dark:text-white dark:hover:text-white">
+        <span class="grid size-8 place-items-center rounded-lg bg-indigo-600 text-white shadow-sm">
+          <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l5-5 4 4 7-8"/></svg>
+        </span>
+        <span class="font-semibold tracking-tight">ING&nbsp;→&nbsp;Firefly</span>
+      </a>
+      {% if g.user %}
+      {% set endpoint = request.endpoint or '' %}
+      <nav class="flex flex-1 items-center gap-1">
+        <a href="{{ url_for('index') }}" class="tab {{ 'tab-active' if endpoint in ('index', 'show_import') }}">Import</a>
+        <a href="{{ url_for('settings_rules') }}" class="tab {{ 'tab-active' if endpoint.startswith('settings') }}">Einstellungen</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <span class="muted hidden sm:inline">{{ g.user.email }}</span>
+        <form method="post" action="{{ url_for('logout') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn btn-ghost btn-sm">Abmelden</button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-8">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="mb-6 space-y-2">
+      {% for category, message in messages %}
+      <div class="flex items-start gap-3 rounded-xl px-4 py-3 text-sm ring-1
+        {{ 'bg-rose-50 text-rose-800 ring-rose-200 dark:bg-rose-950 dark:text-rose-200 dark:ring-rose-900' if category == 'error'
+           else 'bg-emerald-50 text-emerald-800 ring-emerald-200 dark:bg-emerald-950 dark:text-emerald-200 dark:ring-emerald-900' }}">
+        <span class="font-medium">{{ '⚠' if category == 'error' else '✓' }}</span>
+        <span class="whitespace-pre-line">{{ message }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

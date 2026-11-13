@@ -1,5 +1,5 @@
 {inputs, ...}: let
-  # The `agenix` CLI to edit the secrets of `secrets/secrets.nix`, see
+  # The `agenix` CLI to edit the secrets of `secrets/agenix-rules.nix`, see
   # `scripts/secret-edit.sh`
   agenix-cli = {pkgs, ...}: {
     environment.systemPackages = [

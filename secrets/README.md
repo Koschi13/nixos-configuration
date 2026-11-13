@@ -1,0 +1,182 @@
+# secrets
+
+The secrets of all hosts, encrypted with agenix. This file describes what each
+one contains and what its plaintext has to look like. Which keys can decrypt
+them is in `agenix-rules.nix`, how agenix works in the Secrets section of
+`WIKI.md`.
+
+Edit a secret with `scripts/secret-edit.sh -e <name>.age`, a binary one with
+`scripts/secret-edit.sh -e <name>.age < <file>`. A new secret goes into
+`agenix-rules.nix` first and gets a section here.
+
+## Firefly III
+
+### `firefly-iii-app-key`
+
+The key Firefly III encrypts its sessions and some database fields with.
+Changing it logs everyone out and makes encrypted fields unreadable, so it
+stays the same for the lifetime of the installation.
+
+```
+base64:<32 random bytes in base64>
+```
+
+Generate it with `echo "base64:$(head -c 32 /dev/urandom | base64)"`.
+
+### `firefly-iii-data-importer-auto-import-secret`
+
+The `AUTO_IMPORT_SECRET` of the Data Importer, which its `/autoupload`
+endpoint requires next to the Firefly III token of the user. Only the
+`firefly-importer-ing` service calls that endpoint, so changing it only needs
+a deploy. At least 16 characters.
+
+```
+<secret>
+```
+
+Generate it with `head -c 32 /dev/urandom | base64`.
+
+### `firefly-importer-ing-key`
+
+The key the ING importer encrypts the OAuth client IDs and tokens of its
+users with, and signs its sessions with. Changing it logs everyone out and
+makes the stored client IDs unreadable: every user then enters their client
+ID again. At least 32 characters.
+
+```
+<key>
+```
+
+Generate it with `head -c 48 /dev/urandom | base64`.
+
+## PostgreSQL
+
+### `postgresql-admin-password`
+
+The password of the `admin` superuser, which tools like pgAdmin use to connect
+over TCP on localhost. Services connect over the unix socket and need none.
+Applied on every start of `postgresql-setup`, so changing it only needs a
+deploy.
+
+```
+<password>
+```
+
+### `pgadmin-password`
+
+The initial password of the pgAdmin login, at least 6 characters. Only read when pgAdmin creates its database: changing it
+afterwards has no effect, change it in the UI instead.
+
+```
+<password>
+```
+
+## Backup
+
+The restic backups to the Hetzner Storage Box. Each host backs up to its own
+sub-account, so it has its own three secrets, `<host>` is its hostname.
+
+### `restic-<host>-password`
+
+The password the restic repository is encrypted with. Without it the backups
+can't be restored, so keep a copy in the password manager.
+
+```
+<password>
+```
+
+### `restic-<host>-ssh-key`
+
+The private SSH key of the Storage Box sub-account, without a passphrase, as
+the backup runs unattended. Create it and register the public key:
+
+```sh
+ssh-keygen -t ed25519 -N "" -C "restic@<host>.lan" -f restic-<host>
+ssh-copy-id -p 23 -s -i restic-<host> <sub-account>@<account>.your-storagebox.de
+```
+
+Then paste `restic-<host>` into the secret and delete both key files.
+
+```
+-----BEGIN OPENSSH PRIVATE KEY-----
+…
+-----END OPENSSH PRIVATE KEY-----
+```
+
+### `restic-<host>-ssh-config`
+
+The SSH config of the `storagebox` host, which restic connects to. A secret, so
+the account names stay out of the repository. The host key of the Storage Box
+is pinned on the first connect.
+
+```
+Host storagebox
+  HostName <account>.your-storagebox.de
+  User <sub-account>
+  Port 23
+  IdentityFile /run/agenix/restic-<host>-ssh-key
+  UserKnownHostsFile /var/lib/restic-storagebox/known_hosts
+  StrictHostKeyChecking accept-new
+```
+
+## Homeserver shares
+
+### `homeserver-map`
+
+The SMB shares of the homeserver as autofs direct map, one line each. A
+secret, to keep the server and share names out of the repository. autofs
+appends the mount options of the master map to them.
+
+```
+<mount path> -credentials=/run/agenix/smb-credentials ://<server>/<share>
+```
+
+### `smb-credentials`
+
+The login of the shares. Always decrypted to `/run/agenix/smb-credentials`, as
+`homeserver-map` refers to that path.
+
+```
+username=<user>
+password=<password>
+```
+
+## Desktop
+
+### `greeter-wallpaper.jpg`
+
+A JPEG, the background of the SDDM login screen. Encrypted for copyright
+reasons. Binary, so edit it with
+`scripts/secret-edit.sh -e greeter-wallpaper.jpg.age < <file>.jpg`.
+
+### `glance-env`
+
+The environment of the Glance service, keeping the location out of the
+repository.
+
+```
+GLANCE_LOCATION=<city>, <country>
+```
+
+## Work (HiQ)
+
+### `git-hiq`
+
+A git config with the work identity, used for the repositories of HiQ. A
+secret, to keep the work email out of the repository.
+
+```ini
+[user]
+  name = <name>
+  email = <work email>
+```
+
+### `vw-ssh-config`
+
+An SSH config with the `Host` blocks of the VW AWS hosts, reached through the
+SSM session manager. A secret, as the host names are internal.
+
+```
+Host <name>
+  …
+```

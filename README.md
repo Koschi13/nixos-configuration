@@ -44,8 +44,8 @@ ssh -t root@<ip> nixos-enter --root /mnt -c "'passwd max'"
    `boot.nix` and `filesystem.nix`.
 2. `git add` the new files. Flakes only see files tracked by git.
 3. Create the SSH host key that agenix decrypts the secrets with. openssh
-   isn't enabled, so nothing else creates it. On a fresh install, before
-   `nixos-install`:
+   is only enabled by `system-cli` and starts after the secrets are decrypted,
+   so nothing creates it in time. On a fresh install, before `nixos-install`:
 
    ```sh
    sudo mkdir -p /mnt/etc/ssh
@@ -80,6 +80,54 @@ or if the hostname isn't set yet, use:
 ```sh
 sudo nixos-rebuild switch --flake .#<hostname>
 ```
+
+### Deploying to a remote host
+
+```sh
+./scripts/deploy.sh <host> # runs `nh os switch` with `--target-host`
+```
+
+This host evaluates and builds the configuration, copies it over SSH and
+activates it on `<host>.lan` as root. The `ssh` aspect only lets root log in
+with the key of the YubiKey and from the trusted networks (`trustedNetworks`
+in `modules/programs/ssh [Nnd]/ssh.nix`), so each deploy needs a touch. `sudo`
+as `max` keeps asking for the password.
+
+For changes that could lock you out (network, sshd, firewall), activate without
+making the generation the boot default, so a reboot reverts it:
+
+```sh
+nh os test . --hostname <host> --target-host "root@<host>.lan" --elevation-strategy none
+```
+
+### Web services on a server
+
+Each web service is reachable by name on port 80, e.g. `http://glance.lan`.
+nginx (the `reverse-proxy` aspect) picks the service by name, and the services
+themselves only listen on localhost. Every name needs a local DNS record on
+the gateway pointing at the IP of the server:
+
+| Name | Service |
+|---|---|
+| `glance.lan` | Glance |
+| `firefly.lan` | Firefly III |
+| `firefly-import.lan` | Firefly III Data Importer |
+| `firefly-ing.lan` | ING importer for Firefly III |
+| `pgadmin.lan` | pgAdmin |
+
+A new service adds its virtual host to `services.nginx.virtualHosts`, see
+`modules/services/reverse-proxy [N]/reverse-proxy.nix`.
+
+### Using the YubiKey on a remote host
+
+`ssh fabricator` (or `fabricator.lan`) from `alpha` logs in as `max` and
+forwards both gpg-agent sockets, so the YubiKey plugged into `alpha` works on
+the server: SSH to git remotes, signed commits and `scripts/secret-edit.sh`.
+The PIN prompt appears on `alpha`.
+
+The newest forwarding session owns the sockets. Closing it breaks GPG and SSH
+in older sessions until they reconnect. `ssh root@fabricator.lan` connects
+without the forwards, which is what deploys use.
 
 ### Updating
 
@@ -125,7 +173,8 @@ module, imported automatically by
 prefixed with `_` are ignored by import-tree.
 
 - `hosts/<host>`: the entrypoint of each host, see `modules/hosts/README.md`
-- `systems/`: layered base configurations (`system-default`, `system-desktop`)
+- `systems/`: layered base configurations (`system-default`, and on top of it
+  either `system-desktop` or the headless `system-cli`)
 - `users/<user>`: configuration per user, see `modules/users/README.md`
 - `services/`, `programs/`: the aspects hosts and users pick from
 - `lib/`: helpers (`mkNixos`, `mkDarwin`), factories and shared options

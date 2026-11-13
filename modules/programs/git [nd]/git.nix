@@ -1,9 +1,5 @@
 {self, ...}: {
-  flake.modules.homeManager.git = {
-    pkgs,
-    osConfig,
-    ...
-  }: {
+  flake.modules.homeManager.git = {pkgs, ...}: {
     imports = with self.modules.homeManager; [delta];
 
     home.packages = with pkgs; [
@@ -37,21 +33,6 @@
         key = "FCD1C7696CB6672A";
         format = "openpgp";
       };
-
-      includes = [
-        # The `[user]` of HiQ, decrypted by agenix (see `nixos.max`)
-        {
-          condition = "gitdir:~/Git/HiQ/**";
-          path = osConfig.age.secrets.git-hiq.path;
-        }
-        {
-          condition = "gitdir:~/Git/HiQ/**";
-          contents = {
-            commit.gpgsign = false;
-            tag.gpgsign = false;
-          };
-        }
-      ];
     };
   };
 }

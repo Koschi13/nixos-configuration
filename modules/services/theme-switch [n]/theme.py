@@ -93,8 +93,8 @@ def signal_processes(name, signal_number):
 
 def reload_programs():
     # Programs that don't pick up their changed configuration on their own.
-    # Alacritty, rofi and starship read it themselves, dunst and glance are
-    # restarted by the activation.
+    # Alacritty, rofi and starship read it themselves, dunst is restarted by
+    # the activation.
     if "SWAYSOCK" in os.environ and shutil.which("swaymsg"):
         # Respawns waybar as well
         run_quietly("swaymsg", "reload")

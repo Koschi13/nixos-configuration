@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% from "_macros.html" import csrf, booking_table, amount %}
+{% block title %}Vorschau{% endblock %}
+{% block content %}
+{% set income = rows|selectattr('amount', 'ne', '')|map(attribute='amount')|map('float')|select('gt', 0)|sum %}
+{% set spending = rows|map(attribute='amount')|map('float')|select('lt', 0)|sum %}
+{% set visa = rows|selectattr('_kind', 'equalto', 'visa')|list|length %}
+{% set window_query = {'start': start.isoformat(), 'stop': stop.isoformat()} %}
+
+<div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <p class="label">Vorschau</p>
+    <h1 class="text-xl font-semibold tracking-tight">{{ metadata.get('Kontoname', 'ING-Konto') }}
+      {% if upload.export.iban %}<span class="muted font-normal">· {{ metadata.get('IBAN', upload.export.iban) }}</span>{% endif %}
+    </h1>
+    <p class="muted mt-1">{{ upload.file_name }}{% if metadata.get('Zeitraum') %} · Export {{ metadata['Zeitraum'] }}{% endif %} · {{ total }} Buchungen</p>
+  </div>
+  <div class="flex flex-wrap items-center gap-2">
+    {% if upload.failure %}<span class="badge badge-red">letzter Versuch fehlgeschlagen</span>{% endif %}
+    <form method="post" action="{{ url_for('discard_import') }}">
+      {{ csrf() }}
+      <button class="btn btn-danger btn-sm ring-1 ring-rose-300 dark:ring-rose-800">Verwerfen</button>
+    </form>
+  </div>
+</div>
+
+{% if upload.failure %}
+<div class="mb-6 rounded-xl bg-rose-50 px-4 py-3 text-sm text-rose-800 ring-1 ring-rose-200 dark:bg-rose-950 dark:text-rose-200 dark:ring-rose-900">
+  <span class="font-medium">Importer:</span> {{ upload.failure }}
+</div>
+{% endif %}
+{% for warning in warnings %}
+<div class="mb-2 rounded-xl bg-amber-50 px-4 py-2 text-sm text-amber-800 ring-1 ring-amber-200 dark:bg-amber-950 dark:text-amber-200 dark:ring-amber-900">{{ warning }}</div>
+{% endfor %}
+
+<div class="grid gap-6 lg:grid-cols-3">
+  <!-- Account -->
+  <div class="card card-body">
+    <h2 class="card-title mb-3">Firefly-III-Konto</h2>
+    {% if not choose_account %}
+      <p class="text-sm"><span class="font-medium">{{ upload.account_name or 'Konto' }}</span> <span class="muted">#{{ upload.account_id }}</span></p>
+      <a href="{{ url_for('show_import', change_account=1, **window_query) }}" class="mt-2 inline-block text-sm">Ändern</a>
+    {% else %}
+      {% if accounts_error %}<p class="mb-2 text-sm text-rose-600">{{ accounts_error }}</p>{% endif %}
+      <form method="post" action="{{ url_for('set_account') }}" class="space-y-3">
+        {{ csrf() }}
+        <input type="hidden" name="start" value="{{ start.isoformat() }}">
+        <input type="hidden" name="stop" value="{{ stop.isoformat() }}">
+        <select name="account_id" class="input" required>
+          {% for account in accounts if account.active %}
+          <option value="{{ account.id }}" {{ 'selected' if account.id == upload.account_id }}>{{ account.name }}{% if account.iban %} · {{ account.iban }}{% endif %}</option>
+          {% endfor %}
+        </select>
+        {% if upload.export.iban %}
+        <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="remember" value="1" checked class="rounded"> Für {{ upload.export.iban }} merken</label>
+        {% endif %}
+        <button class="btn btn-secondary w-full">Dieses Konto verwenden</button>
+      </form>
+    {% endif %}
+  </div>
+
+  <!-- Window -->
+  <form method="get" class="card card-body lg:col-span-2">
+    <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+      <h2 class="card-title">Zeitraum <span class="muted font-normal">nach Buchungsdatum</span></h2>
+    </div>
+    <div class="mb-4 flex flex-wrap gap-2">
+      <a href="{{ url_for('show_import', start=first.isoformat(), stop=last.isoformat()) }}"
+         class="chip {{ 'chip-active' if start == first and stop == last }}">Ganze Datei</a>
+      {% for month in months %}
+      <a href="{{ url_for('show_import', start=month.start.isoformat(), stop=month.stop.isoformat()) }}"
+         class="chip {{ 'chip-active' if start == month.start and stop == month.stop }}"
+         title="{{ month.first|de_date }} – {{ month.last|de_date }}{% if month.hint %} · {{ month.hint }}{% endif %}">
+        {{ '%02d'|format(month.month) }}.{{ month.year }}
+        <span class="text-slate-400">{{ month.count }}</span>
+        {% if month.hint %}<span class="size-1.5 rounded-full bg-amber-400"></span>{% endif %}
+      </a>
+      {% endfor %}
+    </div>
+    <div class="flex flex-wrap items-end gap-3">
+      <div>
+        <label class="label" for="start">Von</label>
+        <input id="start" name="start" type="date" class="input" value="{{ start.isoformat() }}">
+      </div>
+      <div>
+        <label class="label" for="stop">Bis</label>
+        <input id="stop" name="stop" type="date" class="input" value="{{ stop.isoformat() }}">
+      </div>
+      <button class="btn btn-secondary">Anwenden</button>
+    </div>
+  </form>
+</div>
+
+<!-- Summary + actions -->
+<div class="card card-body my-6">
+  <div class="flex flex-wrap items-center justify-between gap-6">
+    <div class="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-4">
+      <div class="stat"><div class="muted text-xs">Buchungen</div><div class="stat-value">{{ rows|length }}<span class="muted text-sm font-normal"> / {{ total }}</span></div></div>
+      <div class="stat"><div class="muted text-xs">VISA</div><div class="stat-value">{{ visa }}</div></div>
+      <div class="stat"><div class="muted text-xs">Eingang</div><div class="stat-value text-base">{{ amount('%.2f'|format(income)) }}</div></div>
+      <div class="stat"><div class="muted text-xs">Ausgang</div><div class="stat-value text-base">{{ amount('%.2f'|format(spending)) }}</div></div>
+    </div>
+    <div class="flex flex-wrap items-center gap-2">
+      <a class="btn btn-ghost" href="{{ url_for('download_csv', **window_query) }}">CSV</a>
+      {% if upload.account_id is not none %}
+      <a class="btn btn-ghost" href="{{ url_for('download_json', **window_query) }}">JSON</a>
+      {% endif %}
+      <form method="post" action="{{ url_for('send_import') }}"
+            onsubmit="const b=this.querySelector('button'); b.disabled=true; b.textContent='Import läuft … das kann dauern';">
+        {{ csrf() }}
+        <input type="hidden" name="start" value="{{ start.isoformat() }}">
+        <input type="hidden" name="stop" value="{{ stop.isoformat() }}">
+        <button class="btn btn-primary" {{ 'disabled' if upload.account_id is none or not rows }}>
+          {{ rows|length }} an Firefly III senden
+        </button>
+      </form>
+    </div>
+  </div>
+  {% if upload.account_id is none %}<p class="muted mt-3">Zum Senden der Buchungen das Firefly-III-Konto wählen.</p>{% endif %}
+</div>
+
+<div class="card">
+  {% if rows %}
+  {{ booking_table(rows) }}
+  {% else %}
+  <p class="card-body muted">Keine Buchungen in diesem Zeitraum.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -5,8 +5,8 @@
     pkgs,
     ...
   }: {
-    # The `Host` blocks of the VW hosts, decrypted by agenix (see the host
-    # importing this aspect, e.g. `hosts/epsilon [N]/users/max.nix`)
+    # The `Host` blocks of the VW hosts, the `vw-ssh-config` secret of
+    # `secrets/README.md`, declared by the host importing this aspect
     programs.ssh.includes = [osConfig.age.secrets.vw-ssh-config.path];
 
     home.packages = with pkgs; [

@@ -1,0 +1,58 @@
+{% macro csrf() %}<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">{% endmacro %}
+
+{% macro amount(value) %}
+<span class="font-medium tabular-nums whitespace-nowrap {{ 'text-rose-600 dark:text-rose-400' if value|string|first == '-' else 'text-emerald-600 dark:text-emerald-400' }}">{{ value|money }}&nbsp;€</span>
+{% endmacro %}
+
+{% macro tags(text, category='') %}
+<div class="flex flex-wrap gap-1">
+  {% if category %}<span class="badge badge-amber" title="Kategorie">▦ {{ category }}</span>{% endif %}
+  {% for tag in (text or '').split(',') if tag %}<span class="badge badge-indigo">{{ tag }}</span>{% endfor %}
+</div>
+{% endmacro %}
+
+{% macro booking_table(rows, show_notes=true) %}
+<div class="overflow-x-auto">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Datum</th>
+        <th>Empfänger / Beschreibung</th>
+        <th class="hidden md:table-cell">Schlagwörter</th>
+        <th class="hidden text-right md:table-cell">Betrag</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr class="{{ 'bg-indigo-50/40 dark:bg-indigo-950/30' if row._rule }}">
+        <td class="whitespace-nowrap tabular-nums">
+          {{ row.date|de_date }}
+          {% if row.payment_date and row.payment_date != row.date %}
+          <div class="muted text-xs" title="Zahlungsdatum (Kauf)">bezahlt {{ row.payment_date|de_date }}</div>
+          {% endif %}
+          <div class="mt-1 md:hidden">{{ amount(row.amount) }}</div>
+        </td>
+        <td class="break-words sm:min-w-64">
+          <div class="font-medium">{{ row.opposing_name }}
+            {% if row._rule %}<span class="badge badge-indigo ml-1" title="Von einer Empfängerregel geändert">Regel</span>{% endif %}
+          </div>
+          <div class="muted">{{ row.description }}</div>
+          {% if row._bank_payee and row._bank_payee != row.opposing_name %}
+          <div class="text-xs text-slate-400 dark:text-slate-500">Bank: {{ row._bank_payee }}</div>
+          {% endif %}
+          <div class="mt-1 md:hidden">{{ tags(row.tags, row.category) }}</div>
+          {% if show_notes and row.notes %}
+          <details class="mt-1 text-xs">
+            <summary class="cursor-pointer text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">Notizen</summary>
+            <pre class="mt-1 font-sans whitespace-pre-wrap text-slate-600 dark:text-slate-400">{{ row.notes }}</pre>
+          </details>
+          {% endif %}
+        </td>
+        <td class="hidden md:table-cell">{{ tags(row.tags, row.category) }}</td>
+        <td class="hidden text-right md:table-cell">{{ amount(row.amount) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endmacro %}

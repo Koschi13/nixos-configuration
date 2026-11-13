@@ -48,7 +48,6 @@ in {
         dotfiles-cpu
 
         # services
-        docker
         firmware
         logind
         gpg
@@ -120,6 +119,11 @@ in {
     config,
     ...
   }: {
+    # Reached through the user as well as through the layers on top of this
+    # one. Deduplicates the module, see `dotfiles-users` in
+    # `lib/users [N]/users.nix`.
+    key = "dotfiles-system-default";
+
     imports = with self.modules.homeManager; [
       shell
       neovim
@@ -128,7 +132,6 @@ in {
       navi
       nh
       gpg
-      agents
       nix-index
     ];
 
@@ -139,6 +142,7 @@ in {
       nix-tree
       # Explain why two derivations differ
       nix-diff
+      yubikey-manager
     ];
 
     home.homeDirectory =

@@ -63,16 +63,13 @@
     # The path of the map stays the same when its content changes
     systemd.services.autofs.restartTriggers = [config.age.secrets.homeserver-map.file];
 
+    # Their content is documented in `secrets/README.md`
     age.secrets = {
-      # The shares as autofs direct map, one line each:
-      # `<path> -credentials=/run/agenix/smb-credentials ://<server>/<share>`
-      # autofs appends the options of the master map to these.
       homeserver-map = {
         file = "${inputs.self}/secrets/homeserver-map.age";
         mode = "0400";
       };
-      # `username=…` and `password=…` of the shares. The path is fixed, as the
-      # map refers to it.
+      # The path is fixed, as the map refers to it
       smb-credentials = {
         file = "${inputs.self}/secrets/smb-credentials.age";
         path = "/run/agenix/smb-credentials";

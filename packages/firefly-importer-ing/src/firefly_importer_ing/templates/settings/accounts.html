@@ -1,0 +1,51 @@
+{% extends "settings/_layout.html" %}
+{% from "_macros.html" import csrf %}
+{% block settings %}
+<div class="grid gap-6 lg:grid-cols-3">
+  <div class="card lg:col-span-2">
+    <div class="card-body pb-3">
+      <h2 class="card-title">ING-Konto → Firefly-III-Konto</h2>
+      <p class="muted mt-1">Ausgewählt über die IBAN im Kopf des Exports. Konten, deren IBAN in Firefly III hinterlegt ist, werden von selbst gefunden.</p>
+    </div>
+    {% if mappings %}
+    <table class="table">
+      <thead><tr><th>IBAN</th><th>Firefly-III-Konto</th><th></th></tr></thead>
+      <tbody>
+        {% for mapping in mappings %}
+        <tr>
+          <td class="font-mono text-xs">{{ mapping.iban }}</td>
+          <td>{{ mapping.name or 'Konto' }} <span class="muted">#{{ mapping.firefly_account_id }}</span></td>
+          <td class="text-right">
+            <form method="post" action="{{ url_for('settings_accounts_delete', mapping_id=mapping.id) }}">
+              {{ csrf() }}<button class="btn btn-danger btn-sm">Entfernen</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="card-body pt-0 muted">Noch keine. Sie entstehen beim Importieren oder unten.</p>
+    {% endif %}
+  </div>
+
+  <form method="post" class="card card-body h-fit space-y-4">
+    {{ csrf() }}
+    <h2 class="card-title">Konto zuordnen</h2>
+    {% if accounts_error %}<p class="text-sm text-rose-600">{{ accounts_error }}</p>{% endif %}
+    <div>
+      <label class="label" for="iban">IBAN bei der ING</label>
+      <input id="iban" name="iban" class="input font-mono" placeholder="DE00 0000 0000 0000 0000 00" required>
+    </div>
+    <div>
+      <label class="label" for="account_id">Firefly-III-Konto</label>
+      <select id="account_id" name="account_id" class="input" required>
+        {% for account in accounts if account.active %}
+        <option value="{{ account.id }}">{{ account.name }}{% if account.iban %} · {{ account.iban }}{% endif %}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button class="btn btn-primary w-full" {{ 'disabled' if not accounts }}>Speichern</button>
+  </form>
+</div>
+{% endblock %}

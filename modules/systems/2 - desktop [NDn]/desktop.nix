@@ -8,7 +8,11 @@
       printing
       audio
       usb
+      docker
     ];
+
+    # The desktop of every user of this host
+    home-manager.sharedModules = [self.modules.homeManager.system-desktop];
   };
 
   flake.modules.darwin.system-desktop = {
@@ -21,6 +25,8 @@
     imports = with self.modules.homeManager; [
       system-default
 
+      agents
+
       sway
       kanshi
       awww
@@ -31,7 +37,6 @@
       firefox
       vscode
       zed
-      glance
       gnome
       theme-switch
       messengers
@@ -46,8 +51,10 @@
 
       bitwarden-cli
       gnupg
-      yubikey-manager
+      pinentry-gnome3
     ];
+
+    services.gpg-agent.pinentry.package = pkgs.pinentry-gnome3;
 
     services.mpris-proxy.enable = true;
   };

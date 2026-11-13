@@ -1,15 +1,52 @@
-{self, ...}: {
-  flake.modules.homeManager.glance = {osConfig, ...}: {
-    imports = [self.modules.homeManager.stylix];
+{
+  inputs,
+  self,
+  ...
+}: {
+  # The Glance dashboard on http://glance.lan, behind `reverse-proxy`. Runs as
+  # a system service with a dynamic user, which can't read /home, so it can't
+  # reach the files or the forwarded gpg-agent sockets of the users.
+  #
+  # Needs the `glance-env` secret of `secrets/README.md`.
+  flake.modules.nixos.glance = {
+    config,
+    lib,
+    pkgs,
+    ...
+  }: let
+    domain = "glance.lan";
+    inherit (config.services.glance.settings.server) host port;
 
-    stylix.targets.glance.enable = true;
+    # The default variant of the theme, in the colours the stylix target of
+    # Home-Manager would set. stylix only themes Glance in Home-Manager.
+    theme =
+      (lib.evalModules {
+        class = "homeManager";
+        modules = [self.modules.homeManager.dotfiles-theme];
+      }).config.dotfiles.theme.active;
+    colors = (inputs.stylix.inputs.base16.lib {inherit pkgs lib;}).mkSchemeAttrs theme.scheme;
+    hsl = import "${inputs.stylix}/modules/glance/rgb-to-hsl.nix" {inherit lib colors;};
+  in {
+    imports = [self.modules.nixos.reverse-proxy];
 
-    # Provides GLANCE_LOCATION, decrypted by agenix (see `nixos.max`)
-    systemd.user.services.glance.Service.EnvironmentFile = osConfig.age.secrets.glance-env.path;
+    # Provides GLANCE_LOCATION. Read by systemd before it drops privileges, so
+    # root may own it.
+    age.secrets.glance-env.file = "${self}/secrets/glance-env.age";
+
+    services.nginx.virtualHosts.${domain}.locations."/".proxyPass = "http://${host}:${toString port}";
 
     services.glance = {
       enable = true;
+      environmentFile = config.age.secrets.glance-env.path;
       settings = {
+        theme = {
+          light = theme.polarity == "light";
+          contrast-multiplier = 1.0;
+          background-color = hsl "base00";
+          primary-color = hsl "base05";
+          positive-color = hsl "base0B";
+          negative-color = hsl "base08";
+        };
         pages = [
           {
             name = "Home";
@@ -133,6 +170,7 @@
           }
         ];
         server = {
+          host = "127.0.0.1";
           port = 5678;
         };
       };

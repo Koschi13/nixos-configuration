@@ -10,7 +10,7 @@
     ...
   }: let
     # Refuses to commit plaintext secrets: everything staged in secrets/ (but
-    # the rules) has to be encrypted by age and everything in keys/ by gpg.
+    # the rules and their documentation) has to be encrypted by age and everything in keys/ by gpg.
     secrets-guard = pkgs.writers.writePython3Bin "secrets-guard" {} ''
       import fnmatch
       import os
@@ -27,6 +27,7 @@
       # its staged content, `None` refuses it unseen.
       RULES = [
           ("secrets/agenix-rules.nix", lambda blob: True, None),
+          ("secrets/README.md", lambda blob: True, None),
           ("secrets/*.age",
            lambda blob: blob.startswith(b"age-encryption.org/v1"),
            "not encrypted by age"),
@@ -84,6 +85,17 @@
       };
     };
 
-    devShells.default = config.pre-commit.devShell;
+    devShells.default = pkgs.mkShell {
+      inputsFrom = [config.pre-commit.devShell];
+      # `uv run` for developing the Python packages in packages/. uv uses the
+      # Python of nixpkgs, as the interpreters it downloads don't run on
+      # NixOS, and psycopg loads libpq from the library path.
+      packages = [pkgs.uv pkgs.python3];
+      env = {
+        UV_PYTHON = pkgs.lib.getExe pkgs.python3;
+        UV_PYTHON_DOWNLOADS = "never";
+        LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [pkgs.libpq];
+      };
+    };
   };
 }

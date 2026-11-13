@@ -54,6 +54,8 @@ at runtime, e.g. the autofs map of `mount-homeserver` or the SSH `Include` of
 
 - `secrets/agenix-rules.nix` lists the public keys every secret is encrypted
   to: the admin age key and the SSH host key of every host.
+- `secrets/README.md` documents what each secret contains and the format of
+  its plaintext. A new secret gets a section there.
 - `age.secrets.<name>.file` in a NixOS module decrypts the secret at
   activation with `/etc/ssh/ssh_host_ed25519_key` into
   `config.age.secrets.<name>.path` (`/run/agenix/<name>`), with the given
