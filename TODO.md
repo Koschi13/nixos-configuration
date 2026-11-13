@@ -19,3 +19,13 @@
 8. [ ] Move the fonts from the cross-cutting `font.nix` to a shared option
        pulled by each program, like `dotfiles.theme`. See
        `docs/todo/font-shared-option.md`.
+9. [ ] Setup a service which tracks the install package versions similar like
+       OWASP-DP to get notifications about CVEs
+10. [ ] Server metric dashboard like Grafana or include into Glance
+11. [ ] 7z and co
+12. [ ] SSO service for home network (required for VPN)
+13. [ ] Tailscale
+
+- This requires the setup of an additional remote host acting as the proxy
+- Security measurements have to be take to prevent access (whitelist). Maybe
+  this has to be done in Unifi, but hardening the systems is also necessary

@@ -4,12 +4,37 @@
 
 ### Initial install
 
+```shell
+nix-shell -p tmux
+
+tmux
+
+git clone https://github.com/Koschi13/nixos-configuration.git
+```
+
 `./scripts/init-new-system-old.sh <disk-id>` partitions the disk and sets up
 LUKS. **Handle with care, this wipes the disk!** It hasn't been validated
 against the current configuration yet and exits early until it is.
 
-After that, add the host to the configuration and install it, see
-[Adding a host](#adding-a-host).
+```shell
+# Copy the public key from the yubikey to the root user of the ISO
+# E.g.: From the homeserver
+scp <username>@homeserver.lan:~/.ssh/authorized_keys /root/.ssh/
+
+# Copy the hardware-configuration.nix to an existing host (execute on existing host)
+scp root@<ip>:/mnt/etc/nixos/hardware-configuration.nix .
+```
+
+Modify the host configuration with the `hardware-configuration.nix` you copied
+over, build the configuration and copy it to the new host (all executed on
+existing host):
+
+```shell
+nix build .#nixosConfigurations.<host>.config.system.build.toplevel
+nix copy --to "ssh://root@<ip>?remote-store=local%3Froot%3D%2Fmnt" ./result
+ssh root@<ip> nixos-install --root /mnt --system "$(readlink -f result)" --no-root-passwd --no-channel-copy
+ssh -t root@<ip> nixos-enter --root /mnt -c "'passwd max'"
+```
 
 ### Adding a host
 
@@ -30,6 +55,7 @@ After that, add the host to the configuration and install it, see
 
    On an installed host, use `/etc/ssh/ssh_host_ed25519_key` (create it the
    same way if it's missing).
+
 4. Add the public key (`cat …/ssh_host_ed25519_key.pub`, without the comment)
    to `secrets/agenix-rules.nix` and run `scripts/secret-edit.sh -r`. This
    needs the YubiKey, so it's easiest on an existing host. Commit, push and
@@ -111,12 +137,12 @@ Hosts import systems and services, users import programs.
 Aspect directories carry a tag listing the classes they configure, so the
 supported platforms are visible without opening the files:
 
-| Tag | Class                            |
-| --- | -------------------------------- |
-| `N` | `nixos`                          |
-| `D` | `darwin`                         |
-| `n` | `homeManager` on Linux           |
-| `d` | `homeManager` on macOS           |
+| Tag | Class                  |
+| --- | ---------------------- |
+| `N` | `nixos`                |
+| `D` | `darwin`               |
+| `n` | `homeManager` on Linux |
+| `d` | `homeManager` on macOS |
 
 For example `shell [NDnd]` configures every class, while `rofi [n]` only
 exists for Home-Manager on Linux. `[]` marks flake-parts only modules.
@@ -163,11 +189,11 @@ duplicated, like `graphics` and `gnome-keyring`.
 `lib/theme [nd]` declares which theme is active (`dotfiles.theme`). The
 theming itself is left to external projects that work with any theme family:
 
-| Layer | Source | Used for |
-| --- | --- | --- |
-| Palette | [tinted-theming/schemes](https://github.com/tinted-theming/schemes) (`tinted-schemes` input) | every theme is a base24 (or base16) scheme |
-| Theming | [stylix](https://github.com/nix-community/stylix), `stylix` aspect | every program with a stylix target |
-| Own code | this repository | the selection, switching and what stylix doesn't cover (rofi's layout, neovim, VSCode) |
+| Layer    | Source                                                                                       | Used for                                                                               |
+| -------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Palette  | [tinted-theming/schemes](https://github.com/tinted-theming/schemes) (`tinted-schemes` input) | every theme is a base24 (or base16) scheme                                             |
+| Theming  | [stylix](https://github.com/nix-community/stylix), `stylix` aspect                           | every program with a stylix target                                                     |
+| Own code | this repository                                                                              | the selection, switching and what stylix doesn't cover (rofi's layout, neovim, VSCode) |
 
 The `stylix` aspect enables no target by default. Each program imports it and
 enables its target in its own file:
