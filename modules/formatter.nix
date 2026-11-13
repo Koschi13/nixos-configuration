@@ -85,6 +85,17 @@
       };
     };
 
-    devShells.default = config.pre-commit.devShell;
+    devShells.default = pkgs.mkShell {
+      inputsFrom = [config.pre-commit.devShell];
+      # `uv run` for developing the Python packages in packages/. uv uses the
+      # Python of nixpkgs, as the interpreters it downloads don't run on
+      # NixOS, and psycopg loads libpq from the library path.
+      packages = [pkgs.uv pkgs.python3];
+      env = {
+        UV_PYTHON = pkgs.lib.getExe pkgs.python3;
+        UV_PYTHON_DOWNLOADS = "never";
+        LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [pkgs.libpq];
+      };
+    };
   };
 }
