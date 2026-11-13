@@ -1,0 +1,57 @@
+{% extends "settings/_layout.html" %}
+{% from "_macros.html" import csrf %}
+{% block settings %}
+<div class="grid gap-6 lg:grid-cols-3">
+  <div class="space-y-6 lg:col-span-2">
+    {% for kind, title, help in [
+      ('visa_prefix', 'VISA-Händlerpräfixe', 'Ein VISA-Empfänger wie „SUMUP *HÄNDLER“ wird zu „HÄNDLER“ und erhält das Schlagwort.'),
+      ('girocard_payee', 'Girocard-Empfänger', 'Ist der Empfänger einer Girocard-Zahlung einer von diesen, wird stattdessen das Geschäft aus dem Verwendungszweck genommen. Ein leeres Schlagwort fügt keines hinzu.'),
+    ] %}
+    <div class="card">
+      <div class="card-body pb-3">
+        <h2 class="card-title">{{ title }}</h2>
+        <p class="muted mt-1">{{ help }}</p>
+      </div>
+      <table class="table">
+        <thead><tr><th>{{ 'Präfix' if kind == 'visa_prefix' else 'Empfänger' }}</th><th>Schlagwort</th><th></th></tr></thead>
+        <tbody>
+          {% for processor in processors if processor.kind == kind %}
+          <tr>
+            <td class="font-mono text-xs">{{ processor.pattern }}</td>
+            <td>{% if processor.tag %}<span class="badge badge-indigo">{{ processor.tag }}</span>{% else %}<span class="muted">—</span>{% endif %}</td>
+            <td class="text-right">
+              <form method="post" action="{{ url_for('settings_processors_delete', processor_id=processor.id) }}">
+                {{ csrf() }}<button class="btn btn-danger btn-sm">Entfernen</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="3" class="muted">Keine.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endfor %}
+  </div>
+
+  <form method="post" class="card card-body h-fit space-y-4">
+    {{ csrf() }}
+    <h2 class="card-title">Hinzufügen oder ändern</h2>
+    <div>
+      <label class="label" for="kind">Art</label>
+      <select id="kind" name="kind" class="input">
+        {% for kind, label in PROCESSOR_KINDS.items() %}<option value="{{ kind }}">{{ label }}</option>{% endfor %}
+      </select>
+    </div>
+    <div>
+      <label class="label" for="pattern">Präfix oder Empfänger</label>
+      <input id="pattern" name="pattern" class="input font-mono" placeholder="SUMUP" required>
+    </div>
+    <div>
+      <label class="label" for="tag">Schlagwort</label>
+      <input id="tag" name="tag" class="input" placeholder="SumUp">
+    </div>
+    <button class="btn btn-primary w-full">Speichern</button>
+  </form>
+</div>
+{% endblock %}

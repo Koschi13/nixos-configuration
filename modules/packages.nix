@@ -17,10 +17,12 @@
     };
 
     packages.compute_aspect_ratio = pkgs.callPackage ../packages/compute_aspect_ratio {};
+    packages.firefly-importer-ing = pkgs.callPackage ../packages/firefly-importer-ing {};
   };
 
   flake.overlays.local = final: _prev: {
     local.compute_aspect_ratio = final.callPackage ../packages/compute_aspect_ratio {};
+    local.firefly-importer-ing = final.callPackage ../packages/firefly-importer-ing {};
   };
 
   # Escape hatch for packages broken on unstable, see `nixpkgs-stable` in

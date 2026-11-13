@@ -23,6 +23,32 @@ base64:<32 random bytes in base64>
 
 Generate it with `echo "base64:$(head -c 32 /dev/urandom | base64)"`.
 
+### `firefly-iii-data-importer-auto-import-secret`
+
+The `AUTO_IMPORT_SECRET` of the Data Importer, which its `/autoupload`
+endpoint requires next to the Firefly III token of the user. Only the
+`firefly-importer-ing` service calls that endpoint, so changing it only needs
+a deploy. At least 16 characters.
+
+```
+<secret>
+```
+
+Generate it with `head -c 32 /dev/urandom | base64`.
+
+### `firefly-importer-ing-key`
+
+The key the ING importer encrypts the OAuth client IDs and tokens of its
+users with, and signs its sessions with. Changing it logs everyone out and
+makes the stored client IDs unreadable: every user then enters their client
+ID again. At least 32 characters.
+
+```
+<key>
+```
+
+Generate it with `head -c 48 /dev/urandom | base64`.
+
 ## PostgreSQL
 
 ### `postgresql-admin-password`

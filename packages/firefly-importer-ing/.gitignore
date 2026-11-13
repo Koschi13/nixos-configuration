@@ -1,0 +1,4 @@
+# Left behind by `uv run`. The versions that count come from nixpkgs, so the
+# lock file isn't kept.
+__pycache__/
+uv.lock

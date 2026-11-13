@@ -1,0 +1,42 @@
+{% extends "settings/_layout.html" %}
+{% from "_macros.html" import csrf %}
+{% block settings %}
+<div class="grid max-w-4xl gap-6 md:grid-cols-2">
+  <div class="card card-body space-y-3">
+    <h2 class="card-title">Firefly-III-Benutzer</h2>
+    <dl class="space-y-2 text-sm">
+      <div class="flex justify-between gap-4"><dt class="muted">E-Mail</dt><dd class="font-medium">{{ g.user.email }}</dd></div>
+      <div class="flex justify-between gap-4"><dt class="muted">Benutzer-ID</dt><dd>{{ g.user.firefly_user_id }}</dd></div>
+      <div class="flex justify-between gap-4"><dt class="muted">Token gültig bis</dt><dd>{{ g.user.token_expires_at|de_date if g.user.token_expires_at else 'unbekannt' }}</dd></div>
+      <div class="flex justify-between gap-4"><dt class="muted">Client-ID gespeichert</dt><dd>{{ 'ja, verschlüsselt' if client_id_ok else 'nicht lesbar, bitte neu anmelden' }}</dd></div>
+    </dl>
+    <form method="post" action="{{ url_for('oauth_start', user_id=g.user.id) }}">
+      {{ csrf() }}<button class="btn btn-secondary">Neu mit Firefly III verbinden</button>
+    </form>
+  </div>
+
+  <form method="post" class="card card-body space-y-4">
+    {{ csrf() }}
+    <h2 class="card-title">OAuth-Client</h2>
+    <p class="muted">Seine Weiterleitungs-URL in Firefly III muss <code class="break-all">{{ redirect_uri }}</code> lauten.</p>
+    <div>
+      <label class="label" for="client_id">Neue Client-ID</label>
+      <input id="client_id" name="client_id" class="input" inputmode="numeric" required>
+    </div>
+    <button class="btn btn-primary">Speichern</button>
+  </form>
+
+  <form method="post" action="{{ url_for('settings_profile_delete') }}" class="card card-body space-y-4 md:col-span-2">
+    {{ csrf() }}
+    <h2 class="card-title text-rose-700 dark:text-rose-400">Profil löschen</h2>
+    <p class="muted">Löscht hier deine Regeln, Kontozuordnungen, übrigen Einstellungen und die gespeicherten Tokens. In Firefly III ändert sich nichts.</p>
+    <div class="flex flex-wrap items-end gap-3">
+      <div class="min-w-64 flex-1">
+        <label class="label" for="confirm">Zur Bestätigung {{ g.user.email }} eingeben</label>
+        <input id="confirm" name="confirm" class="input" autocomplete="off">
+      </div>
+      <button class="btn btn-danger ring-1 ring-rose-300 dark:ring-rose-800">Löschen</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

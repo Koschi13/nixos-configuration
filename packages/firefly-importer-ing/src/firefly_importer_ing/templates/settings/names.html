@@ -1,0 +1,21 @@
+{% extends "settings/_layout.html" %}
+{% from "_macros.html" import csrf %}
+{% block settings %}
+<form method="post" class="card card-body max-w-3xl space-y-5">
+  {{ csrf() }}
+  <div>
+    <h2 class="card-title">Namen & Schlagwörter</h2>
+    <p class="muted mt-1">Die Schlagwörter und Empfänger, die die Umwandlung verwendet. Ein hier umbenanntes Schlagwort wird an Buchungen, die schon in Firefly III sind, nicht umbenannt.</p>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2">
+    {% for key, (default, label) in NAME_SETTINGS.items() %}
+    <div>
+      <label class="label" for="{{ key }}">{{ label }}</label>
+      <input id="{{ key }}" name="{{ key }}" class="input" value="{{ names[key] }}" required>
+      {% if names[key] != default %}<p class="muted mt-1 text-xs">Standard: {{ default }}</p>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  <div class="flex justify-end"><button class="btn btn-primary">Speichern</button></div>
+</form>
+{% endblock %}

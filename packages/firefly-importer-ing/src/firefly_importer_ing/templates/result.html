@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% from "_macros.html" import csrf, booking_table, amount %}
+{% block title %}Import{% endblock %}
+{% block content %}
+{% set rows = upload.rows %}
+{% set missing = upload.check.missing if upload.check else [] %}
+{% set others = upload.check.others if upload.check else [] %}
+<div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <p class="label">Import</p>
+    <h1 class="text-xl font-semibold tracking-tight">{{ upload.start|de_date }} – {{ upload.stop|de_date }}</h1>
+    <p class="muted mt-1">{{ rows|length }} Buchungen gesendet · {{ upload.file_name }}</p>
+  </div>
+  <div class="flex flex-wrap gap-2">
+    <a class="btn btn-ghost" href="{{ url_for('download_csv') }}">CSV</a>
+    <a class="btn btn-ghost" href="{{ url_for('download_json') }}">JSON</a>
+    {% if upload.state == 'sent' %}
+    <form method="post" action="{{ url_for('reset_import') }}">
+      {{ csrf() }}
+      <button class="btn btn-secondary">Weiteren Zeitraum importieren</button>
+    </form>
+    {% endif %}
+    <form method="post" action="{{ url_for('discard_import') }}">
+      {{ csrf() }}
+      <button class="btn btn-primary">Fertig</button>
+    </form>
+  </div>
+</div>
+
+<div class="card card-body mb-6">
+  <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
+    <h2 class="card-title">Was in Firefly III angekommen ist</h2>
+    <form method="post" action="{{ url_for('check_import') }}">
+      {{ csrf() }}
+      <button class="btn btn-ghost btn-sm">↻ Erneut prüfen</button>
+    </form>
+  </div>
+  {% if upload.answer %}<p class="muted mb-3">{{ upload.answer }}</p>{% endif %}
+  {% if upload.state == 'sending' %}
+    <p class="text-sm text-amber-700 dark:text-amber-400">Der Importer hat noch nicht geantwortet. Diese Seite aktualisiert sich nicht selbst: erneut prüfen, sobald er fertig ist.</p>
+  {% elif upload.check is none %}
+    <p class="text-sm text-amber-700 dark:text-amber-400">Noch nicht in Firefly III geprüft.</p>
+  {% else %}
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <div class="stat"><div class="muted text-xs">Gesendet</div><div class="stat-value">{{ rows|length }}</div></div>
+      <div class="stat"><div class="muted text-xs">In Firefly III gefunden</div><div class="stat-value text-emerald-600 dark:text-emerald-400">{{ rows|length - missing|length }}</div></div>
+      <div class="stat"><div class="muted text-xs">Fehlend</div><div class="stat-value {{ 'text-rose-600 dark:text-rose-400' if missing else '' }}">{{ missing|length }}</div></div>
+    </div>
+    <p class="muted mt-3">Abgeglichen über die interne Referenz jeder Buchung, im Zeitraum auf Konto #{{ upload.account_id }}.
+      Der Importer meldet nur, ob er die Datei angenommen hat; diese Prüfung ist daher das eigentliche Ergebnis.</p>
+    {% if missing %}
+    <p class="mt-3 text-sm text-amber-700 dark:text-amber-400">Fehlende Buchungen sind beim Importer fehlgeschlagen oder noch in Arbeit; Einzelheiten stehen in seinem Log.
+      Sie lassen sich gefahrlos erneut senden: Was schon in Firefly III ist, überspringt der Importer.</p>
+    {% endif %}
+  {% endif %}
+  <p class="muted mt-3">Diese Seite wird nicht gespeichert: Nach „Fertig“ oder einer Stunde ohne Nutzung ist sie weg.</p>
+</div>
+
+{% if missing %}
+<div class="card mb-6">
+  <div class="card-body pb-0"><h2 class="card-title">Fehlen in Firefly III</h2></div>
+  {{ booking_table(missing) }}
+</div>
+{% endif %}
+
+{% if others %}
+<div class="card mb-6">
+  <div class="card-body pb-2">
+    <h2 class="card-title">Nur in Firefly III</h2>
+    <p class="muted">Buchungen in diesem Zeitraum, die nicht zu diesem Import gehören: von Hand erfasst oder aus einem anderen Import.</p>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="table">
+      <thead><tr><th>Datum</th><th>Beschreibung</th><th>Von → An</th><th class="text-right">Betrag</th></tr></thead>
+      <tbody>
+        {% for split in others %}
+        <tr>
+          <td class="whitespace-nowrap tabular-nums">{{ split.date|de_date }}</td>
+          <td>{{ split.description }}</td>
+          <td class="muted">{{ split.source_name }} → {{ split.destination_name }}</td>
+          <td class="text-right">{{ amount(('-' if split.type == 'withdrawal' else '') ~ split.amount) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<details class="card">
+  <summary class="card-body cursor-pointer card-title">Alle {{ rows|length }} gesendeten Buchungen</summary>
+  {{ booking_table(rows) }}
+</details>
+{% endblock %}

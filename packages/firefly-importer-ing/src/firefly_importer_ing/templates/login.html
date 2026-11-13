@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% from "_macros.html" import csrf %}
+{% block title %}Anmelden{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-md space-y-6 pt-6">
+  <div class="text-center">
+    <h1 class="text-2xl font-semibold tracking-tight">Mit Firefly&nbsp;III anmelden</h1>
+    <p class="muted mt-2">Die Buchungen werden als der Firefly-III-Benutzer importiert, der sich anmeldet.</p>
+  </div>
+
+  {% if profiles %}
+  <div class="card card-body space-y-2">
+    <p class="label">Bekannte Profile</p>
+    {% for profile in profiles %}
+    <div class="flex items-center gap-2">
+      <form method="post" class="min-w-0 flex-1" action="{{ url_for('oauth_start', user_id=profile.id, next=request.args.get('next')) }}">
+        {{ csrf() }}
+        <button class="btn btn-secondary w-full justify-between">
+          <span class="flex min-w-0 items-center gap-3">
+            <span class="grid size-7 shrink-0 place-items-center rounded-full bg-indigo-100 text-xs font-semibold text-indigo-700 uppercase dark:bg-indigo-900 dark:text-indigo-200">{{ profile.email[:1] }}</span>
+            <span class="truncate">{{ profile.email }}</span>
+          </span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </form>
+      <form method="post" action="{{ url_for('forget_profile', user_id=profile.id) }}">
+        {{ csrf() }}
+        <button class="btn btn-ghost btn-sm" title="Aus diesem Browser entfernen" aria-label="{{ profile.email }} aus diesem Browser entfernen">✕</button>
+      </form>
+    </div>
+    {% endfor %}
+    <p class="muted text-xs">Profile, die sich in diesem Browser angemeldet haben.</p>
+  </div>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('login', next=request.args.get('next')) }}" class="card card-body space-y-4">
+    {{ csrf() }}
+    <div>
+      <label for="client_id" class="label">{{ 'Neues Profil: ' if profiles }}OAuth-Client-ID</label>
+      <input id="client_id" name="client_id" class="input" inputmode="numeric" placeholder="z. B. 4" required>
+    </div>
+    <button class="btn btn-primary w-full">Weiter zu Firefly III</button>
+    <p class="text-center text-sm">
+      <a href="{{ firefly_url }}/profile/oauth" target="_blank" rel="noopener">Client-ID in Firefly&nbsp;III erstellen</a>
+    </p>
+  </form>
+</div>
+{% endblock %}

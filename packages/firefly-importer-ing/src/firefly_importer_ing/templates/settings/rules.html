@@ -1,0 +1,128 @@
+{% extends "settings/_layout.html" %}
+{% from "_macros.html" import csrf, tags %}
+
+{% macro rule_fields(rule=none) %}
+<div class="grid gap-3 sm:grid-cols-12">
+  <div class="sm:col-span-2">
+    <label class="label">Feld</label>
+    <select name="field" class="input">
+      {% for field, label in RULE_FIELDS.items() %}
+      <option value="{{ field }}" {{ 'selected' if rule and rule.field == field }}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="sm:col-span-2">
+    <label class="label">Vergleich</label>
+    <select name="match" class="input">
+      {% for match, label in RULE_MATCHES.items() %}
+      <option value="{{ match }}" {{ 'selected' if rule and rule.match == match }}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="sm:col-span-8">
+    <label class="label">Muster</label>
+    <input name="pattern" class="input font-mono" value="{{ rule.pattern if rule }}" placeholder="^LIDL\b" required>
+  </div>
+  <div class="sm:col-span-4">
+    <label class="label">Neuer Empfänger</label>
+    <input name="new_name" class="input" value="{{ rule.new_name if rule }}" placeholder="beibehalten">
+  </div>
+  <div class="sm:col-span-3">
+    <label class="label">Kategorie</label>
+    <input name="category" class="input" value="{{ rule.category if rule }}" placeholder="keine">
+  </div>
+  <div class="sm:col-span-3">
+    <label class="label">Weitere Schlagwörter</label>
+    <input name="tags" class="input" value="{{ rule.tags|join(', ') if rule }}" placeholder="durch Komma getrennt">
+  </div>
+  <div class="flex items-end sm:col-span-2">
+    <label class="flex items-center gap-2 pb-2 text-sm"><input type="checkbox" name="enabled" value="1" class="rounded" {{ 'checked' if not rule or rule.enabled }}> Aktiv</label>
+  </div>
+</div>
+{% endmacro %}
+
+{% block settings %}
+<div class="grid gap-6 lg:grid-cols-3">
+  <div class="space-y-6 lg:col-span-2">
+    <div class="card">
+      <div class="card-body pb-3">
+        <h2 class="card-title">Empfängerregeln</h2>
+        <p class="muted mt-1">Nach der Umwandlung von oben nach unten geprüft; der erste aktive Treffer gewinnt. Der Empfänger ist der bereinigte Name, z. B. <code>LIDL SAGT DANKE</code> ohne <code>VISA</code>. Groß- und Kleinschreibung spielt keine Rolle.</p>
+      </div>
+      {% if rules %}
+      <ul class="divide-y divide-slate-100 dark:divide-slate-800">
+        {% for rule in rules %}
+        <li id="rule-{{ rule.id }}" class="{{ 'opacity-60' if not rule.enabled }} {{ 'bg-indigo-50/50 dark:bg-indigo-950/30' if test and test.rule and test.rule.id == rule.id }}">
+          <details>
+            <summary class="flex cursor-pointer list-none flex-wrap items-center gap-x-3 gap-y-1 px-5 py-3 sm:px-6">
+              <span class="w-6 text-right text-xs text-slate-400 tabular-nums">{{ loop.index }}</span>
+              <span class="badge badge-slate">{{ RULE_FIELDS[rule.field] }} · {{ RULE_MATCHES[rule.match] }}</span>
+              <code class="min-w-0 truncate text-sm">{{ rule.pattern }}</code>
+              <span class="text-slate-400">→</span>
+              <span class="text-sm font-medium">{{ rule.new_name or '(Empfänger unverändert)' }}</span>
+              {{ tags(rule.tags|join(','), rule.category) }}
+              {% if not rule.enabled %}<span class="badge badge-slate">aus</span>{% endif %}
+            </summary>
+            <div class="space-y-3 border-t border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-6 dark:border-slate-800 dark:bg-slate-950/40">
+              <form method="post" action="{{ url_for('settings_rules_update', rule_id=rule.id) }}" class="space-y-3">
+                {{ csrf() }}
+                {{ rule_fields(rule) }}
+                <div class="flex justify-end"><button class="btn btn-primary btn-sm">Speichern</button></div>
+              </form>
+              <div class="flex flex-wrap gap-1">
+                {% for direction, label in [('up', '↑ Hoch'), ('down', '↓ Runter')] %}
+                <form method="post" action="{{ url_for('settings_rules_move', rule_id=rule.id) }}">
+                  {{ csrf() }}<input type="hidden" name="direction" value="{{ direction }}">
+                  <button class="btn btn-ghost btn-sm">{{ label }}</button>
+                </form>
+                {% endfor %}
+                <form method="post" action="{{ url_for('settings_rules_delete', rule_id=rule.id) }}" class="ml-auto" onsubmit="return confirm('Diese Regel löschen?')">
+                  {{ csrf() }}<button class="btn btn-danger btn-sm">Löschen</button>
+                </form>
+              </div>
+            </div>
+          </details>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="card-body muted">Noch keine Regeln.</p>
+      {% endif %}
+    </div>
+
+    <form method="post" action="{{ url_for('settings_rules_add') }}" class="card card-body space-y-4">
+      {{ csrf() }}
+      <h2 class="card-title">Neue Regel</h2>
+      {{ rule_fields() }}
+      <div class="flex justify-end"><button class="btn btn-primary">Regel hinzufügen</button></div>
+    </form>
+  </div>
+
+  <form method="get" class="card card-body h-fit space-y-4 lg:sticky lg:top-6">
+    <div>
+      <h2 class="card-title">Ausprobieren</h2>
+      <p class="muted mt-1">Welche Regel greift bei einer Buchung?</p>
+    </div>
+    <div>
+      <label class="label" for="test_payee">Empfänger</label>
+      <input id="test_payee" name="test_payee" class="input" value="{{ test.payee if test }}" placeholder="LIDL SAGT DANKE">
+    </div>
+    <div>
+      <label class="label" for="test_description">Beschreibung</label>
+      <input id="test_description" name="test_description" class="input" value="{{ test.description if test }}" placeholder="optional">
+    </div>
+    <button class="btn btn-secondary w-full">Testen</button>
+    {% if test %}
+    <div class="rounded-xl px-4 py-3 text-sm ring-1 {{ 'bg-indigo-50 ring-indigo-200 dark:bg-indigo-950 dark:ring-indigo-900' if test.rule else 'bg-slate-50 ring-slate-200 dark:bg-slate-950 dark:ring-slate-800' }}">
+      {% if test.rule %}
+        <p>Regel <code>{{ test.rule.pattern }}</code> greift:</p>
+        <p class="mt-1 font-medium">{{ test.rule.new_name or test.payee }}</p>
+        <div class="mt-1">{{ tags(test.rule.tags|join(','), test.rule.category) }}</div>
+      {% else %}
+        <p>Keine Regel greift; der Empfänger bleibt, wie er ist.</p>
+      {% endif %}
+    </div>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}

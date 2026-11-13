@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Einstellungen{% endblock %}
+{% block content %}
+{% set tabs = [
+  ('settings_rules', 'Empfängerregeln'),
+  ('settings_accounts', 'Konten'),
+  ('settings_names', 'Namen & Schlagwörter'),
+  ('settings_processors', 'Zahlungsdienstleister'),
+  ('settings_profile', 'Profil'),
+] %}
+<div class="mb-6">
+  <h1 class="text-xl font-semibold tracking-tight">Einstellungen</h1>
+  <p class="muted mt-1">Nur für dich ({{ g.user.email }}). Änderungen gelten ab sofort für jede Vorschau und jeden Import.</p>
+</div>
+<nav class="mb-6 flex flex-wrap gap-1 rounded-xl bg-slate-100 p-1 dark:bg-slate-900">
+  {% for endpoint, label in tabs %}
+  <a href="{{ url_for(endpoint) }}" class="tab {{ 'tab-active' if request.endpoint == endpoint }}">{{ label }}</a>
+  {% endfor %}
+</nav>
+{% block settings %}{% endblock %}
+{% endblock %}
