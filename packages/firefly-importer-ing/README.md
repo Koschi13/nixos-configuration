@@ -11,6 +11,12 @@ and imports them.
 - Splits the Verwendungszweck into payee, description, notes and dates
   (booking, value date, purchase date).
 - Tags card payments (`VISA`, `Karte 1234`, `Girocard`, Apple Pay, SumUp, …).
+- Splits a booking that pays several things at once into one booking per
+  part (web service only, settings tab *Geteilte Buchungen*): a regex on the
+  Verwendungszweck whose groups come in pairs of description and amount.
+  The parts must add up to the booking, else it stays whole. Each part gets
+  its own internal reference, so a booking imported before its split rule
+  existed is imported again as parts.
 - Applies payee rules: rename, category, extra tags.
 
 It ships two commands: a CLI and a web service.
@@ -40,7 +46,7 @@ How it works:
    checks in Firefly III what arrived.
 
 What is stored, per user in PostgreSQL: the profile with its (encrypted)
-OAuth client ID and tokens, rules, processors, tag names and the assignments
+OAuth client ID and tokens, rules, split rules, processors, tag names and the assignments
 of IBANs to Firefly III accounts (`models.py`).
 
 What is not stored: anything about an upload. The export, its bookings and

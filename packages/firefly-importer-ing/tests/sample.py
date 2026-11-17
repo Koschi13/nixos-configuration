@@ -3,15 +3,19 @@ the real exports use. No real bank data belongs in this repository."""
 
 from __future__ import annotations
 
+import re
+
 IBAN = "DE00 1234 5678 9012 3456 78"
 WRAP = 35
 
 
 def wrap(text: str) -> str:
-    """Wrap like ING: cut every 35 characters, join with a space."""
-    return " ".join(
+    """Wrap like ING: cut every 35 characters, join with a space. A line
+    that starts or ends with a space gets no second one."""
+    joined = " ".join(
         text[start : start + WRAP] for start in range(0, len(text), WRAP)
     )
+    return re.sub(" {2,}", " ", joined)
 
 
 HEADER_BLOCK = [
@@ -155,6 +159,44 @@ LINES = {
         ref="1234567890123",
         balance="784,97",
     ),
+    "paypal_short": line(
+        "12.08.2026",
+        "PayPal Europe S.a.r.l. et Cie S.C.A",
+        "Lastschrift",
+        wrap(
+            "1234567890124/. Beispielverlag, Ihr Einkauf bei "
+            "Beispielverlag"
+        ),
+        "-4,90",
+        ref="1234567890124",
+        balance="779,07",
+    ),
+    # wrapped right at the space before "bei", in the last line
+    "paypal_cut_before_bei": line(
+        "04.08.2026",
+        "PayPal Europe S.a.r.l. et Cie S.C.A",
+        "Lastschrift",
+        wrap(
+            "1234567890125/PP.1234.PP/. MUSTER Moebelwel GmbH . Co. KG, "
+            "Ihr Einkauf bei MUSTER Moebelwel GmbH . Co. KG"
+        ),
+        "-103,89",
+        ref="1234567890125",
+        balance="782,07",
+    ),
+    # without the number in front, with a note at the end
+    "paypal_credit": line(
+        "30.07.2026",
+        "PayPal Europe S.a.r.l. et Cie S.C.A",
+        "Gutschrift",
+        wrap(
+            ". Muster Elektro GmbH (Elektro24), Ihr Einkauf bei Muster "
+            "Elektro GmbH (Elektro24) /ABBUCHUNG VOM PAYPAL-KONTO"
+        ),
+        "135,54",
+        ref="ABC1234567890123",
+        balance="917,61",
+    ),
     "generic": line(
         "05.11.2026",
         "STADTWERKE BEISPIEL",
@@ -184,6 +226,15 @@ LINES = {
         "ARN44444444444444444444444 Google Pay",
         "-20,00",
         valued="31.12.2025",
+        balance="677,98",
+    ),
+    "split": line(
+        "03.08.2026",
+        "Beispiel Versicherung",
+        "Lastschrift",
+        "L 1.111.111 55,74 L 2.222.222 13,16",
+        "-68,90",
+        ref="VERS-0000000001",
         balance="677,98",
     ),
     "transfer": line(

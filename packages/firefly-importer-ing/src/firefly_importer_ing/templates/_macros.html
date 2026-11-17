@@ -35,7 +35,11 @@
         <td class="break-words sm:min-w-64">
           <div class="font-medium">{{ row.opposing_name }}
             {% if row._rule %}<span class="badge badge-indigo ml-1" title="Von einer Empfängerregel geändert">Regel</span>{% endif %}
+            {% if row._split %}<span class="badge badge-amber ml-1" title="Von einer Regel für geteilte Buchungen aufgeteilt">Teil {{ row._split }}</span>{% endif %}
           </div>
+          {% if row._split_error %}
+          <div class="text-xs text-rose-600 dark:text-rose-400">Nicht geteilt: {{ row._split_error }}</div>
+          {% endif %}
           <div class="muted">{{ row.description }}</div>
           {% if row._bank_payee and row._bank_payee != row.opposing_name %}
           <div class="text-xs text-slate-400 dark:text-slate-500">Bank: {{ row._bank_payee }}</div>

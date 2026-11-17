@@ -1,7 +1,9 @@
 import csv
+import dataclasses
 import io
 import re
 from datetime import date
+from decimal import Decimal
 
 import pytest
 import sample
@@ -179,6 +181,51 @@ def test_wrapping_is_undone():
     )
 
 
+def test_paypal_without_pp_number():
+    row = one("paypal_short")
+    assert row["opposing_name"] == "Beispielverlag"
+    assert "PayPal" in tags(row)
+
+
+def test_paypal_wrapped_at_the_space_before_bei():
+    row = one("paypal_cut_before_bei")
+    assert row["opposing_name"] == "MUSTER Moebelwel GmbH . Co. KG"
+    assert "PayPal" in tags(row)
+
+
+def test_paypal_without_number_and_with_a_note_at_the_end():
+    row = one("paypal_credit")
+    assert row["opposing_name"] == "Muster Elektro GmbH (Elektro24)"
+    assert row["external_id"] == "ABC1234567890123"
+    assert "ABBUCHUNG VOM PAYPAL-KONTO" in row["notes"]
+    assert "PayPal" in tags(row)
+
+
+def test_paypal_shop_with_a_slash_is_kept_whole():
+    match = converter.PAYPAL_PURPOSE.match(". Foo, Ihr Einkauf bei Shop24/DE")
+    assert match.group("shop") == "Shop24/DE"
+
+
+@pytest.mark.parametrize(
+    "original",
+    [
+        # line 2 starts with a space, line 3 with the rest of a word
+        "1234567890123/PP.1234.PP/. Musterei Warenhaus, Ihr Einkauf bei "
+        "Musterei Warenhaus",
+        # line 1 ends with a space, the next line starts lowercase
+        "Rechnung 12345 fuer den Monat Juni bei Beispiel GmbH und so weiter",
+        # cut right after the hyphen of a word, and a dash between words
+        "Einkauf bei Must /ABBUCHUNG PAYPAL-KONTO",
+        "Beispiel Laden 1234 Musterhausen - Einkauf vom Juli mit Karte 99",
+        # a word cut at every line
+        "Kundennummer 1234567 Vertragsnummer 7654321 Lebensversicherung "
+        "Beitrag Juli Beispielversicherungsgesellschaft",
+    ],
+)
+def test_dewrap_undoes_the_wrapping_of_the_bank(original):
+    assert converter.dewrap(sample.wrap(original)) == original
+
+
 def test_dates_of_a_transfer():
     row = one("transfer")
     assert row["date"] == "2026-11-02"
@@ -259,6 +306,121 @@ def test_custom_names():
     )
     assert tags(one("visa", settings))[:1] == ["Kreditkarte"]
     assert "Card 1111 1111" in tags(one("visa", settings))
+
+
+# --- split bookings ------------------------------------------------------
+
+SPLIT = converter.SplitRule(
+    r"^(L 1.111.111 (\d*,\d*)) (L 2.222.222 (\d*,\d*))$", name="Versicherung"
+)
+
+
+def split_settings(*rules):
+    return converter.ConverterSettings(split_rules=list(rules or [SPLIT]))
+
+
+def test_booking_is_split_by_the_groups():
+    first, second = convert("split", settings=split_settings())
+    assert (first["description"], first["amount"]) == (
+        "L 1.111.111 55,74",
+        "-55.74",
+    )
+    assert (second["description"], second["amount"]) == (
+        "L 2.222.222 13,16",
+        "-13.16",
+    )
+    for part in (first, second):
+        assert part["opposing_name"] == "Beispiel Versicherung"
+        assert part["date"] == "2026-08-03"
+        assert "L 1.111.111 55,74 L 2.222.222 13,16" in part["notes"]
+    assert (first["_split"], second["_split"]) == ("1/2", "2/2")
+    assert "Teil 1 von 2" in first["notes"]
+
+
+def test_split_parts_have_their_own_stable_references():
+    first, second = convert("split", settings=split_settings())
+    again = convert("split", settings=split_settings())
+    (unsplit,) = convert("split")
+    references = {first["internal_reference"], second["internal_reference"]}
+    assert len(references | {unsplit["internal_reference"]}) == 3
+    assert references == {row["internal_reference"] for row in again}
+
+
+def test_parts_that_dont_add_up_are_not_split():
+    wrong = converter.SplitRule(
+        r"^(L 1.111.111) (\d*,\d*) (L 2.222.222) (\d*),\d*$"
+    )
+    (row,) = convert("split", settings=split_settings(wrong))
+    assert row["amount"] == "-68.90"
+    assert "ergeben nicht" in row["_split_error"]
+
+
+def test_unreadable_part_amount_is_not_split():
+    unreadable = converter.SplitRule(r"^(L) (1.111.111 55,74) (L) (2.222.222 13,16)$")
+    (row,) = convert("split", settings=split_settings(unreadable))
+    assert "nicht lesbar" in row["_split_error"]
+
+
+def test_split_rule_needs_pairs_of_groups():
+    for pattern in (r"(a)(b)", r"(a)(b)(c)", r"(a"):
+        with pytest.raises((ValueError, re.error)):
+            converter.SplitRule(pattern)
+
+
+def test_disabled_split_rule_and_other_bookings_are_untouched():
+    disabled = dataclasses.replace(SPLIT, enabled=False)
+    assert len(convert("split", settings=split_settings(disabled))) == 1
+    assert len(convert("generic", settings=split_settings())) == 1
+
+
+def test_payee_rules_apply_to_each_part():
+    settings = split_settings()
+    settings.rules = [
+        converter.Rule(
+            "^L 2", match="regex", field="description", category="Haftpflicht"
+        )
+    ]
+    first, second = convert("split", settings=settings)
+    assert (first["category"], second["category"]) == ("", "Haftpflicht")
+
+
+def test_split_matches_and_divides_the_unwrapped_purpose():
+    description = "Beitrag Haftpflichtversicherung fuer das Jahr 2026 Vertrag 12345"
+    purpose = sample.wrap(f"Hausrat 13,16 {description} 55,74")
+    rule = converter.SplitRule(r"^(Hausrat) (\d+,\d\d) (.*) (\d+,\d\d)$")
+    row = dict(
+        zip(converter.INPUT_FIELDS, sample.LINES["split"].split(";"))
+    )
+    row["purpose"] = purpose
+    first, second = converter.transform_line(row, "line", split_settings(rule))
+    assert first["description"] == "Hausrat"
+    assert second["description"] == description
+    assert "gesamt -68,90 EUR" in second["notes"]
+
+
+def test_amount_cut_by_the_wrapping_still_splits():
+    # the wrap falls inside "13,16"
+    purpose = sample.wrap("Vertrag 1111111 Hausratversich 13,16 Haftpflicht 55,74")
+    assert "13,1 6" in purpose
+    rule = converter.SplitRule(r"^(.*?) (\d+,\d\d) (.*) (\d+,\d\d)$")
+    split = split_settings(rule).split_for(converter.dewrap(purpose), Decimal("-68.90"))
+    assert not split.error
+    assert [amount for _, amount in split.parts] == [Decimal("-13.16"), Decimal("-55.74")]
+
+
+def test_a_failing_rule_gives_way_to_a_later_one():
+    broad = converter.SplitRule(r"^(L) (1.111.111 55,74) (L) (2.222.222 13,16)$")
+    settings = split_settings(broad, SPLIT)
+    first, second = convert("split", settings=settings)
+    assert (first["amount"], second["amount"]) == ("-55.74", "-13.16")
+    (row,) = convert("split", settings=split_settings(broad))
+    assert row["_split_error"]
+
+
+def test_positive_booking_splits_into_positive_parts():
+    rule = converter.SplitRule(r"^(A) (\S+) (B) (\S+)$")
+    split = converter.split_booking(rule, "A 1,50 B 2,50", Decimal("4"))
+    assert split.parts == [("A", Decimal("1.50")), ("B", Decimal("2.50"))]
 
 
 # --- window and output ---------------------------------------------------

@@ -8,6 +8,8 @@
   fees and cash withdrawals, Girocard payments, PayPal, everything else
 * strips "VISA " (and processor prefixes like "SUMUP *") from the payee and
   records them as tags instead: VISA, Karte 2023, Apple Pay, SumUp, ...
+* splits bookings that pay several things at once into one booking per
+  part, by the split rules
 * applies the payee rules: rename, category and extra tags
 * writes a clean UTF-8 CSV with ISO dates and dot decimals, plus the matching
   importer JSON config
@@ -26,7 +28,7 @@ import io
 import re
 from collections import Counter
 from datetime import date, datetime
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 INPUT_ENCODING = "cp1252"
 WRAP_WIDTH = 35  # ING wraps the Verwendungszweck every 35 characters
@@ -77,6 +79,96 @@ class Rule:
         if self.match == "contains":
             return self.pattern.casefold() in value.casefold()
         return self.pattern.casefold() == value.strip().casefold()
+
+
+@dataclasses.dataclass
+class SplitRule:
+    """Splits one booking of the bank into several bookings.
+
+    `pattern` is searched in the Verwendungszweck after undoing the bank's
+    line wrapping (`dewrap`), as it appears in the notes. Its groups come in pairs, one pair per part: the description, then the
+    amount (German format, without sign: the parts take the sign of the
+    booking). For "L 1.111.111 55,74 L 2.222.222 13,16":
+
+        ^(L 1.111.111 (\\d*,\\d*)) (L 2.222.222 (\\d*,\\d*))$
+
+    The amounts of the parts must add up to the amount of the booking.
+    The first enabled rule that matches wins. Matching ignores case.
+    """
+
+    pattern: str
+    name: str = ""
+    enabled: bool = True
+    id: int | None = None
+
+    def __post_init__(self) -> None:
+        # Raises re.error for an invalid pattern, so it surfaces when saved
+        self._regex = re.compile(self.pattern, re.IGNORECASE)
+        groups = self._regex.groups
+        if groups < 4 or groups % 2:
+            raise ValueError(
+                "Das Muster braucht je Teil zwei Gruppen (Beschreibung,"
+                f" Betrag), also 4, 6, … Gruppen; es hat {groups}."
+            )
+
+    def parts(self, purpose: str) -> list[tuple[str, str]] | None:
+        """The (description, amount) of each part, or None without a
+        match."""
+        if not self.enabled:
+            return None
+        match = self._regex.search(purpose)
+        if not match:
+            return None
+        values = [(value or "").strip() for value in match.groups()]
+        return [
+            (values[index], values[index + 1])
+            for index in range(0, len(values), 2)
+        ]
+
+
+@dataclasses.dataclass
+class Split:
+    """How a split rule divides a booking. `error` says why it doesn't,
+    although the rule matches."""
+
+    rule: SplitRule
+    total: Decimal
+    parts: list[tuple[str, Decimal]]
+    error: str = ""
+
+
+def split_booking(
+    rule: SplitRule, purpose: str, total: Decimal
+) -> Split | None:
+    """Apply a split rule to the Verwendungszweck and amount of a booking."""
+    parts = rule.parts(purpose)
+    if parts is None:
+        return None
+    sign = -1 if total < 0 else 1
+    try:
+        amounts = [parse_amount(amount) for _, amount in parts]
+    except InvalidOperation:
+        unreadable = ", ".join(repr(amount) for _, amount in parts)
+        return Split(
+            rule, total, [], f"Beträge nicht lesbar: {unreadable}"
+        )
+    if sum(amounts) != abs(total):
+        listed = " + ".join(format_amount(amount) for amount in amounts)
+        return Split(
+            rule,
+            total,
+            [],
+            f"Die Teile ({listed} = {format_amount(sum(amounts))}) ergeben"
+            f" nicht den Betrag der Buchung ({format_amount(abs(total))}).",
+        )
+    return Split(
+        rule,
+        total,
+        [
+            (description, sign * amount)
+            for (description, _), amount in zip(parts, amounts)
+        ],
+    )
 
 
 DEFAULT_RULES = [
@@ -159,6 +251,7 @@ class ConverterSettings:
     rules: list[Rule] = dataclasses.field(
         default_factory=lambda: list(DEFAULT_RULES)
     )
+    split_rules: list[SplitRule] = dataclasses.field(default_factory=list)
 
     def __post_init__(self) -> None:
         # Looked up once or twice per row: normalise the keys only once
@@ -180,6 +273,20 @@ class ConverterSettings:
             (rule for rule in self.rules if rule.matches(payee, description)),
             None,
         )
+
+    def split_for(self, purpose: str, total: Decimal) -> Split | None:
+        """How the first matching split rule divides a booking. A rule that
+        matches but fails (the parts don't add up) gives way to later
+        ones; its error is the result only if none succeeds."""
+        failed = None
+        for rule in self.split_rules:
+            split = split_booking(rule, purpose, total)
+            if split is None:
+                continue
+            if not split.error:
+                return split
+            failed = failed or split
+        return failed
 
 
 # ---------------------------------------------------------------------------
@@ -229,9 +336,18 @@ GIROCARD_TERMINAL = re.compile(r"\s+G ?I ?R ?(?P<terminal>\d(?:[\d ]*\d)?)$")
 
 # 1234567890123/PP.1234.PP/. Muster GmbH (Shop24), Ihr Einkauf bei
 # Muster GmbH (Shop24)
+# or without the "PP.1234.PP/" part:
+# 1234567890123/. Muster GmbH, Ihr Einkauf bei Muster GmbH
+# or without the number, which is in the Referenz column then, and with a
+# note in capitals at the end:
+# . Muster GmbH, Ihr Einkauf bei Muster GmbH /ABBUCHUNG VOM PAYPAL-KONTO
+# The spaces in "Ihr Einkauf bei" are optional: when the wrapping cuts at
+# the space before "bei" in the last line, `dewrap` can't tell it from a cut
+# word and joins "Einkaufbei".
 PAYPAL_PURPOSE = re.compile(
-    r"^(?P<reference>\d+)/PP\.\d+\.PP/\.\s*(?P<name>.*?)\s*,"
-    r"\s*Ihr Einkauf bei\s*(?P<shop>.*)$"
+    r"^(?:(?P<reference>\d+)/)?(?:PP\.\d+\.PP/)?\.\s*(?P<name>.*?)\s*,"
+    r"\s*Ihr\s*Einkauf\s*bei\s*(?P<shop>.*?)"
+    r"(?:\s+/\s*[A-ZÄÖÜ][A-ZÄÖÜ0-9 .-]*)?$"
 )
 
 OUTPUT_COLUMNS = [
@@ -279,6 +395,11 @@ def parse_amount(value: str) -> Decimal:
     return Decimal(value.replace(".", "").replace(",", "."))
 
 
+def format_amount(value: Decimal) -> str:
+    """An amount the German way, like the export writes it: -1.234,50"""
+    return f"{value:,.2f}".replace(",", "_").replace(".", ",").replace("_", ".")
+
+
 def parse_date(value: str) -> date:
     return datetime.strptime(value.strip(), "%d.%m.%Y").date()
 
@@ -291,13 +412,30 @@ def _splits_word(previous: str, following: str) -> bool:
     return following.islower() or (previous.isdigit() and following.isdigit())
 
 
+def _splits_hyphenated(text: str, position: int, following: str) -> bool:
+    """The joining space at `position` follows the hyphen inside a word
+    ("PAYPAL- KONTO"), not a dash between words ("Muster - Shop")."""
+    return (
+        text[position - 1] == "-"
+        and position >= 2
+        and text[position - 2].isalnum()
+        and following.isalnum()
+    )
+
+
 def dewrap(text: str, width: int = WRAP_WIDTH, join=None) -> str:
     """Undo ING's fixed-width line wrapping.
 
     The bank cuts the text every `width` chars and joins the pieces with a
     space. That space is dropped when it obviously splits a word (next char
-    is lowercase, or it sits between two digits); otherwise it is kept,
+    is lowercase, it sits between two digits, or after the hyphen of a
+    word like "PAYPAL-KONTO"); otherwise it is kept,
     because the line break may have been a real word boundary.
+
+    A line that starts or ends with a real space is one character shorter:
+    the bank collapses that space with the joining one. One of the two
+    joining spaces around such a line is then a real space. It is the one
+    that doesn't split a word, so the other one decides.
 
     `join(position, previous, following)` can override the decision;
     `position` is the index of the joining space in `text`.
@@ -306,19 +444,44 @@ def dewrap(text: str, width: int = WRAP_WIDTH, join=None) -> str:
         return text
     join = join or (
         lambda position, previous, following: _splits_word(previous, following)
+        or _splits_hyphenated(text, position, following)
     )
-    pieces: list[str] = []
-    position = 0
-    while position < len(text):
-        pieces.append(text[position : position + width])
-        position += width
-        if position < len(text) and text[position] == " ":
-            previous = text[position - 1]
-            following = text[position + 1 : position + 2]
-            if not join(position, previous, following):
-                pieces.append(" ")
-            position += 1
-    return "".join(pieces)
+    # The joining spaces, and whether the line before each one is short
+    joins: list[int] = []
+    short: list[bool] = []
+    start = 0
+    while start + width < len(text):
+        if text[start + width] == " ":
+            joins.append(start + width)
+            short.append(False)
+            start += width + 1
+        elif text[start + width - 1] == " ":
+            joins.append(start + width - 1)
+            short.append(True)
+            start += width
+        else:  # not wrapped the way the bank wraps: leave the rest as it is
+            break
+    drop = [
+        join(position, text[position - 1], text[position + 1 : position + 2])
+        for position in joins
+    ]
+    for index, is_short in enumerate(short):
+        if not is_short:
+            continue
+        if index == 0:
+            # The first line never starts with a space: it ended with one
+            drop[index] = False
+        elif drop[index]:
+            # The space after the line splits a word: the one before is real
+            drop[index - 1] = False
+        else:
+            drop[index] = False
+    dropped = {position for position, gone in zip(joins, drop) if gone}
+    return "".join(
+        character
+        for position, character in enumerate(text)
+        if position not in dropped
+    )
 
 
 def parse_girocard(raw: str) -> dict[str, str] | None:
@@ -407,10 +570,15 @@ def notes_block(items: list[tuple[str, str]]) -> str:
 
 
 def transform(
-    row: dict[str, str], raw_line: str, settings: ConverterSettings
+    row: dict[str, str],
+    raw_line: str,
+    settings: ConverterSettings,
+    *,
+    wrapped: bool = True,
 ) -> dict:
     """Convert one bank row. Keys starting with `_` are for display only and
-    not written to the CSV."""
+    not written to the CSV. `wrapped` is false for a purpose whose line
+    wrapping is already undone (the parts of a split booking)."""
     payee = row["payee"].strip()
     text = row["booking_text"].strip()
     purpose_raw = row["purpose"].strip()
@@ -548,7 +716,7 @@ def transform(
         ]
 
     else:
-        purpose = dewrap(purpose_raw)
+        purpose = dewrap(purpose_raw) if wrapped else purpose_raw
         paypal = PAYPAL_PURPOSE.match(purpose)
 
         if paypal:
@@ -561,7 +729,7 @@ def transform(
                 description = f"PayPal-Einkauf bei {shop}"
             else:
                 description = "PayPal-Zahlung"
-            external_id = reference or paypal.group("reference")
+            external_id = reference or paypal.group("reference") or ""
             notes += [
                 ("Zahlungsdienst", payee),
                 ("Verwendungszweck", purpose),
@@ -687,6 +855,54 @@ def read_export(data: bytes) -> Export:
     return export
 
 
+def _append_notes(converted: dict, items: list[tuple[str, str]]) -> None:
+    converted["notes"] = "\n".join(
+        block for block in (converted["notes"], notes_block(items)) if block
+    )
+
+
+def transform_line(
+    row: dict[str, str], raw_line: str, settings: ConverterSettings
+) -> list[dict]:
+    """Convert one bank row into one booking, or into several if a split
+    rule divides it."""
+    purpose = dewrap(row["purpose"].strip())
+    split = settings.split_for(purpose, parse_amount(row["amount"]))
+    if split is None:
+        return [transform(row, raw_line, settings)]
+    if split.error:
+        converted = transform(row, raw_line, settings)
+        converted["_split_error"] = split.error
+        return [converted]
+    count = len(split.parts)
+    currency = row["currency"].strip() or "EUR"
+    parts = []
+    for index, (description, amount) in enumerate(split.parts, start=1):
+        part_row = {
+            **row,
+            "purpose": description,
+            "amount": format_amount(amount),
+        }
+        # Each part needs its own internal reference, see `transform`
+        converted = transform(
+            part_row, f"{raw_line}|Teil {index}", settings, wrapped=False
+        )
+        _append_notes(
+            converted,
+            [
+                (
+                    "Geteilte Buchung",
+                    f"Teil {index} von {count}, gesamt"
+                    f" {format_amount(split.total)} {currency}",
+                ),
+                ("Verwendungszweck", purpose),
+            ],
+        )
+        converted["_split"] = f"{index}/{count}"
+        parts.append(converted)
+    return parts
+
+
 def convert(export: Export, settings: ConverterSettings) -> list[dict]:
     seen: Counter[str] = Counter()
     rows = []
@@ -698,7 +914,7 @@ def convert(export: Export, settings: ConverterSettings) -> list[dict]:
             raw_line if seen[raw_line] == 1 else f"{raw_line}#{seen[raw_line]}"
         )
         try:
-            rows.append(transform(row, key, settings))
+            rows.extend(transform_line(row, key, settings))
         except Exception as exc:
             raise ConversionError(
                 f"Zeile {line_number}: {exc}\n{raw_line}"

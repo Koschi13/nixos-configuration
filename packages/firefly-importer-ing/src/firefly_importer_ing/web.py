@@ -848,6 +848,44 @@ def _rule_values(form) -> dict:
     return values
 
 
+def _split_rule_values(form) -> dict:
+    values = {
+        "name": form.get("name", "").strip(),
+        "pattern": form.get("pattern", "").strip(),
+        "enabled": bool(form.get("enabled")),
+    }
+    if not values["pattern"]:
+        raise ValueError("Das Muster ist leer.")
+    # Validates the regex and its groups
+    converter.SplitRule(pattern=values["pattern"])
+    return values
+
+
+def _split_test(rules: list) -> dict | None:
+    """Splits the Verwendungszweck and amount of the request with the
+    user's split rules, for trying them."""
+    purpose = request.args.get("test_purpose", "").strip()
+    amount = request.args.get("test_amount", "").strip()
+    if not (purpose or amount):
+        return None
+    test = {"purpose": purpose, "amount": amount, "split": None, "error": ""}
+    try:
+        total = converter.parse_amount(amount)
+    except InvalidOperation:
+        test["error"] = (
+            f"Der Betrag {amount!r} ist nicht lesbar."
+            if amount
+            else "Den Betrag der Buchung angeben."
+        )
+        return test
+    settings = converter.ConverterSettings(
+        split_rules=[db.converter_split_rule(rule) for rule in rules]
+    )
+    # Like the conversion: the bank's line wrapping undone
+    test["split"] = settings.split_for(converter.dewrap(purpose), total)
+    return test
+
+
 def _register_settings(app: Flask) -> None:
     @app.get("/settings")
     @login_required
@@ -904,6 +942,47 @@ def _register_settings(app: Flask) -> None:
         db.delete_rule(g.db, g.user.id, rule_id)
         flash("Regel gelöscht.", "success")
         return redirect(url_for("settings_rules"))
+
+    @app.get("/settings/splits")
+    @login_required
+    def settings_splits():
+        rules = db.list_split_rules(g.db, g.user.id)
+        return render_template(
+            "settings/splits.html", rules=rules, test=_split_test(rules)
+        )
+
+    @app.post("/settings/splits")
+    @login_required
+    def settings_splits_add():
+        try:
+            db.add_split_rule(
+                g.db, g.user.id, _split_rule_values(request.form)
+            )
+        except (ValueError, re.error) as exc:
+            flash(f"Nicht gespeichert: {exc}", "error")
+        else:
+            flash("Regel hinzugefügt.", "success")
+        return redirect(url_for("settings_splits"))
+
+    @app.post("/settings/splits/<int:rule_id>")
+    @login_required
+    def settings_splits_update(rule_id: int):
+        try:
+            db.update_split_rule(
+                g.db, g.user.id, rule_id, _split_rule_values(request.form)
+            )
+        except (ValueError, re.error) as exc:
+            flash(f"Nicht gespeichert: {exc}", "error")
+        else:
+            flash("Regel gespeichert.", "success")
+        return redirect(url_for("settings_splits") + f"#split-{rule_id}")
+
+    @app.post("/settings/splits/<int:rule_id>/delete")
+    @login_required
+    def settings_splits_delete(rule_id: int):
+        db.delete_split_rule(g.db, g.user.id, rule_id)
+        flash("Regel gelöscht.", "success")
+        return redirect(url_for("settings_splits"))
 
     @app.route("/settings/accounts", methods=["GET", "POST"])
     @login_required

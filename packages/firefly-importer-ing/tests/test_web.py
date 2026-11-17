@@ -508,6 +508,67 @@ def test_names_and_processors_are_saved(app, fake):
     assert "Neu" in processors
 
 
+SPLIT_PATTERN = r"^(L 1.111.111 (\d*,\d*)) (L 2.222.222 (\d*,\d*))$"
+
+
+def test_split_rule_splits_the_preview(app, fake, database):
+    client = app.test_client()
+    sign_in(client, fake)
+    response = client.post(
+        "/settings/splits",
+        data={"name": "Versicherung", "pattern": SPLIT_PATTERN, "enabled": "1"},
+    )
+    assert response.status_code == 302
+    upload(client)
+    preview = page(client)
+    assert "Teil 1/2" in preview
+    assert "L 2.222.222 13,16" in preview
+
+    tested = page(
+        client,
+        "/settings/splits?test_purpose=L 1.111.111 55,74 L 2.222.222 13,16"
+        "&test_amount=-68,90",
+    )
+    assert "teilt die Buchung" in tested
+    assert "55,74" in tested
+
+    (rule_id,) = database.execute(text("SELECT id FROM split_rules")).scalars()
+    client.post(
+        f"/settings/splits/{rule_id}",
+        data={"name": "Versicherung", "pattern": SPLIT_PATTERN},
+    )
+    database.commit()
+    assert database.execute(
+        text("SELECT enabled FROM split_rules")
+    ).scalar_one() is False
+    assert "Teil 1/2" not in page(client)
+
+    client.post(f"/settings/splits/{rule_id}/delete")
+    database.commit()
+    assert database.execute(text("SELECT count(*) FROM split_rules")).scalar() == 0
+
+
+def test_split_test_needs_an_amount(app, fake):
+    client = app.test_client()
+    sign_in(client, fake)
+    client.post(
+        "/settings/splits", data={"pattern": SPLIT_PATTERN, "enabled": "1"}
+    )
+    tested = page(
+        client,
+        "/settings/splits?test_purpose=L 1.111.111 55,74 L 2.222.222 13,16",
+    )
+    assert "Den Betrag der Buchung angeben." in tested
+    assert "ergeben nicht" not in tested
+
+
+def test_split_rule_without_pairs_of_groups_is_not_saved(app, fake):
+    client = app.test_client()
+    sign_in(client, fake)
+    client.post("/settings/splits", data={"pattern": "(a)(b)(c)"})
+    assert "Nicht gespeichert" in page(client, "/settings/splits")
+
+
 def test_invalid_regex_is_not_saved(app, fake):
     client = app.test_client()
     sign_in(client, fake)

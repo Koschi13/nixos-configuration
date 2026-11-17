@@ -109,6 +109,20 @@ class PayeeRule(Base):
     enabled: Mapped[bool] = mapped_column(server_default=true())
 
 
+class SplitRule(Base):
+    """A `converter.SplitRule`. The rules of a user apply in the order they
+    were added."""
+
+    __tablename__ = "split_rules"
+    __table_args__ = (Index(None, "user_id"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = _owner()
+    name: Mapped[str] = mapped_column(Text, server_default="")
+    pattern: Mapped[str] = mapped_column(Text)
+    enabled: Mapped[bool] = mapped_column(server_default=true())
+
+
 PROCESSOR_KINDS = ("visa_prefix", "girocard_payee")
 
 

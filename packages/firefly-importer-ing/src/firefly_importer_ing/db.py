@@ -19,7 +19,14 @@ from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session
 
 from . import converter
-from .models import BankAccount, PayeeRule, Processor, Setting, User
+from .models import (
+    BankAccount,
+    PayeeRule,
+    Processor,
+    Setting,
+    SplitRule,
+    User,
+)
 
 MIGRATIONS = Path(__file__).parent / "migrations"
 
@@ -143,6 +150,19 @@ def _delete_owned(session: Session, model, user_id: int, row_id: int) -> None:
     )
 
 
+def _update_owned(
+    session: Session, model, user_id: int, row_id: int, values: dict
+) -> None:
+    """Change the columns of a row by its ID, if it belongs to the user."""
+    row = session.scalar(
+        select(model).where(model.id == row_id, model.user_id == user_id)
+    )
+    if row is None:
+        return
+    for column, value in values.items():
+        setattr(row, column, value)
+
+
 # ---------------------------------------------------------------------------
 # Converter settings
 # ---------------------------------------------------------------------------
@@ -184,15 +204,7 @@ def add_rule(session: Session, user_id: int, values: dict) -> None:
 def update_rule(
     session: Session, user_id: int, rule_id: int, values: dict
 ) -> None:
-    rule = session.scalar(
-        select(PayeeRule).where(
-            PayeeRule.id == rule_id, PayeeRule.user_id == user_id
-        )
-    )
-    if rule is None:
-        return
-    for column, value in values.items():
-        setattr(rule, column, value)
+    _update_owned(session, PayeeRule, user_id, rule_id, values)
 
 
 def delete_rule(session: Session, user_id: int, rule_id: int) -> None:
@@ -250,6 +262,41 @@ def delete_processor(
     _delete_owned(session, Processor, user_id, processor_id)
 
 
+def list_split_rules(session: Session, user_id: int) -> list[SplitRule]:
+    return list(
+        session.scalars(
+            select(SplitRule)
+            .where(SplitRule.user_id == user_id)
+            .order_by(SplitRule.id)
+        )
+    )
+
+
+def converter_split_rule(rule: SplitRule) -> converter.SplitRule:
+    """The rule as the converter applies it."""
+    return converter.SplitRule(
+        pattern=rule.pattern,
+        name=rule.name,
+        enabled=rule.enabled,
+        id=rule.id,
+    )
+
+
+def add_split_rule(session: Session, user_id: int, values: dict) -> None:
+    """Add a split rule. `values` are the columns a user can set."""
+    session.add(SplitRule(user_id=user_id, **values))
+
+
+def update_split_rule(
+    session: Session, user_id: int, rule_id: int, values: dict
+) -> None:
+    _update_owned(session, SplitRule, user_id, rule_id, values)
+
+
+def delete_split_rule(session: Session, user_id: int, rule_id: int) -> None:
+    _delete_owned(session, SplitRule, user_id, rule_id)
+
+
 def get_names(session: Session, user_id: int) -> dict[str, str]:
     """The name settings, defaults filled in."""
     names = {
@@ -286,6 +333,10 @@ def load_settings(
             if processor.kind == "girocard_payee"
         },
         rules=[_converter_rule(rule) for rule in list_rules(session, user_id)],
+        split_rules=[
+            converter_split_rule(rule)
+            for rule in list_split_rules(session, user_id)
+        ],
     )
 
 
