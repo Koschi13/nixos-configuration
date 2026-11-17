@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% from "_macros.html" import csrf, booking_table, amount %}
 {% block title %}Import{% endblock %}
+{% block head %}{% if upload.state == 'sending' %}<meta http-equiv="refresh" content="10">{% endif %}{% endblock %}
 {% block content %}
 {% set rows = upload.rows %}
 {% set missing = upload.check.missing if upload.check else [] %}
@@ -37,7 +38,7 @@
   </div>
   {% if upload.answer %}<p class="muted mb-3">{{ upload.answer }}</p>{% endif %}
   {% if upload.state == 'sending' %}
-    <p class="text-sm text-amber-700 dark:text-amber-400">Der Importer hat noch nicht geantwortet. Diese Seite aktualisiert sich nicht selbst: erneut prüfen, sobald er fertig ist.</p>
+    <p class="text-sm text-amber-700 dark:text-amber-400">Der Importer hat noch nicht geantwortet, der Import läuft. Bei einem ganzen Jahr kann das eine halbe Stunde dauern. Diese Seite aktualisiert sich alle 10 Sekunden und prüft Firefly III, sobald er fertig ist; „Erneut prüfen“ zeigt den Zwischenstand.</p>
   {% elif upload.check is none %}
     <p class="text-sm text-amber-700 dark:text-amber-400">Noch nicht in Firefly III geprüft.</p>
   {% else %}

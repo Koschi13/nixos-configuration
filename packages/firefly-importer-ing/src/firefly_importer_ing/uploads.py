@@ -52,6 +52,8 @@ class Upload:
     stop: date | None = None
     answer: str = ""
     check: Check | None = None
+    # The importer answered, but nobody asked Firefly III yet
+    check_due: bool = False
     _lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
 
     def begin_send(self, rows: list[dict], start: date, stop: date) -> bool:
@@ -63,13 +65,14 @@ class Upload:
             self.state = SENDING
         self.rows, self.start, self.stop = rows, start, stop
         self.failure, self.answer, self.check = "", "", None
+        self.check_due = False
         return True
 
     def finish_send(self, ok: bool, message: str) -> None:
         """Store the importer's answer. Without `ok` nothing was imported
         and the upload can be sent again."""
         if ok:
-            self.state, self.answer = SENT, message
+            self.state, self.answer, self.check_due = SENT, message, True
         else:
             self.reset()
             self.failure = message
@@ -78,6 +81,7 @@ class Upload:
         """Back to the preview, e.g. to send another window of the file."""
         self.rows, self.start, self.stop = [], None, None
         self.failure, self.answer, self.check = "", "", None
+        self.check_due = False
         self.state = DRAFT
 
 

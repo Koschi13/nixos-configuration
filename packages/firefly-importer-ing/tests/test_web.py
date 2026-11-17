@@ -2,6 +2,8 @@
 and a real PostgreSQL (see `conftest`)."""
 
 import io
+import threading
+import time
 from datetime import UTC, datetime, timedelta
 from urllib.parse import parse_qs, urlsplit
 
@@ -42,6 +44,7 @@ def app(fake, empty_database):
             "SECRET_KEY_RAW": "k" * 40,
             "AUTO_IMPORT_SECRET": fake.secret,
             "HTTP_SESSION": session_for(fake),
+            "SEND_IN_BACKGROUND": False,
         }
     )
     yield app
@@ -329,6 +332,39 @@ def test_an_upload_in_progress_is_not_sent_again(app, fake):
     client.post(IMPORT + "/send", data={"start": "2026-11-01"})
     assert fake.uploads == []
     assert "Der Importer hat noch nicht geantwortet" in page(client)
+
+
+def test_a_long_import_runs_in_the_background(app, fake, monkeypatch):
+    """The send request answers at once, the result page waits for the
+    importer and then checks Firefly III."""
+    app.config["SEND_IN_BACKGROUND"] = True
+    importing = threading.Event()
+    finish = threading.Event()
+    post = app.extensions["http"].post
+
+    def slow_importer(*args, **kwargs):
+        importing.set()
+        assert finish.wait(5)
+        return post(*args, **kwargs)
+
+    client = signed_in_with_upload(app, fake)
+    monkeypatch.setattr(app.extensions["http"], "post", slow_importer)
+    response = client.post(IMPORT + "/send", data={"start": "2026-11-01"})
+    assert response.status_code == 302
+    assert importing.wait(5)
+    waiting = page(client)
+    assert "der Import läuft" in waiting
+    assert 'http-equiv="refresh"' in waiting
+
+    finish.set()
+    for _ in range(50):
+        if the_upload(app).state != uploads.SENDING:
+            break
+        time.sleep(0.1)
+    result = page(client)
+    assert 'http-equiv="refresh"' not in result
+    assert "In Firefly III gefunden" in result
+    assert "Fehlen in Firefly III" not in result
 
 
 def test_an_unanswered_upload_counts_as_sent(app, fake, monkeypatch):

@@ -34,8 +34,12 @@
     fireflyUrl = config.services.firefly-iii.settings.APP_URL;
     autoImportSecret = config.age.secrets.firefly-iii-data-importer-auto-import-secret;
 
-    # An import converts and imports while the upload request waits
+    # Requests of the browser, e.g. checking a year in Firefly III
     timeout = "900";
+    # The importer converts and imports while the upload request of this
+    # service waits in the background; a whole year takes more than a
+    # quarter of an hour. Matches `UPLOAD_TIMEOUT` of the package.
+    importTimeout = "3600";
   in {
     imports = with self.modules.nixos; [
       firefly-iii
@@ -133,13 +137,13 @@
     };
     # Large uploads and imports that take minutes
     services.phpfpm.pools.firefly-iii-data-importer.phpOptions = {
-      max_execution_time = timeout;
+      max_execution_time = importTimeout;
       upload_max_filesize = "20M";
       post_max_size = "20M";
     };
     services.nginx.virtualHosts.${importer.virtualHost} = {
       extraConfig = "client_max_body_size 20m;";
-      locations."~ \\.php$".extraConfig = "fastcgi_read_timeout ${timeout}s;";
+      locations."~ \\.php$".extraConfig = "fastcgi_read_timeout ${importTimeout}s;";
     };
 
     # This service calls the importer by its name, which would otherwise

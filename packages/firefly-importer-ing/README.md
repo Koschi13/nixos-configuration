@@ -42,8 +42,10 @@ How it works:
 
 1. Sign in with Firefly III.
 2. Upload the export, pick the period and check the preview.
-3. Send it. The service uploads it to the importer's `/autoupload` and then
-   checks in Firefly III what arrived.
+3. Send it. The service uploads it to the importer's `/autoupload` in the
+   background, as a large import takes longer than a browser or proxy
+   waits; the result page reloads itself until the importer answered and
+   then checks in Firefly III what arrived.
 
 What is stored, per user in PostgreSQL: the profile with its (encrypted)
 OAuth client ID and tokens, rules, split rules, processors, tag names and the assignments

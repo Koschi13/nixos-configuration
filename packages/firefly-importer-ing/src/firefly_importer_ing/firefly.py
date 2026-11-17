@@ -27,8 +27,11 @@ from .converter import normalize_iban
 
 API_HEADERS = {"Accept": "application/vnd.api+json"}
 TIMEOUT = 30
-# The importer converts and imports while the request waits
-UPLOAD_TIMEOUT = 900
+# The importer converts and imports while the request waits. That request
+# runs in the background (see `web.send_import`), so it may wait long: a
+# whole year takes more than a quarter of an hour. The importer's own
+# timeouts in `modules/services/firefly-importer-ing [N]` match this.
+UPLOAD_TIMEOUT = 3600
 UPLOAD_UNANSWERED = (
     "Der Importer hat nicht rechtzeitig geantwortet und importiert"
     " möglicherweise noch. In ein paar Minuten erneut prüfen."

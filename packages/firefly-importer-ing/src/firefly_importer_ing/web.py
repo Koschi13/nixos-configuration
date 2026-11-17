@@ -27,9 +27,11 @@ from __future__ import annotations
 
 import functools
 import json
+import logging
 import os
 import re
 import secrets
+import threading
 from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -57,6 +59,8 @@ from . import converter, db, firefly, uploads
 from .crypto import Vault
 from .models import User
 from .uploads import Check, Upload, UploadStore
+
+log = logging.getLogger(__name__)
 
 # The user interface is German only: the texts in the templates and the
 # messages shown to the user are written in German, everything else in
@@ -105,6 +109,8 @@ def create_app(config: dict | None = None) -> Flask:
         # A form stays valid as long as the session: a preview may be left
         # open for hours before it is sent
         WTF_CSRF_TIME_LIMIT=None,
+        # Tests send within the request, see `_start_sending`
+        SEND_IN_BACKGROUND=True,
     )
     if config:
         app.config.update(config)
@@ -639,6 +645,38 @@ def _check(upload: Upload) -> None:
         )
 
 
+def _check_if_due(upload: Upload) -> None:
+    """Check a sent upload in Firefly III once the importer answered."""
+    if upload.state == uploads.SENT and upload.check_due:
+        upload.check_due = False
+        _check(upload)
+
+
+def _start_sending(upload: Upload, send) -> None:
+    """Run `send()`, which returns the importer's (ok, message), and store
+    its answer with the upload.
+
+    It runs in a thread of its own: the importer imports while the request
+    waits, which takes longer for a whole year than any proxy waits for an
+    answer. The browser meanwhile looks at the result page, which reloads
+    itself until the upload is no longer being sent.
+    """
+
+    def run() -> None:
+        try:
+            ok, message = send()
+        except Exception:  # never leave the upload "sending" forever
+            log.exception("Sending an upload to the importer failed")
+            # Unknown how far it got: check instead of sending again
+            ok, message = True, firefly.UPLOAD_UNANSWERED
+        upload.finish_send(ok, message)
+
+    if current_app.config["SEND_IN_BACKGROUND"]:
+        threading.Thread(target=run, name="send-upload", daemon=True).start()
+    else:
+        run()
+
+
 def _preview_page(upload: Upload) -> str:
     rows = _converted(upload)
     start, stop = _window(rows)
@@ -705,6 +743,7 @@ def _register_import(app: Flask) -> None:
         upload = _upload()
         if upload.state == uploads.DRAFT:
             return _preview_page(upload)
+        _check_if_due(upload)
         return render_template("result.html", upload=upload)
 
     @app.post("/import/account")
@@ -773,23 +812,26 @@ def _register_import(app: Flask) -> None:
             return _to_import(start=start, stop=stop)
         if not upload.begin_send(rows, start, stop):
             return _to_import()  # another request sent it in the meantime
-        # The upload can take minutes: no transaction stays open meanwhile
-        g.db.commit()
-        ok, message = firefly.autoupload(
-            _http(),
-            _config("IMPORTER_URL"),
-            _config("AUTO_IMPORT_SECRET"),
-            token,
-            converter.to_csv(rows),
-            json.dumps(converter.build_config(upload.account_id)).encode(),
+        # Everything the thread needs is taken from this request
+        http = _http()
+        importer_url = _config("IMPORTER_URL")
+        secret = _config("AUTO_IMPORT_SECRET")
+        csv_data = converter.to_csv(rows)
+        config_data = json.dumps(
+            converter.build_config(upload.account_id)
+        ).encode()
+        _start_sending(
+            upload,
+            lambda: firefly.autoupload(
+                http, importer_url, secret, token, csv_data, config_data
+            ),
         )
-        upload.finish_send(ok, message)
-        if not ok:
-            flash(f"Der Import ist fehlgeschlagen: {message}", "error")
+        if upload.state == uploads.DRAFT:  # refused right away
+            flash(f"Der Import ist fehlgeschlagen: {upload.failure}", "error")
             return _to_import(start=start, stop=stop)
         # The importer's answer doesn't tell whether the bookings arrived:
-        # check in Firefly III right away
-        _check(upload)
+        # check in Firefly III as soon as it is there
+        _check_if_due(upload)
         return _to_import()
 
     @app.post("/import/check")
