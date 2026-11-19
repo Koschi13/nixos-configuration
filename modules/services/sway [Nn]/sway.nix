@@ -117,10 +117,6 @@
 
           bars = [{command = "${pkgs.waybar}/bin/waybar";}];
 
-          # The target sets the fonts as well, which come from sway's
-          # defaults until fonts move to stylix (TODO.md)
-          fonts = lib.mkForce {};
-
           # It is super important that the left side of the binding does not include any spaces!
           keybindings = let
             m = config.wayland.windowManager.sway.config.modifier;

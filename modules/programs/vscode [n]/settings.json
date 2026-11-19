@@ -3,8 +3,8 @@
   // editor
   //
   "editor.detectIndentation": false,
-  "editor.fontFamily": "Lilex Nerd Font Mono",
-  "editor.fontSize": 13,
+  "editor.fontFamily": "@fontFamily@",
+  "editor.fontSize": "@fontSize@",
   "editor.inlayHints.enabled": "onUnlessPressed",
   "editor.mouseWheelZoom": false,
 
@@ -29,7 +29,7 @@
   //
   // workbench
   //
-  // The @placeholders@ are filled from `dotfiles.theme` by vscode.nix
+  // The @placeholders@ are filled by vscode.nix
   "workbench.colorTheme": "@colorTheme@",
   "workbench.iconTheme": "@iconTheme@",
   "workbench.preferredDarkColorTheme": "@colorTheme@",
@@ -39,22 +39,22 @@
   //
   // terminal
   //
-  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.fontSize": "@fontSize@",
 
   //
   // markdown
   //
-  "markdown.preview.fontSize": 13,
+  "markdown.preview.fontSize": "@fontSize@",
 
   //
   // chat
   //
-  "chat.editor.fontSize": 13,
+  "chat.editor.fontSize": "@fontSize@",
 
   //
   // debug
   //
-  "debug.console.fontSize": 13,
+  "debug.console.fontSize": "@fontSize@",
 
   //
   // Python

@@ -1,5 +1,4 @@
 {self, ...}: {
-  # TODO: unify font settings in css files via font.nix
   flake.modules.homeManager.waybar = {
     config,
     lib,
@@ -9,12 +8,10 @@
   in {
     imports = [self.modules.homeManager.stylix];
 
-    # Only defines the colors `style.css` uses, e.g. `@base0D`
+    # Only defines the font and the colors `style.css` uses, e.g. `@base0D`
     stylix.targets.waybar = {
       enable = true;
       addCss = false;
-      # The font comes from `style.css`
-      fonts.enable = false;
     };
 
     programs.waybar = {
@@ -23,7 +20,7 @@
         enable = false;
         targets = ["graphical-session.target"];
       };
-      # After the colors of the stylix target, which it uses
+      # After the font and colors of the stylix target, which it builds on
       style = lib.mkAfter (builtins.readFile ./style.css);
 
       settings = [

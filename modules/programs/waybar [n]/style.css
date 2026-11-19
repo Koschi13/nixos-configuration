@@ -1,6 +1,6 @@
-/* The @base00 to @base0F colors are defined by the stylix target, see waybar.nix */
+/* The font family and the @base00 to @base0F colors are defined by the stylix
+   target, see waybar.nix */
 * {
-  font-family: "Lilex Nerd Font Mono";
   font-size: 12pt;
   font-weight: bold;
   /* Disabled for sway

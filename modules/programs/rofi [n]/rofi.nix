@@ -1,5 +1,6 @@
 {self, ...}: {
   flake.modules.homeManager.rofi = {config, ...}: let
+    inherit (config.stylix) fonts;
     # The stylix target replaces the whole theme, so only the
     # colors are taken from stylix and `theme.rasi` keeps the layout
     colors = with config.lib.stylix.colors; ''
@@ -22,6 +23,7 @@
     programs.rofi = {
       enable = true;
       theme = ./theme.rasi;
+      font = "${fonts.monospace.name} ${toString fonts.sizes.popups}";
       # terminal is configured by the terminal aspect
     };
 

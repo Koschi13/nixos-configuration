@@ -16,9 +16,8 @@
 6. [ ] Create a windows like desktop as alternative (and maybe for gaming and
        office stuff)
 7. [ ] Impermanence
-8. [ ] Move the fonts from the cross-cutting `font.nix` to a shared option
-       pulled by each program, like `dotfiles.theme`. See
-       `docs/todo/font-shared-option.md`.
+8. [x] Move the fonts from the cross-cutting `font.nix` to a shared option
+       pulled by each program, like `dotfiles.theme`.
 9. [ ] Setup a service which tracks the install package versions similar like
        OWASP-DP to get notifications about CVEs
 10. [ ] Server metric dashboard like Grafana or include into Glance

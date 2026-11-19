@@ -4,8 +4,7 @@
 
     stylix.targets.ghostty = {
       enable = true;
-      # The font comes from `font.nix`, the opacity is set below
-      fonts.enable = false;
+      # The opacity is set below
       opacity.enable = false;
     };
 

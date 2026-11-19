@@ -4,8 +4,6 @@
 
     stylix.targets.alacritty = {
       enable = true;
-      # The font comes from `font.nix`
-      fonts.enable = false;
       opacity.enable = false;
     };
 

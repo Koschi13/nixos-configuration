@@ -8,11 +8,7 @@
   in {
     imports = with self.modules.homeManager; [dotfiles-theme stylix];
 
-    stylix.targets.dunst = {
-      enable = true;
-      # The font comes from `font.nix`
-      fonts.enable = false;
-    };
+    stylix.targets.dunst.enable = true;
 
     services.dunst = {
       enable = true;

@@ -207,11 +207,13 @@ their own.
 
 ### Cross-cutting features
 
-A file may contribute to aspects it doesn't own when it describes one
-decision that touches several programs. `font.nix` sets the font of
-`alacritty`, `ghostty` and `dunst`, and `terminal.nix` tells `rofi` and
-`sway` which terminal to open. Changing the font or terminal then stays a one
-file change, and the program aspects stay free of that choice.
+A file may contribute to aspects it doesn't own when it chooses *which*
+program fills a role. `terminal.nix` tells `rofi` and `sway` which terminal to
+open, so changing the terminal stays a one file change, and the program
+aspects stay free of that choice.
+
+Values several programs share, like the fonts and colors, are not pushed this
+way. Each program pulls them in its own file, see [Themes](#themes).
 
 ### Shared options
 
@@ -250,12 +252,15 @@ enables its target in its own file:
 ```nix
 flake.modules.homeManager.dunst = {
   imports = [self.modules.homeManager.stylix];
-  stylix.targets.dunst = {
-    enable = true;
-    fonts.enable = false; # fonts come from `font.nix`
-  };
+  stylix.targets.dunst.enable = true;
 };
 ```
+
+The fonts are themed the same way. `lib/theme [nd]/stylix/fonts.nix` sets
+`stylix.fonts`, the targets apply it, and programs without a fitting target
+(`rofi`, `neovim`, VSCode) read `config.stylix.fonts` in their own file. The
+`font` aspect installs the fonts. A host overrides a value through
+`home-manager.users.<user>.stylix.fonts`, e.g. `sizes.terminal`.
 
 Programs referencing colors in their own configuration, like `waybar`'s
 `style.css` or the `starship` prompt, only use the neutral names of the scheme

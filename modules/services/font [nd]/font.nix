@@ -1,38 +1,14 @@
-let
-  serif = "Lilex Nerd Font Propo";
-  sansSerif = "Lilex Nerd Font";
-  monospace = "Lilex Nerd Font Mono";
-  fontSize = 10;
-in {
-  flake.modules.homeManager = {
-    font = {pkgs, ...}: {
-      home.packages = [pkgs.nerd-fonts.lilex];
-      fonts.fontconfig = {
-        enable = true;
-        defaultFonts = {
-          serif = [serif];
-          sansSerif = [sansSerif];
-          monospace = [monospace];
-        };
-      };
-    };
+{self, ...}: {
+  # Installs the fonts of `stylix.fonts` and makes them the default ones. The
+  # values are set in `lib/theme [nd]/stylix/fonts.nix`.
+  flake.modules.homeManager.font = {
+    imports = [self.modules.homeManager.stylix];
 
-    ghostty = {
-      programs.ghostty.settings = {
-        font-size = fontSize;
-        font-family = monospace;
-      };
-    };
+    fonts.fontconfig.enable = true;
 
-    alacritty = {
-      programs.alacritty.settings.font = {
-        normal.family = monospace;
-        size = fontSize;
-      };
-    };
-
-    dunst = {
-      services.dunst.settings.global.font = "${monospace} ${toString fontSize}";
+    stylix.targets = {
+      fontconfig.enable = true;
+      font-packages.enable = true;
     };
   };
 }

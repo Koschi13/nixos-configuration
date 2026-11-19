@@ -1,5 +1,4 @@
 {self, ...}: {
-  # TODO: unify font settings in lua files via font.nix
   flake.modules = {
     nixos.neovim = {
       programs.neovim = {
@@ -22,7 +21,7 @@
         then theme.integrations.nvim
         else "default";
     in {
-      imports = [self.modules.homeManager.dotfiles-theme];
+      imports = with self.modules.homeManager; [dotfiles-theme stylix];
 
       home = {
         sessionVariables = {
@@ -92,6 +91,7 @@
             return {
               colorscheme = "${colorscheme}",
               background = "${theme.polarity}",
+              font = "${config.stylix.fonts.monospace.name}",
             }
           '';
         };
