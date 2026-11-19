@@ -6,6 +6,7 @@ in {
       system-cli
 
       glance
+      cve-scan
 
       backup
       firefly-iii
