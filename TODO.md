@@ -18,8 +18,11 @@
 7. [ ] Impermanence
 8. [x] Move the fonts from the cross-cutting `font.nix` to a shared option
        pulled by each program, like `dotfiles.theme`.
-9. [ ] Setup a service which tracks the install package versions similar like
+9. [x] Setup a service which tracks the install package versions similar like
        OWASP-DP to get notifications about CVEs
+
+- The overview exists (`cve-scan` aspect), the notifications are item 14
+
 10. [ ] Server metric dashboard like Grafana or include into Glance
 11. [ ] 7z and co
 12. [ ] SSO service for home network (required for VPN)
@@ -28,3 +31,14 @@
 - This requires the setup of an additional remote host acting as the proxy
 - Security measurements have to be take to prevent access (whitelist). Maybe
   this has to be done in Unifi, but hardening the systems is also necessary
+
+14. [ ] Notification channel for the home network
+
+- Self-hosted ntfy (`services.ntfy-sh`) as `ntfy.lan` behind `reverse-proxy`,
+  subscribed to by the phone app and the desktops (dunst). Outside the LAN it
+  needs item 13 or a relay through the public ntfy.sh.
+- A shared `dotfiles.notify` option, like `dotfiles.backup`, so every aspect
+  sends through the same channel
+- First senders: `cve-scan` (compare the new `summary.json` with the one it
+  replaces: a new id + package pair is a new CVE, a changed severity or fix is
+  an update), failed backups and failed systemd units

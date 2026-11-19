@@ -114,9 +114,33 @@ the gateway pointing at the IP of the server:
 | `firefly-import.lan` | Firefly III Data Importer |
 | `firefly-ing.lan` | ING importer for Firefly III |
 | `pgadmin.lan` | pgAdmin |
+| `cve.lan` | CVE overview |
 
 A new service adds its virtual host to `services.nginx.virtualHosts`, see
 `modules/services/reverse-proxy [N]/reverse-proxy.nix`.
+
+### CVE overview
+
+The "Security" page of `http://glance.lan` lists the public CVEs of the
+packages of every host. `http://cve.lan` serves the data behind it:
+`summary.json` and the package list of each host, `<host>.cdx.json.gz`.
+
+`apply.sh` and `deploy.sh` upload the packages of the new system to
+`fabricator` after the switch, which takes a few minutes and one more touch of
+the YubiKey. `fabricator` checks them against the current CVEs once a day (the
+`cve-scan` aspect). If the upload fails, e.g. outside the LAN, the switch
+still succeeds. Upload later with:
+
+```sh
+./scripts/sbom-upload.sh        # this host
+./scripts/sbom-upload.sh <host> # a host deployed from here
+```
+
+A switch without the scripts, e.g. plain `nh os switch`, uploads nothing: the
+page shows when each host uploaded last. The matches are guesses by package
+name and version, so expect false positives, e.g. CVEs nixpkgs already
+patched. Silence them in `ignoredFindings` of
+`modules/services/cve-scan [N]/cve-scan.nix`.
 
 ### Using the YubiKey on a remote host
 
