@@ -11,6 +11,8 @@
       enable = true;
       settings = {
         env.TERM = "xterm-256color";
+        # Spreads the leftover pixels of the window evenly around the grid
+        window.dynamic_padding = true;
       };
     };
   };

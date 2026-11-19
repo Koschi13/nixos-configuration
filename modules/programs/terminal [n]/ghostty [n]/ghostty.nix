@@ -19,6 +19,12 @@
         background-opacity = 0.85;
         background-blur = 16;
 
+        # The window is rarely a multiple of the cell size. Spreads the
+        # leftover pixels around the grid and fills them with the color of the
+        # nearest cells, instead of an empty transparent bar at the bottom.
+        window-padding-balance = true;
+        window-padding-color = "extend";
+
         mouse-hide-while-typing = true;
 
         working-directory = "home";
