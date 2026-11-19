@@ -21,6 +21,15 @@ nixos-rebuild build --flake .#<host>
 # Activate a risky change on a remote host, a reboot reverts it
 nh os test . --hostname <host> --target-host "root@<host>.lan" --elevation-strategy none
 
+# Upload the packages of this host for the CVE overview (scripts/sbom-upload.sh)
+./scripts/sbom-upload.sh
+
+# Upload the packages of a host deployed from here for the CVE overview
+./scripts/sbom-upload.sh <host>
+
+# Check the uploaded packages of all hosts for CVEs now
+ssh root@fabricator.lan systemctl start cve-scan.service
+
 # Update all flake inputs (scripts/update.sh)
 ./scripts/update.sh
 
