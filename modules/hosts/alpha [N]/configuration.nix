@@ -22,6 +22,7 @@ in {
           android
           gaming
           minecraft
+          wow
           virtualisation
 
           amdgpu
