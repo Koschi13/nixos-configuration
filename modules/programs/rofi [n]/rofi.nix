@@ -23,7 +23,7 @@
     programs.rofi = {
       enable = true;
       theme = ./theme.rasi;
-      font = "${fonts.monospace.name} ${toString fonts.sizes.popups}";
+      settings.font = "${fonts.monospace.name} ${toString fonts.sizes.popups}";
       # terminal is configured by the terminal aspect
     };
 
